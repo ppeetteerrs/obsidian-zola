@@ -14,7 +14,7 @@ compile_sass = true
 generate_feed = true
 
 # When set to "true", the generated HTML files are minified.
-minify_html = true
+minify_html = false
 
 # The taxonomies to be rendered for the site and their configuration.
 taxonomies = [

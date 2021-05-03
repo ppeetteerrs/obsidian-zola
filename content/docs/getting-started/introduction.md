@@ -29,4 +29,3 @@ Find out how to contribute to Doks. [Contributing →](../../contributing/how-to
 ## Help
 
 Get help on Doks. [Help →](../../help/faq/)
-
