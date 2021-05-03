@@ -104,7 +104,7 @@
   <meta property="og:locale" content="{{ config.extra.open.og_locale }}">
 {% endif %}
 
-{% if is_home %}
+{% if is_home and config.extra.schema %}
   {% if config.extra.schema.type == "Organization" %}
     <script type="application/ld+json">
     {
@@ -152,7 +152,7 @@
   {% endif %}
 {% endif %}
 
-{% if is_page %}
+{% if is_page and config.extra.schema.section %}
   {% if config.extra.schema.section == page_section %}
     <script type="application/ld+json">
     {

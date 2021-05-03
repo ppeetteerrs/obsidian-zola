@@ -4,14 +4,16 @@
 		<div class="row">
 			<div class="col-lg-8 order-last order-lg-first">
 				<ul class="list-inline">
-					<li class="list-inline-item">{{ config.extra.footer.info | safe }}</li>
+					<li class="list-inline-item">{{ config.extra.footer.info | default(value="Powered by AdiDoks") | safe }}</li>
 				</ul>
 			</div>
 			<div class="col-lg-8 order-first order-lg-last text-lg-end">
 				<ul class="list-inline">
-					{% for val in config.extra.footer.nav %}
-					<li class="list-inline-item"><a href="{{ get_url(path=val.url, trailing_slash=true) | safe }}">{{ val.name }}</a></li>
-					{% endfor %}
+					{% if config.extra.footer.nav %}
+						{% for val in config.extra.footer.nav %}
+							<li class="list-inline-item"><a href="{{ get_url(path=val.url, trailing_slash=true) | safe }}">{{ val.name }}</a></li>
+						{% endfor %}
+					{% endif %}
 				</ul>
 			</div>
 		</div>
