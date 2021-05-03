@@ -1,3 +1,2 @@
-/fonts/vendor/jost/*.woff2
-  Access-Control-Allow-Origin: *
-  Content-Type: font/woff2 woff2
+/*
+  Content-Security-Policy: default-src 'self'; frame-ancestors https://jamstackthemes.dev; manifest-src 'self'; connect-src 'self'; font-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'
