@@ -52,7 +52,7 @@ Or install as a submodule:
 
 ```bash
 cd mysite
-git init
+git init  # if your project is a git repository already, ignore this command
 git submodule add git@github.com:aaranxu/adidoks.git themes/adidoks
 ```
 
