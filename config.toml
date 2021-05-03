@@ -47,6 +47,9 @@ github = "https://github.com/aaranxu"
 twitter = "https://twitter.com/aaranxu"
 email = "aaranxu@outlook.com"
 
+# If running on netlify.app site, set to true
+is_netlify = true
+
 # Set HTML file language
 language_code = "en-US"
 
