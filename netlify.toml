@@ -9,7 +9,7 @@ ZOLA_VERSION = "0.13.0"
 command = "zola build --base-url $DEPLOY_PRIME_URL"
 
 [[headers]]
-  for = "/*.woff2"
+  for = "/fonts/vendor/jost/*.woff2"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Content-Type = "font/woff2 woff2"
