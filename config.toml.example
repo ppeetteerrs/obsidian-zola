@@ -17,7 +17,7 @@ compile_sass = true
 generate_feed = true
 
 # When set to "true", the generated HTML files are minified.
-minify_html = false
+minify_html = true
 
 # The taxonomies to be rendered for the site and their configuration.
 taxonomies = [
@@ -73,7 +73,7 @@ repo_branch = "main"
 ## Math settings
 # options: true, false. Enable math support globally,
 # default: false. You can always enable math on a per page.
-math = true
+math = false
 library = "katex"  # options: "katex", "mathjax". default is "katex".
 
 ## Open Graph + Twitter Cards
