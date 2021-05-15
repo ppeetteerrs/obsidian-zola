@@ -15,4 +15,4 @@ draft = false
 "aaran-xu" = "authors/aaran-xu.md"
 +++
 
-The authurs of the blog articles.
+The authors of the blog articles.
