@@ -4,7 +4,6 @@ title = "Modern Documentation Theme"
 
 # The homepage contents
 [extra]
-title = "Modern Documentation Theme"
 lead = '<b>AdiDoks</b> is a mordern documentation theme, which is a port of the Hugo theme <a href="https://github.com/h-enk/">Doks</a> for Zola.'
 url = "/docs/getting-started/introduction/"
 url_button = "Get started"
