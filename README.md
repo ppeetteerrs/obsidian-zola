@@ -14,7 +14,7 @@ Before using the theme, you need to install the [Zola](https://www.getzola.org/d
 ## Quick Start
 
 ```bash
-git clone git@github.com:aaranxu/adidoks.git
+git clone https://github.com/aaranxu/adidoks.git
 cd adidoks
 zola serve
 # open http://127.0.0.1:1111/ in the browser
@@ -39,7 +39,7 @@ Download this theme to your themes directory:
 
 ```bash
 cd mysite/themes
-git clone git@github.com:aaranxu/adidoks.git
+git clone https://github.com/aaranxu/adidoks.git
 ```
 
 Or install as a submodule:
@@ -47,7 +47,7 @@ Or install as a submodule:
 ```bash
 cd mysite
 git init  # if your project is a git repository already, ignore this command
-git submodule add git@github.com:aaranxu/adidoks.git themes/adidoks
+git submodule add https://github.com/aaranxu/adidoks.git themes/adidoks
 ```
 
 ### Step 3: Configuration
