@@ -9,7 +9,7 @@ sort_by = "weight"
 template = "docs/page.html"
 
 [extra]
-lead = "AdiDoks is a Zola theme helping you build modern documentation websites, which is a port of the Hugo theme <a href=\"https://github.com/h-enk/doks\">Doks</a> for Zola."
+lead = 'AdiDoks is a Zola theme helping you build modern documentation websites, which is a port of the Hugo theme <a href="https://github.com/h-enk/doks">Doks</a> for Zola.'
 toc = true
 top = false
 +++

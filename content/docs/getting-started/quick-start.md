@@ -92,4 +92,3 @@ zola serve
 
 AdiDoks will start the Zola development web server accessible by default at 
 `http://127.0.0.1:1111`. Saved changes will live reload in the browser.
-
