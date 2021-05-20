@@ -117,7 +117,7 @@ build_search_index = true
 
 The following options should be under the `[extra]` in `config.toml`
 
-- `alanguage_code` - set HTML file language (default to `en-US`)
+- `language_code` - set HTML file language (default to `en-US`)
 - `theme_color` - your site's HTML color (default to `#fff`)
 - `title_separator` - the separator to your site title, like `|` and `-` (defaults to `|`)
 - `title_addition` - the additon content for the title of the homepage
