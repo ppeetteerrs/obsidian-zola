@@ -131,9 +131,6 @@ The following options should be under the `[extra]` in `config.toml`
 - `[[extra.menu.social]]` - the social links on the header of the page
 - `[extra.footer]` - the footer content on the left
 - `[[extra.footer.nav]]` - the footer navigations on the right
-- `[extra.home]` - the main content of the homepage
-- `[[extra.home.list]]` - the lists' content of the homepage
-
 
 ### Templates
 
@@ -143,7 +140,10 @@ All pages are extend to the `base.html`, and you can customize them as need.
 
 #### Homepage
 
-Go to the `config.toml` to set your own homepage content.
+Go to the *content/_index.md* file to add your own homepage content.
+
+- `[extra]` - the main content of the homepage
+- `[[extra.ist]]` - the lists' content of the homepage
 
 #### Sections
 
