@@ -52,7 +52,7 @@ git submodule add https://github.com/aaranxu/adidoks.git themes/adidoks
 
 ### Step 3: Configuration
 
-Enable the theme in your `config.toml` in the site derectory:
+Enable the theme in your `config.toml` in the site directory:
 
 ```toml
 theme = "adidoks"
