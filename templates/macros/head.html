@@ -62,7 +62,7 @@
 
 {% if config.extra.open.enable %}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="{{ config.extra.open.image }}">
+  <meta name="twitter:image" content="{{ config.base_url | safe }}/{{ config.extra.open.image }}">
   <meta name="twitter:title" content="{{ title }}">
   <meta name="twitter:description" content="{{ description }}">
   <meta name="twitter:site" content="@{{ config.extra.open.twitter_site }}">
@@ -82,7 +82,7 @@
       <meta property="og:image" content="{{ get_url(path=image) | safe }}">
     {% endfor %}
   {% elif config.extra.open.image %}
-    <meta property="og:image" content="{{ config.extra.open.image }}">
+    <meta property="og:image" content="{{ config.base_url | safe }}/{{ config.extra.open.image }}">
   {% endif %}
 
   <meta property="og:updated_time" content="{{ updated_time }}">
