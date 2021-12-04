@@ -35,8 +35,11 @@ Source:
 document.addEventListener('keydown',suggestionFocus);
 
 function suggestionFocus(e){
-
   const focusableSuggestions= suggestions.querySelectorAll('a');
+  if (suggestions.classList.contains('d-none')
+      || focusableSuggestions.length === 0) {
+    return;
+  }
   const focusable= [...focusableSuggestions];
   const index = focusable.indexOf(document.activeElement);
 
