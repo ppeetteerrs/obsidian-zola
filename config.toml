@@ -46,6 +46,7 @@ author = "Aaran Xu"
 github = "https://github.com/aaranxu"
 twitter = "https://twitter.com/aaranxu"
 email = "aaranxu@outlook.com"
+ganalytics = ""  # Google Analytics code
 
 # If running on netlify.app site, set to true
 is_netlify = true
