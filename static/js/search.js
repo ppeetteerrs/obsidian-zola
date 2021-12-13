@@ -5,7 +5,9 @@ document.addEventListener('keydown', inputFocus);
 
 function inputFocus(e) {
 
-  if (e.keyCode === 191 ) {
+  if (e.keyCode === 191
+      && document.activeElement.tagName !== "INPUT"
+      && document.activeElement.tagName !== "TEXTAREA") {
     e.preventDefault();
     userinput.focus();
   }
