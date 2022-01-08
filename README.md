@@ -1,18 +1,25 @@
-# Zola-PKM
+# Obsidian-Zola
 
-This repo is a Zola theme made for converting simple Markdown personal knowledge management (PKM) systems into a Zola website. It has only been tested on Obsidian.
+This repo contains an easy-to-use (read: simplistic) solution for converting an Obsidian Personal Knowledge Management System (read: bunch of random Markdowns) into a Zola site.
 
-*Note: use together with `convert.py` in the example repo for a full Obsidian conversion.*
+Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the use experience.
 
+## Usage
+- Step 1: Create a git repo out of your Obsidian directory.
+- Step 2: Copy `netlify.example.toml` into `<your_obsidian_dir>/netlify.toml` and change the placeholders.
+- Step 3: Commit and push your changes to git repository, create a netlify site using your repo. Make sure that the `SITE_URL` in `netlify.toml` matches your actual netlify site url.
+- Step 4: Enjoy your new site!
+
+## Examples
 [Example site](https://peteryuen.netlify.app/)
 
 [Example repo](https://github.com/ppeetteerrs/obsidian-pkm)
 
-# Features
+## Features (vs the original AdiDoks)
 
-This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the use experience.
+First of all, this repo is fully customized for Obsidian PKMs. Of course you can still use it like a regular Zola theme, but it might lack some flexibility in terms of customization.
 
-## Enhancements
+### Enhancements
 
 **Search Function**
 
@@ -32,7 +39,7 @@ Updated KaTEX to latest version and loads KaTEX by default. Since who on earth b
 
 Again, who wants to write a PKM page without proper TOC navigation :))
 
-## Small Chanages
+### Small Chanages
 
 **Change Default Content**
 
