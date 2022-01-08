@@ -176,7 +176,7 @@ def filter_lines(file: Path, content: List[str]) -> List[str]:
     return replaced_slashes
 
 
-def write_frontmatters(file: Path, description: str, content: List[str]) -> List[str]:
+def write_frontmatters(file: Path, content: List[str]) -> List[str]:
     """
     Write Zola-specific frontmatters
     """
@@ -192,7 +192,6 @@ def write_frontmatters(file: Path, description: str, content: List[str]) -> List
     return [
         "---",
         f"title: {title}",
-        f"description: {description}",
         f"date: {modified}",
         f"updated: {modified}",
         "template: docs/page.html",
@@ -216,7 +215,7 @@ def step5():
 
         content = remove_frontmatters(content)
         content = filter_lines(md_file, content)
-        content = write_frontmatters(md_file, description, content)
+        content = write_frontmatters(md_file, content)
         open(md_file, "w").write("\n".join(content))
 
 
