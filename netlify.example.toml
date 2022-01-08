@@ -1,5 +1,5 @@
 [build]
-command = "python zola/convert.py && zola --root $ZOLA_DIR build --output-dir public"
+command = "git clone https://github.com/ppeetteerrs/obsidian-zola $ZOLA_DIR && python $ZOLA_DIR/convert.py && zola --root $ZOLA_DIR build --output-dir public"
 publish = "public"
 
 [build.environment]
