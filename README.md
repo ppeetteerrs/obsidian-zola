@@ -5,10 +5,22 @@ This repo contains an easy-to-use (read: simplistic) solution for converting an 
 Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the use experience.
 
 ## Usage
-- Step 1: Create a git repo out of your Obsidian directory.
-- Step 2: Copy `netlify.example.toml` into `<your_obsidian_dir>/netlify.toml` and change the placeholders.
-- Step 3: Commit and push your changes to git repository, create a netlify site using your repo. Make sure that the `SITE_URL` in `netlify.toml` matches your actual netlify site url.
-- Step 4: Enjoy your new site!
+
+**Step 1: Check Obsidian Settings**
+- Set `Settings => Files & Links => New link format`to Relative path to file
+- Set `Settings => Files & Links => USe [[Wikilinks]]` to off
+- Change any existing Wikilinks / Markdown links to relative Markdown links
+
+**Step 2: Setup Netlify**
+- Turn your Obsidian vault folder into a Git repository
+- Create a Netlify site pointing to that Git repository
+
+**Step 3: Edit `netlify.toml`**
+- Create `netlify.toml` in your Obsidian vault folder
+- Copy the content from `netlify.example.toml` in this repo and replace the placeholders
+
+**Step 4: You'reDone!**
+Push your changes and enjoy your new site!
 
 ## Examples
 [Example site](https://peteryuen.netlify.app/)
