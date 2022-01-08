@@ -1,17 +1,17 @@
-name = "adidoks"
-description = "AdiDoks is a Zola theme helping you build modern documentation."
+name = "zola-pkm"
+description = "A minimal theme adapted from AdiDoks, built to turn Obsidian PKM in a simple zola site."
 license = "MIT"
-homepage = "https://github.com/aaranxu/adidoks"
-min_version = "0.13.0"
-demo = "https://adidoks.netlify.app/"
+homepage = "https://github.com/ppeetteerrs/zola-pkm"
+min_version = "0.15.2"
+demo = "https://peteryuen.netlify.app/"
 
 [extra]
 
 [author]
-name = "Aaran Xu"
-homepage = "https://github.com/aaranxu"
+name = "Peter Yuen"
+homepage = "https://github.com/ppeetteerrs/zola-pkm"
 
 [original]
-author =  "h-enk"
-homepage = "https://getdoks.org/"
-repo = "https://github.com/h-enk/doks"
+author =  "Aaran Xu"
+homepage = "https://github.com/aaranxu"
+repo = "https://github.com/aaranxu"
