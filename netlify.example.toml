@@ -3,14 +3,24 @@ command = "git clone https://github.com/ppeetteerrs/obsidian-zola $ZOLA_DIR && p
 publish = "public"
 
 [build.environment]
+# Text in landing page button
 LANDING_BUTTON = "Explore"
-LANDING_DESCRIPTION = "This is my personal knowledge management system. Concepts and snippets of knowledge are organized in an (unstructure) inter-linked knowledge graph."
+# Site description on landing page
+LANDING_DESCRIPTION = "I have nothing but intelligence."
+# The Markdown page linked to landing page button (e.g. put home for ./home.md)
 LANDING_PAGE = "home"
+# Site title on landing page
 LANDING_TITLE = "My Second Brain"
 PYTHON_VERSION = "3.8"
-REPO_URL = "https://github.com/ppeetteerrs/obsidian-pkm"
-SITE_TITLE = "Peter Yuen"
-SITE_URL = "https://ihaveocd.netlify.app/"
+# Site repo URL
+REPO_URL = "https://github.com/ppeetteerrs/obsidian-zola"
+# Site title in navbar
+SITE_TITLE = "Example Site"
+# Site URL
+SITE_URL = ""
+# Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
+# Directory to store zola site files (make sure 
+# your site repo does not contain this folder)
 ZOLA_DIR = "zola"
 ZOLA_VERSION = "0.15.2"
