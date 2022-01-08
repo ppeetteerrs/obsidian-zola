@@ -77,8 +77,9 @@ Source:
     var options = {
       bool: "OR",
       fields: {
-        title: {boost: 2},
-        body: {boost: 1},
+        title: {boost: 2, expand: true},
+        body: {boost: 1, expand: true},
+        expand: true
       }
     };
     var results = index.search(value, options);
