@@ -1,7 +1,7 @@
 {% macro resource() %}
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 {% endmacro %}
 
 
@@ -16,7 +16,7 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ get_url(path="favicon-32x32.png") | safe }}">
   <link rel="icon" type="image/png" sizes="16x16" href="{{ get_url(path="favicon-16x16.png") | safe }}">
   {% if not config.extra.is_netlify %}
-    <link rel="manifest" href="{{ get_url(path="site.webmanifest") | safe }}" crossorigin>
+    <link rel="manifest" href="{{ get_url(path="site.webmanifest") | safe }}">
   {% endif %}
 {% endmacro %}
 
@@ -63,17 +63,7 @@
 
 {% if config.extra.open.enable %}
   <meta name="twitter:card" content="summary_large_image">
-  {% if page.extra.images %}
-    {% for image in page.extra.images %}
-      <meta property="twitter:image" content="{{ get_url(path=image) | safe }}">
-    {% endfor %}
-  {% elif section.extra.images %}
-    {% for image in section.extra.images %}
-      <meta property="twitter:image" content="{{ get_url(path=image) | safe }}">
-    {% endfor %}
-  {% elif config.extra.open.image %}
-    <meta name="twitter:image" content="{{ config.base_url | safe }}/{{ config.extra.open.image }}">
-  {% endif %}
+  <meta name="twitter:image" content="{{ config.base_url | safe }}/{{ config.extra.open.image }}">
   <meta name="twitter:title" content="{{ title }}">
   <meta name="twitter:description" content="{{ description }}">
   <meta name="twitter:site" content="@{{ config.extra.open.twitter_site }}">
