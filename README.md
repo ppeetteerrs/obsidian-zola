@@ -2,6 +2,8 @@
 
 This repo is a Zola theme made for converting simple Markdown personal knowledge management (PKM) systems into a Zola website. It has only been tested on Obsidian.
 
+*Note: use together with `convert.py` in the example repo for a full Obsidian conversion.*
+
 [Example site](https://peteryuen.netlify.app/)
 
 [Example repo](https://github.com/ppeetteerrs/obsidian-pkm)
