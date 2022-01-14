@@ -24,3 +24,5 @@ TIMEZONE = "Asia/Hong_Kong"
 # your site repo does not contain this folder)
 ZOLA_DIR = "zola"
 ZOLA_VERSION = "0.15.2"
+# How to sort notes on the right sidebar ("date" or "title"), defaults to "title" if missing or invalid
+SORT_BY = "title"

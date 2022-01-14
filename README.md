@@ -6,20 +6,26 @@ Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/ad
 
 ## Usage
 
-**Step 1: Check Obsidian Settings**
+**Step 1: Change Obsidian Settings**
 - Set `Settings => Files & Links => New link format`to Relative path to file
-- Set `Settings => Files & Links => USe [[Wikilinks]]` to off
-- Change any existing Wikilinks / Markdown links to relative Markdown links
+- Set `Settings => Files & Links => Use [[Wikilinks]]` to off
 
-**Step 2: Setup Netlify**
+** Step 2: Modify Existing Obsidian Links
+- Install and activate the `Obsidian Link Converter` plugin
+- Set `Obsidian Link Converter => Converted Link Format` to `Relative Path`
+- Run command `Obsidian Link Converter: Vault: Links to Wiki` then `Obsidian Link Converter: Vault: Links to Markdown`
+
+*The reason to run the command twice is to convert existing Markdown links to relative links also*
+
+**Step 3: Setup Netlify**
 - Turn your Obsidian vault folder into a Git repository
 - Create a Netlify site pointing to that Git repository
 
-**Step 3: Edit `netlify.toml`**
+**Step 4: Edit `netlify.toml`**
 - Create `netlify.toml` in your Obsidian vault folder
 - Copy the content from `netlify.example.toml` in this repo and replace the placeholders
 
-**Step 4: You'reDone!**
+**Step 5: You're Done!**
 Push your changes and enjoy your new site!
 
 ## Examples
