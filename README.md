@@ -33,7 +33,30 @@ Push your changes and enjoy your new site!
 
 [Example repo](https://github.com/ppeetteerrs/obsidian-pkm)
 
-## Features (vs the original AdiDoks)
+## Obsidian Features
+
+**Disclaimer**
+
+> This tool is made for people who use Obsidian as a simple and efficient note-taking app (or PKM). If you configured your Obsidian with plenty of fancy shortcodes, plugins and Obsidian-specific syntax, this tool would not (and does not intend) to support those features.
+
+**Supported**
+- Typical Markdown syntax
+- Strikethroughs
+- Tables
+- Single-line footnotes (i.e. `[^1]` in the paragraph and `[^1]: xxx` later)
+- Checkboxes
+- Link escaping pattern: `[Slides Demo](<Slides Demo>)`
+
+**Unsupported**
+
+- Non-image embeds (e.g. notes, videos, audio, PDF)
+- Image resizing
+- Highlighting text
+- Comments
+- Inline / Multi-line footnotes
+- Mermaid Diagrams
+
+## Zola Features (vs the original AdiDoks)
 
 First of all, this repo is fully customized for Obsidian PKMs. Of course you can still use it like a regular Zola theme, but it might lack some flexibility in terms of customization.
 
