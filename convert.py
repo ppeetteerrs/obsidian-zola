@@ -107,6 +107,7 @@ def step4():
 
     print_step("GENERATING _index.md")
     sections = list(DOCS_DIR.glob("**/**"))
+    content = None
     for section in sections:
         # Set section title as relative path to section
         title = re.sub(r"^.*?content/docs/*", "", str(section))
@@ -130,6 +131,8 @@ def step4():
             "---",
         ]
         open(section / "_index.md", "w").write("\n".join(content))
+    if content:
+        print("\n".join(content))
 
 
 def remove_frontmatters(content: List[str]) -> List[str]:
