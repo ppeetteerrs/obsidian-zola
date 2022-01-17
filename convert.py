@@ -162,11 +162,13 @@ def filter_lines(file: Path, content: List[str]) -> List[str]:
     2. Double escape latex newline
     """
     # Replace relative links
-    parent_dir = f"{file.parents[0]}".replace(str(ZOLA_DIR / "content"), "")
+    parent_dir = f"{file.parents[0]}".replace(str(ZOLA_DIR / "content"), "").replace(
+        " ", "%20"
+    )
 
     # Markdown links: [xxx](yyy)
     # (\[.+?\]): Capture [xxx] part
-    # \((?!http)(.+?)(?:.md)?\): Capture (yyy) part, ensuring that link is not http and is markdown file
+    # \((?!http)(.+?)(?:.md)?\): Capture (yyy) part, ensuring that link is not http and remove .md from markdown files
     replaced_links = [
         re.sub(
             r"(\[.+?\])\((?!http)(.+?)(?:.md)?\)", r"\1(" + parent_dir + r"/\2)", line
