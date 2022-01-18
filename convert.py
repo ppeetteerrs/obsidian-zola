@@ -1,26 +1,9 @@
 import os
 import re
-import shutil
 from datetime import datetime
-from glob import glob
 from os import environ
 from pathlib import Path
-from typing import Callable, List, Tuple
-
-OBSIDIAN_DIR = Path("obsidian")
-DOCS_DIR = Path("content/docs")
-
-
-"""
-Build Steps:
-1. Clone repo into ZOLA_DIR
-2. Run ZOLA_DIR/convert.py
-3. Build zola --root ZOLA_DIR --output-dir public
-
-Convert Steps:
-1. Copy all files to ZOLA_DIR/content/docs
-2. 
-"""
+from typing import Callable, List
 
 ENV_VARS = [
     "SITE_URL",
@@ -33,8 +16,7 @@ ENV_VARS = [
     "LANDING_BUTTON",
 ]
 
-CUR_DIR = Path()
-ZOLA_DIR = CUR_DIR / environ["ZOLA_DIR"]
+ZOLA_DIR = Path(__file__).resolve().parent
 DOCS_DIR = ZOLA_DIR / "content" / "docs"
 
 
@@ -64,28 +46,6 @@ def step1():
 
 def step2():
     """
-    Copy root dir files into ZOLA_DIR
-    """
-
-    print_step("COPYING FILES INTO ZOLA_DIR")
-    shutil.copytree(
-        Path(),
-        Path(DOCS_DIR),
-        dirs_exist_ok=True,
-        ignore=lambda _, contents: [
-            item
-            for item in contents
-            if item.startswith(".")
-            or item == environ["ZOLA_DIR"]
-            or item == "netlify.toml"
-        ],
-    )
-
-    # print(list(glob("zola/content/**/*", recursive=True)))
-
-
-def step3():
-    """
     Substitute netlify.toml settings into config.toml and landing page
     """
 
@@ -100,7 +60,7 @@ def step3():
     process_lines(ZOLA_DIR / "content" / "_index.md", sub)
 
 
-def step4():
+def step3():
     """
     Generate _index.md for each section
     """
@@ -211,7 +171,7 @@ def write_frontmatters(file: Path, content: List[str]) -> List[str]:
     ]
 
 
-def step5():
+def step4():
     """
     Parse markdown files contents
     """
@@ -235,4 +195,3 @@ if __name__ == "__main__":
     step2()
     step3()
     step4()
-    step5()

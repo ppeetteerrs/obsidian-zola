@@ -2,31 +2,20 @@
 
 This repo contains an easy-to-use (read: simplistic) solution for converting an Obsidian Personal Knowledge Management System (read: bunch of random Markdowns) into a Zola site.
 
-Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the use experience.
+Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the user experience.
 
 ## Usage
 
-**Step 1: Change Obsidian Settings**
-- Set `Settings => Files & Links => New link format`to Relative path to file
-- Set `Settings => Files & Links => Use [[Wikilinks]]` to off
-
-** Step 2: Modify Existing Obsidian Links
-- Install and activate the `Obsidian Link Converter` plugin
-- Set `Obsidian Link Converter => Converted Link Format` to `Relative Path`
-- Run command `Obsidian Link Converter: Vault: Links to Wiki` then `Obsidian Link Converter: Vault: Links to Markdown`
-
-*The reason to run the command twice is to convert existing Markdown links to relative links also*
-
-**Step 3: Setup Netlify**
+**Step 1: Setup Netlify**
 - Turn your Obsidian vault folder into a Git repository
 - Create a Netlify site pointing to that Git repository
 
-**Step 4: Edit `netlify.toml`**
+**Step 2: Edit `netlify.toml`**
 - Create `netlify.toml` in your Obsidian vault folder
 - Copy the content from `netlify.example.toml` in this repo and replace the placeholders
 
-**Step 5: You're Done!**
-Push your changes and enjoy your new site!
+**Step 3: You're Done!**
+Push your changes and enjoy your new site! If you encounter any deployment issues (due to breaking changes), please go to netlify's `Deploys => Trigger Deploy => Clear cache and deploy site` to clear the cache.
 
 ## Examples
 [Example site](https://peteryuen.netlify.app/)
@@ -49,7 +38,7 @@ Push your changes and enjoy your new site!
 
 **Unsupported**
 
-- Non-image embeds (e.g. notes, videos, audio, PDF)
+- Non-image embeds (e.g. notes, videos, audio, PDF). They will be turned into links.
 - Image resizing
 - Highlighting text
 - Comments

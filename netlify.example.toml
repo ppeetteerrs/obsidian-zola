@@ -1,5 +1,10 @@
 [build]
-command = "rm -rf $ZOLA_DIR && git clone https://github.com/ppeetteerrs/obsidian-zola $ZOLA_DIR && python $ZOLA_DIR/convert.py && zola --root $ZOLA_DIR build --output-dir public"
+command = """rm -rf __obsidian __site && \
+			mkdir __obsidian && \
+			mv * __obsidian || true && \
+			git clone -b test https://github.com/ppeetteerrs/obsidian-zola.git __site && \
+			__site/run.sh
+		"""
 publish = "public"
 
 [build.environment]
@@ -20,9 +25,6 @@ SITE_TITLE = "Example Site"
 SITE_URL = ""
 # Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
-# Directory to store zola site files (make sure 
-# your site repo does not contain this folder)
-ZOLA_DIR = "zola"
 ZOLA_VERSION = "0.15.2"
 # How to sort notes on the right sidebar ("date" or "title"), defaults to "title" if missing or invalid
 SORT_BY = "title"
