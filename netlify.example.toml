@@ -2,7 +2,7 @@
 command = """rm -rf __obsidian __site && \
 			mkdir __obsidian && \
 			mv * __obsidian || true && \
-			git clone -b test https://github.com/ppeetteerrs/obsidian-zola.git __site && \
+			git clone https://github.com/ppeetteerrs/obsidian-zola.git __site && \
 			__site/run.sh
 		"""
 publish = "public"
