@@ -1,5 +1,7 @@
 # Obsidian-Zola
 
+**IMPORTANT NOTICE**: Existig users, please update your netlify.toml's `build.command` and clear your netlify cache via `Deploys => Trigger Deploy => Clear cache and deploy site`. The latest (breaking) version uses obsidian-export to support more features.
+
 This repo contains an easy-to-use (read: simplistic) solution for converting an Obsidian Personal Knowledge Management System (read: bunch of random Markdowns) into a Zola site.
 
 Disclaimer: This repo is forked from the [Adidoks](https://github.com/aaranxu/adidoks) theme. However, several changes are made to alter / improve the user experience.
@@ -38,7 +40,7 @@ Push your changes and enjoy your new site! If you encounter any deployment issue
 
 **Unsupported**
 
-- Non-image embeds (e.g. notes, videos, audio, PDF). They will be turned into links.
+- Non-image / note embeds (e.g. videos, audio, PDF). They will be turned into links.
 - Image resizing
 - Highlighting text
 - Comments
