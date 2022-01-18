@@ -1,6 +1,6 @@
-# Obsidian-Zola
+**IMPORTANT NOTICE**: Existing users, please update your netlify.toml's `build.command` and clear your netlify cache via `Deploys => Trigger Deploy => Clear cache and deploy site`. The latest (breaking) version uses obsidian-export to support more features.
 
-**IMPORTANT NOTICE**: Existig users, please update your netlify.toml's `build.command` and clear your netlify cache via `Deploys => Trigger Deploy => Clear cache and deploy site`. The latest (breaking) version uses obsidian-export to support more features.
+# Obsidian-Zola
 
 This repo contains an easy-to-use (read: simplistic) solution for converting an Obsidian Personal Knowledge Management System (read: bunch of random Markdowns) into a Zola site.
 
