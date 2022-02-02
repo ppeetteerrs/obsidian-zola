@@ -8,5 +8,3 @@ chmod +x export.bin
 ./export.bin --frontmatter=never --hard-linebreaks --no-recursive-embeds __obsidian __site/content/docs
 
 python __site/convert.py
-
-zola --root __site build --output-dir public
