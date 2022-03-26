@@ -132,9 +132,12 @@ def filter_lines(file: Path, content: List[str]) -> List[str]:
     # Markdown links: [xxx](yyy)
     # (\[.+?\]): Capture [xxx] part
     # \((?!http)(.+?)(?:.md)?\): Capture (yyy) part, ensuring that link is not http and remove .md from markdown files
+    # (#.+)?: Capture any heading tags after ".md"
     replaced_links = [
         re.sub(
-            r"(\[.+?\])\((?!http)(.+?)(?:.md)?\)", r"\1(" + parent_dir + r"/\2)", line
+            r"(\[.+?\])\((?!http)(.+?)(?:.md)?(#.+)?\)",
+            r"\1(" + parent_dir + r"/\2\3)",
+            line,
         )
         for line in content
     ]
