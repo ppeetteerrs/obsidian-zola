@@ -14,6 +14,7 @@ ENV_VARS = [
     "LANDING_TITLE",
     "LANDING_DESCRIPTION",
     "LANDING_BUTTON",
+    "SORT_BY",
 ]
 
 ZOLA_DIR = Path(__file__).resolve().parent
