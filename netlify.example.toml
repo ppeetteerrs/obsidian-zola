@@ -21,5 +21,7 @@ SITE_URL = ""
 # Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
 ZOLA_VERSION = "0.15.2"
-# How to sort notes on the right sidebar ("date" or "title"), defaults to "title" if missing or invalid
+# How to sort notes inside each section on the right sidebar ("date" or "title"), defaults to "title" if missing or invalid (subsections are sorted by title, the sort order cannot be changed)
 SORT_BY = "title"
+# Google Analytics Measurement ID
+GANALYTICS = ""

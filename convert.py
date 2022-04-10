@@ -16,6 +16,7 @@ DEFAULTS = {
     "LANDING_DESCRIPTION": "I have nothing but intelligence.",
     "LANDING_BUTTON": "Steal some of my intelligence",
     "SORT_BY": "title",
+    "GANALYTICS": "",
 }
 
 ZOLA_DIR = Path(__file__).resolve().parent
@@ -46,7 +47,7 @@ def step1():
                 raise NotFoundErr(f"FATAL ERROR: build.environment.{item} not set!")
             else:
                 print(
-                    f"WARNING: build.environment.{item} not set! Defaulting to {def_val}"
+                    f"WARNING: build.environment.{item} not set! Defaulting to '{def_val}'."
                 )
                 environ[item] = def_val
         else:
@@ -75,9 +76,9 @@ def step3():
     """
 
     print_step("GENERATING _index.md")
-    sections = list(DOCS_DIR.glob("**/**"))
+    sections = list(sorted(DOCS_DIR.glob("**/**"), key=lambda x: str(x).lower()))
     content = None
-    for section in sections:
+    for idx, section in enumerate(sections):
         # Set section title as relative path to section
         title = re.sub(r"^.*?content/docs/*", "", str(section))
 
@@ -97,6 +98,7 @@ def step3():
             f"title: {title}",
             "template: docs/section.html",
             f"sort_by: {sort_by}",
+            f"weight: {idx}",
             "---",
         ]
         open(section / "_index.md", "w").write("\n".join(content))

@@ -26,6 +26,7 @@ is_netlify = true
 language_code = "en-US"
 theme_color = "#fff"
 
+ganalytics = "___GANALYTICS___"
 timeformat = "%B %e, %Y"
 timezone = "___TIMEZONE___"
 
