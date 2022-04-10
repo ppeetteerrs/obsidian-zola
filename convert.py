@@ -4,18 +4,19 @@ from datetime import datetime
 from os import environ
 from pathlib import Path
 from typing import Callable, List
+from xml.dom import NotFoundErr
 
-ENV_VARS = [
-    "SITE_URL",
-    "SITE_TITLE",
-    "TIMEZONE",
-    "REPO_URL",
-    "LANDING_PAGE",
-    "LANDING_TITLE",
-    "LANDING_DESCRIPTION",
-    "LANDING_BUTTON",
-    "SORT_BY",
-]
+DEFAULTS = {
+    "SITE_URL": None,
+    "SITE_TITLE": "I love obsidian-zol",
+    "TIMEZONE": "Asia/Hong_Kong",
+    "REPO_URL": None,
+    "LANDING_PAGE": "home",
+    "LANDING_TITLE": "I love obsidian-zola!",
+    "LANDING_DESCRIPTION": "I have nothing but intelligence.",
+    "LANDING_BUTTON": "Steal some of my intelligence",
+    "SORT_BY": "title",
+}
 
 ZOLA_DIR = Path(__file__).resolve().parent
 DOCS_DIR = ZOLA_DIR / "content" / "docs"
@@ -37,10 +38,17 @@ def step1():
     Check environment variables
     """
     print_step("CHECKING ENVIRONMENT VARIABLES")
-    for item in ENV_VARS:
+    for item in DEFAULTS.keys():
         if item not in environ:
-            print(f"WARNING: build.environment.{item} not set!")
-            environ[item] = f"build.environment.{item}"
+            def_val = DEFAULTS[item]
+
+            if def_val is None:
+                raise NotFoundErr(f"FATAL ERROR: build.environment.{item} not set!")
+            else:
+                print(
+                    f"WARNING: build.environment.{item} not set! Defaulting to {def_val}"
+                )
+                environ[item] = def_val
         else:
             print(f"{item}: {environ[item]}")
 
@@ -53,7 +61,7 @@ def step2():
     print_step("SUBSTITUTING CONFIG FILE AND LANDING PAGE")
 
     def sub(line: str) -> str:
-        for env_var in ENV_VARS:
+        for env_var in DEFAULTS.keys():
             line = line.replace(f"___{env_var}___", environ[env_var])
         return line
 
