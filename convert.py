@@ -298,7 +298,7 @@ def parse_graph():
     }
     graph_info = json.dumps(graph_info)
 
-    with open("static/js/graph_info.js", "w") as f:
+    with open(ZOLA_DIR / "static/js/graph_info.js", "w") as f:
         f.write(f"var graph_data={graph_info}")
 
 
