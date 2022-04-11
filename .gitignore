@@ -1,3 +1,9 @@
 public
+data
 .vs
 .vscode
+.data_path
+
+static/js/graph_info.js
+content/**/*
+!content/_index.md

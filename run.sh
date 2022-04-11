@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install matplotlib
+
 echo "netlify.toml" >> __obsidian/.gitignore
 mkdir __site/content/docs
 
