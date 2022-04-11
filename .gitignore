@@ -7,3 +7,4 @@ data
 static/js/graph_info.js
 content/**/*
 !content/_index.md
+content/graph.md
