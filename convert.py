@@ -24,7 +24,7 @@ DEFAULTS = {
     "GANALYTICS": "",
 }
 
-ZOLA_DIR = Path(__file__).resolve().parent
+ZOLA_DIR = Path(__file__).resolve().parent / "build"
 DOCS_DIR = ZOLA_DIR / "content" / "docs"
 
 # key: relative path, value: title
@@ -193,7 +193,6 @@ def filter_lines(file: Path, content: List[str]) -> List[str]:
     # Relative path of current file
     rel_path = re.sub(r"^.*?content/*", "/", str(file)).replace(".md", "")
     nodes[rel_path] = file.stem
-    print(rel_path)
 
     # Replace relative links
     parent_dir = Path(
