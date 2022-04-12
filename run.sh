@@ -1,14 +1,14 @@
 #!/bin/bash
 
-pip install matplotlib
-
 echo "netlify.toml" >> __obsidian/.gitignore
-mkdir __site/content/docs
 
-wget https://github.com/zoni/obsidian-export/releases/download/v22.1.0/obsidian-export_Linux-x86_64.bin -O export.bin
-chmod +x export.bin
-./export.bin --frontmatter=never --hard-linebreaks --no-recursive-embeds __obsidian __site/content/docs
+rsync -avh __site/zola/ __site/build
+rsync -avh __site/content/ __site/build/content
+
+mkdir -p __site/build/content/docs
+
+__site/bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds __obsidian __site/build/content/docs
 
 python __site/convert.py
 
-zola --root __site build --output-dir public
+zola --root __site/build build --output-dir public

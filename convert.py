@@ -8,9 +8,6 @@ from pathlib import Path
 from typing import Callable, Dict, List, Tuple
 from urllib import parse as urlparse
 
-from matplotlib import cm
-from matplotlib.colors import rgb2hex
-
 DEFAULTS = {
     "SITE_URL": None,
     "SITE_TITLE": "I love obsidian-zol",
@@ -259,7 +256,41 @@ def parse_graph():
     existing_edges = [
         edge for edge in set(edges) if edge[0] in hash_ids and edge[1] in hash_ids
     ]
-    colors = [rgb2hex(cm.get_cmap("Pastel1")(i / 9)) for i in range(9)]
+
+    colors = [
+        # First tier
+        "#FFADAD",
+        "#FFD6A5",
+        "#FDFFB6",
+        "#CAFFBF",
+        "#9BF6FF",
+        "#A0C4FF",
+        "#BDB2FF",
+        "#FFC6FF",
+        # Second tier
+        "#FBF8CC",
+        "#FDE4CF",
+        "#FFCFD2",
+        "#F1C0E8",
+        "#CFBAF0",
+        "#A3C4F3",
+        "#90DBF4",
+        "#8EECF5",
+        "#98F5E1",
+        "#B9FBC0",
+        # Third tier
+        "#EAE4E9",
+        "#FFF1E6",
+        "#FDE2E4",
+        "#FAD2E1",
+        "#E2ECE9",
+        "#BEE1E6",
+        "#F0EFEB",
+        "#DFE7FD",
+        "#CDDAFD",
+    ]
+
+    n_colored = len(colors)
 
     edge_counts = {k: 0 for k in nodes.keys()}
 
@@ -270,7 +301,7 @@ def parse_graph():
     top_nodes = {
         node_url: i
         for i, (node_url, _) in enumerate(
-            list(sorted(edge_counts.items(), key=lambda k: -k[1]))[:9]
+            list(sorted(edge_counts.items(), key=lambda k: -k[1]))[:n_colored]
         )
     }
 
@@ -281,11 +312,8 @@ def parse_graph():
                 "label": title,
                 "url": url,
                 "color": colors[top_nodes[url]] if url in top_nodes else None,
-                "font": {
-                    "size": 20 if url in top_nodes else 16,
-                },
-                "value": edge_counts[url],
-                "mass": math.log(edge_counts[url] + 1) + 1,
+                "value": math.log10(edge_counts[url] + 1) + 1,
+                "opacity": 0.1,
             }
             for url, title in nodes.items()
         ],

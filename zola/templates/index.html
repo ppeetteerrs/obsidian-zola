@@ -23,7 +23,7 @@
 {% endblock seo %}
 
 {% block content %}
-<div class="wrap container" role="document">
+<div class="wrap container" role="document" style="flex: 0 1 auto;">
   <div class="content">
     <section class="section container-fluid mt-n3 pb-3">
       <div class="row justify-content-center">
@@ -33,32 +33,24 @@
         <div class="col-lg-9 col-xl-8 text-center">
           <p class="lead">{{ section.extra.lead | default(value="Please start setting config.toml and adding your content.") | safe }}</p>
           <a class="btn btn-primary btn-lg px-4 mb-2" href="{{ get_url(path=section.extra.url | default(value="/")) | safe }}" role="button">{{ section.extra.url_button | default(value="Read My Brain") }}</a>
-          <span class="px-4 mb-2"></span>
-          <a class="btn btn-primary btn-lg px-4 mb-2" href="/graph" role="button">{{ section.extra.graph_button | default(value="See My Neurons") }}</a>
         </div>
       </div>
     </section>
   </div>
 </div>
 
-<section class="section section-sm">
-  <div class="container">
-    <div class="row justify-content-center text-center">
-      {% if section.extra.list %}
-        {% for val in section.extra.list %}
-        <div class="col-lg-5">
-          <h2 class="h4">{{ val.title }}</h2>
-          <p>{{ val.content | safe }}</p>
-        </div>
-        {% endfor %}
-      {% endif %}
-    </div>
-  </div>
-</section>
+<div  style="width: 100%; flex: 1 0 0px; min-height: 400px;">
+{% if config.extra.home_graph %}
+  <div style="width: 100%; height: 100%;" id="graph"></div>
+{% endif %}
+</div>
 
-<section class="section section-sm container-fluid">
-  <div class="row justify-content-center text-center">
-    <div class="col-lg-9"></div>
-  </div>
-</section>
+{% block footer %}
+  {{ macros_footer::footer() }}
+{% endblock footer %}
+
+{% if config.extra.home_graph %}
+  {{ macros_graph::graph_js() }}
+{% endif %}
+
 {% endblock content %}

@@ -1,0 +1,5 @@
+{% macro graph_js() %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha512-XHDcSyqhOoO2ocB7sKOCJEkUjw/pQCJViP1ynpy+EGh/LggzrP6U/V3a++LQTnZT7sCQKeHRyWHfhN2afjXjCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ get_url(path="js/graph_info.js") | safe }}" defer></script>
+<script src="{{ get_url(path="js/graph.js") | safe }}" defer></script>
+{% endmacro %}

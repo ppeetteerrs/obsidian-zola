@@ -158,10 +158,6 @@ body {
 }
 
 .docs-navigation, .blog-navigation {
-  margin-top: 2rem;
-  margin-bottom: 0;
-  padding-top: 2rem;
-
   a {
     font-size: $font-size-base * 0.9;
   }
@@ -173,8 +169,6 @@ body {
 
 @include media-breakpoint-up(lg) {
   .docs-navigation, .blog-navigation {
-    margin-bottom: -1rem;
-
     a {
       font-size: $font-size-base;
     }
