@@ -21,9 +21,9 @@ include_title = true
 highlight_code = true
 
 [extra]
-home_graph = true
+home_graph = "___HOME_GRAPH___"
 is_netlify = true
-page_graph = true
+page_graph = "___PAGE_GRAPH___"
 
 language_code = "en-US"
 theme_color = "#fff"

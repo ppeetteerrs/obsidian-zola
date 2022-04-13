@@ -27,18 +27,22 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
 def slugify_path(path: Union[str, Path]) -> Path:
-    """Slugifies every component of a path. Note that '../xxx' will be slugified to '/xxx'. Always use absolute paths."""
-    path = Path(path)
-    os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
-    name = ".".join(slugify(item) for item in path.stem.split("."))
-    suffix = path.suffix
+    """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths."""
 
-    if name != "" and suffix != "":
-        return Path(os_path) / f"{name}{suffix}"
-    elif suffix == "":
-        return Path(os_path) / name
+    path = Path(path)
+    if Settings.is_true("SLUGIFY"):
+        os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
+        name = ".".join(slugify(item) for item in path.stem.split("."))
+        suffix = path.suffix
+
+        if name != "" and suffix != "":
+            return Path(os_path) / f"{name}{suffix}"
+        elif suffix == "":
+            return Path(os_path) / name
+        else:
+            return Path(os_path)
     else:
-        return Path(os_path)
+        return path
 
 
 # ---------------------------------------------------------------------------- #
@@ -92,8 +96,8 @@ class DocLink:
         """Check that capture link does not contain inner links."""
         return re.match(r"\[.+?\]\(\S+?\)", item) is None
 
-    def rel_path(self, doc_path: "DocPath") -> Path:
-        """Returns path of the link relative to docs_dir."""
+    def abs_url(self, doc_path: "DocPath") -> str:
+        """Returns an absolute URL based on quoted relative URL from obsidian-export."""
         new_rel_path = (
             (doc_path.new_path.parent / unquote(self.url))
             .resolve()
@@ -101,7 +105,7 @@ class DocLink:
         )
         if doc_path.slugified:
             new_rel_path = slugify_path(new_rel_path)
-        return new_rel_path
+        return f"/docs/{new_rel_path}"
 
     @classmethod
     def parse(cls, line: str, doc_path: "DocPath") -> Tuple[str, List[str]]:
@@ -111,17 +115,22 @@ class DocLink:
         linked: List[str] = []
 
         for link in cls.get_links(line):
-            rel_path = link.rel_path(doc_path)
-            new_url = quote(f"/docs/{rel_path}")
+            abs_url = link.abs_url(doc_path)
             parsed = parsed.replace(
-                link.combined, f"[{link.title}]({new_url}{link.header})"
+                link.combined, f"[{link.title}]({quote(abs_url)}{link.header})"
             )
-            linked.append(str(rel_path))
+            linked.append(abs_url)
         return parsed, linked
 
 
 class DocPath:
+    """
+    A class for any path found in the exported Obsidian directory.
+    Can be a section (folder), page (Markdown file) or resource (non-Markdown file).
+    """
+
     def __init__(self, path: Path, slugify: bool):
+        """Path parsing."""
         self.old_path = path.resolve()
         self.old_rel_path = self.old_path.relative_to(raw_dir)
         if slugify:
@@ -131,24 +140,25 @@ class DocPath:
         self.new_path = docs_dir / str(self.new_rel_path)
         self.slugified = slugify
 
-    @property
-    def md_path(self) -> str:
-        assert self.is_md
-        return f"/docs/{str(self.new_rel_path)[:-3]}"
-
-    def edge(self, other: str) -> Tuple[str, str]:
-        return tuple(sorted([self.md_path, f"/docs/{other}"]))
-
-    @property
-    def content(self) -> List[str]:
-        """Gets the lines of the file."""
-        return [l.rstrip() for l in open(self.old_path, "r").readlines()]
+    # --------------------------------- Sections --------------------------------- #
 
     @property
     def section_title(self) -> str:
         """Gets the title of the section."""
         title = str(self.old_rel_path)
         return title if (title != "" and title != ".") else "main"
+
+    def write_to(self, child: str, content: Union[str, List[str]]):
+        """Writes content to a child path under new path."""
+        new_path = self.new_path / child
+        new_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(new_path, "w") as f:
+            if isinstance(content, str):
+                f.write(content)
+            else:
+                f.write("\n".join(content))
+
+    # ----------------------------------- Pages ---------------------------------- #
 
     @property
     def page_title(self) -> str:
@@ -161,11 +171,6 @@ class DocPath:
         )
 
     @property
-    def is_file(self) -> bool:
-        """Whether path points to a file."""
-        return self.old_path.is_file()
-
-    @property
     def is_md(self) -> bool:
         """Whether path points to a Markdown file."""
         return self.is_file and self.old_path.suffix == ".md"
@@ -175,10 +180,10 @@ class DocPath:
         """Gets last modified time."""
         return datetime.fromtimestamp(os.path.getmtime(self.old_path))
 
-    def copy(self):
-        """Copies file from old path to new path."""
-        self.new_path.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(self.old_path, self.new_path)
+    @property
+    def content(self) -> List[str]:
+        """Gets the lines of the file."""
+        return [l.rstrip() for l in open(self.old_path, "r").readlines()]
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
@@ -189,15 +194,29 @@ class DocPath:
             else:
                 f.write("\n".join(content))
 
-    def write_to(self, child: str, content: Union[str, List[str]]):
-        """Writes content to a child path under new path."""
-        new_path = self.new_path / child
-        new_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(new_path, "w") as f:
-            if isinstance(content, str):
-                f.write(content)
-            else:
-                f.write("\n".join(content))
+    # --------------------------------- Resources -------------------------------- #
+
+    @property
+    def is_file(self) -> bool:
+        """Whether path points to a file."""
+        return self.old_path.is_file()
+
+    def copy(self):
+        """Copies file from old path to new path."""
+        self.new_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(self.old_path, self.new_path)
+
+    # ----------------------------------- Graph ---------------------------------- #
+
+    @property
+    def abs_url(self) -> str:
+        """Returns an absolute URL to the page."""
+        assert self.is_md
+        return f"/docs/{str(self.new_rel_path)[:-3]}"
+
+    def edge(self, other: str) -> Tuple[str, str]:
+        """Gets an edge from page's URL to another URL."""
+        return tuple(sorted([self.abs_url, other]))
 
 
 # ---------------------------------------------------------------------------- #
@@ -215,24 +234,26 @@ class Settings:
     - change self.default["xxx"] inside instance method
     """
 
+    # Default options
     options: Dict[str, Optional[str]] = {
         "SITE_URL": None,
-        "SITE_TITLE": "I love obsidian-zol",
+        "SITE_TITLE": "Someone's Second 🧠",
         "TIMEZONE": "Asia/Hong_Kong",
         "REPO_URL": None,
-        "LANDING_PAGE": "home",
-        "LANDING_TITLE": "I love obsidian-zola!",
+        "LANDING_PAGE": None,
+        "LANDING_TITLE": "I love obsidian-zola! 💖",
         "LANDING_DESCRIPTION": "I have nothing but intelligence.",
-        "LANDING_BUTTON": "Steal some of my intelligence",
+        "LANDING_BUTTON": "Click to steal some👆",
         "SORT_BY": "title",
         "GANALYTICS": "",
-        "SLUGIFY": "n",
-        "HOME_GRAPH": "n",
-        "PAGE_GRAPH": "n",
+        "SLUGIFY": "y",
+        "HOME_GRAPH": "y",
+        "PAGE_GRAPH": "y",
     }
 
     @classmethod
     def is_true(cls, key: str) -> bool:
+        """Returns whether an option's string value is true."""
         val = cls.options[key]
         return bool(strtobool(val)) if val else False
 
@@ -250,23 +271,19 @@ class Settings:
             else:
                 if required:
                     raise Exception(f"FATAL ERROR: build.environment.{key} not set!")
-        print(cls.options)
+        print("Options:")
+        pp(cls.options)
 
     @classmethod
     def sub_line(cls, line: str) -> str:
-        """
-        Substitutes variable placeholders in a line.
-        """
-
+        """Substitutes variable placeholders in a line."""
         for key, val in cls.options.items():
             line = line.replace(f"___{key}___", val if val else "")
         return line
 
     @classmethod
     def sub_file(cls, path: Path):
-        """
-        Substitutes variable placeholders in a file.
-        """
+        """Substitutes variable placeholders in a file."""
         content = "\n".join(
             [cls.sub_line(line.rstrip()) for line in open(path, "r").readlines()]
         )
@@ -312,6 +329,9 @@ PASTEL_COLORS = [
 
 
 def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
+    """
+    Constructs a knowledge graph from given nodes and edges.
+    """
 
     # Assign increasing ID value to each node
     node_ids = {k: i for i, k in enumerate(nodes.keys())}

@@ -3,25 +3,31 @@ command = "rm -rf __obsidian __site && mkdir __obsidian && mv * __obsidian || tr
 publish = "public"
 
 [build.environment]
-# Text in landing page button
-LANDING_BUTTON = "Explore"
-# Site description on landing page
+# (Optional) Text in landing page button
+LANDING_BUTTON = "Click to steal some👆"
+# (Optional) Site description on landing page
 LANDING_DESCRIPTION = "I have nothing but intelligence."
-# The Markdown page linked to landing page button (e.g. put home for ./home.md)
+# (REQUIRED) The Markdown page linked to landing page button (e.g. put home for ./home.md)
 LANDING_PAGE = "home"
-# Site title on landing page
-LANDING_TITLE = "My Second Brain"
+# (Optional) Site title on landing page
+LANDING_TITLE = "I love obsidian-zola! 💖"
 PYTHON_VERSION = "3.8"
-# Site repo URL
+# (REQUIRED) Site repo URL
 REPO_URL = "https://github.com/ppeetteerrs/obsidian-zola"
-# Site title in navbar
-SITE_TITLE = "Example Site"
-# Site URL
+# (Optional) Site title in navbar
+SITE_TITLE = "Someone's Second 🧠"
+# (REQUIRED) Netlify site URL
 SITE_URL = ""
-# Site Timezone
+# (Optional) Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
 ZOLA_VERSION = "0.15.2"
-# How to sort notes inside each section on the right sidebar ("date" or "title"), defaults to "title" if missing or invalid (subsections are sorted by title, the sort order cannot be changed)
+# (Optional, default title) How to sort notes inside each section on the right sidebar ("date" or "title"). Subsections on side bar are sorted by title, the sort order cannot be changed.
 SORT_BY = "title"
-# Google Analytics Measurement ID
+# (Optional) Google Analytics Measurement ID
 GANALYTICS = ""
+# (Optional, default true) Slugify URLs. Put "" to disable.
+SLUGIFY = "y"
+# (Optional, default true) Shows knowledge graph on home page. Put "" to disable.
+HOME_GRAPH = "y"
+# (Optional, default true) Shows knowledge graph on every page. Put "" to disable.
+PAGE_GRAPH = "y"

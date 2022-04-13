@@ -20,7 +20,7 @@ if __name__ == "__main__":
         if doc_path.is_file:
             if doc_path.is_md:
                 # Page
-                nodes[doc_path.md_path] = doc_path.page_title
+                nodes[doc_path.abs_url] = doc_path.page_title
                 content = doc_path.content
                 parsed_lines: List[str] = []
                 for line in content:
@@ -58,6 +58,5 @@ if __name__ == "__main__":
             section_count += 1
             doc_path.write_to("_index.md", content)
             print(f"Found section: {doc_path.new_rel_path}")
-    # pp(nodes)
-    # pp(edges)
+
     parse_graph(nodes, edges)

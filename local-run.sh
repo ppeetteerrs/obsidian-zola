@@ -13,6 +13,8 @@ bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds 
 export SITE_URL=local
 export REPO_URL=local
 export SLUGIFY=y
+export HOME_GRAPH=y
+export PAGE_GRAPH=y
 
 # Run conversion script
 python convert.py
