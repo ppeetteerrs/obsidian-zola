@@ -3,8 +3,8 @@
 echo "netlify.toml" >> __obsidian/.gitignore
 
 # Sync Zola template contents
-rsync -avh __site/zola/ __site/build
-rsync -avh __site/content/ __site/build/content
+rsync -a __site/zola/ __site/build
+rsync -a __site/content/ __site/build/content
 
 # Use obsidian-export to export markdown content from obsidian
 mkdir -p __site/build/content/docs

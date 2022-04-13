@@ -93,8 +93,14 @@ graph.once("afterDrawing", function () {
 			scale: graph.getScale() * 1.8
 		});
 	} else {
+		var clientHeight = container.clientHeight;
+		console.log(clientHeight);
 		graph.moveTo({
-			scale: graph.getScale() * 1
+			position: {
+				x: 0,
+				y: -clientHeight / 3
+			},
+			scale: graph.getScale() * 1.2
 		});
 	}
 });

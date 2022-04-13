@@ -2,96 +2,202 @@ import json
 import math
 import os
 import re
-import site
+import shutil
+from dataclasses import dataclass
 from datetime import datetime
 from distutils.util import strtobool
 from os import environ
 from pathlib import Path
-from typing import Callable, Dict, List, Optional, Tuple, Union
-from urllib import parse as urlparse
+from pprint import PrettyPrinter
+from typing import Dict, List, Optional, Tuple, Union
+from urllib.parse import quote, unquote
 
-from numpy import isin
 from slugify import slugify
+
+site_dir = Path("build").absolute()
+raw_dir = site_dir / "__docs"
+docs_dir = site_dir / "content/docs"
 
 # ---------------------------------------------------------------------------- #
 #                                 General Utils                                #
 # ---------------------------------------------------------------------------- #
 
+# Pretty printer
+pp = PrettyPrinter(indent=4, compact=False).pprint
 
-def print_step(msg: str):
-    print(msg.center(100, "-"))
 
-
-def slugify_path(path: Union[str, Path]) -> str:
+def slugify_path(path: Union[str, Path]) -> Path:
+    """Slugifies every component of a path. Note that '../xxx' will be slugified to '/xxx'. Always use absolute paths."""
     path = Path(path)
     os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
     name = ".".join(slugify(item) for item in path.stem.split("."))
-    suffix = slugify(path.suffix)
+    suffix = path.suffix
 
-    if name == "":
-        return os_path
+    if name != "" and suffix != "":
+        return Path(os_path) / f"{name}{suffix}"
     elif suffix == "":
-        return f"{os_path}/{name}"
+        return Path(os_path) / name
     else:
-        return f"{os_path}/{name}.{suffix}"
+        return Path(os_path)
 
 
 # ---------------------------------------------------------------------------- #
-#                            File Content Processing                           #
+#                               Document Classes                               #
 # ---------------------------------------------------------------------------- #
 
 
-def process_lines(path: Path, fn: Callable[[str], str]):
+@dataclass
+class DocLink:
     """
-    Applies a function to the rstrip-ed lines of a file and write them back.
-    """
-
-    content = "\n".join([fn(line.rstrip()) for line in open(path, "r").readlines()])
-    open(path, "w").write(content)
-
-
-# ---------------------------------------------------------------------------- #
-#                                  Regex Magic                                 #
-# ---------------------------------------------------------------------------- #
-
-
-def no_inner_link(item: str) -> bool:
-    """
-    Avoids regex matches that span over multiple links
+    A class for internal links inside a Markdown document.
+    [xxxx](yyyy<.md?>#zzzz)
     """
 
-    return re.match(r"\[.+?\]\(\S+?\)", item) is None
+    combined: str
+    title: str
+    url: str
+    md: str
+    header: str
 
+    @classmethod
+    def get_links(cls, line: str) -> List["DocLink"]:
+        r"""
+        Factory method.
+        Get non-http links [xxx](<!http>yyy<.md>#zzz).
 
-def get_md_links(line: str) -> List[Tuple[str, str, str]]:
-    """
-    Returns entire match, title and url body for Markdown links found
-    """
+        \[(.+?)\]: Captures title part (xxx).
+        (?!http)(\S+?): Captures URL part (yyy) and discard URL that starts with http.
+        (\.md)?: Captures ".md" extension (if any) to identify markdown files.
+        (#\S+)?: Captures header part (#zzz).
 
-    return [
-        (combined, title, url)
-        for combined, title, url in re.findall(
-            r"(\[(.+?)\]\((?!http)(\S+?)(?:\.md)(?:#\S+)?\))", line
+        Returns:
+            _type_: _description_
+        """
+
+        return [
+            cls(combined, title, url, md, header)
+            for combined, title, url, md, header in re.findall(
+                r"(\[(.+?)\]\((?!http)(\S+?)(\.md)?(#\S+)?\))", line
+            )
+            if not cls.no_inner_link(combined)
+        ]
+
+    @property
+    def is_md(self) -> bool:
+        """Link is a Markdown link."""
+        return self.md != ""
+
+    @staticmethod
+    def no_inner_link(item: str) -> bool:
+        """Check that capture link does not contain inner links."""
+        return re.match(r"\[.+?\]\(\S+?\)", item) is None
+
+    def rel_path(self, doc_path: "DocPath") -> Path:
+        """Returns path of the link relative to docs_dir."""
+        new_rel_path = (
+            (doc_path.new_path.parent / unquote(self.url))
+            .resolve()
+            .relative_to(docs_dir)
         )
-        if not no_inner_link(combined)
-    ]
+        if doc_path.slugified:
+            new_rel_path = slugify_path(new_rel_path)
+        return new_rel_path
+
+    @classmethod
+    def parse(cls, line: str, doc_path: "DocPath") -> Tuple[str, List[str]]:
+        """Parses and fixes all internal links in a line. Also returns linked paths for knowledge graph."""
+
+        parsed = line
+        linked: List[str] = []
+
+        for link in cls.get_links(line):
+            rel_path = link.rel_path(doc_path)
+            new_url = quote(f"/docs/{rel_path}")
+            parsed = parsed.replace(
+                link.combined, f"[{link.title}]({new_url}{link.header})"
+            )
+            linked.append(str(rel_path))
+        return parsed, linked
 
 
-def get_internal_links(line: str) -> List[Tuple[str, str, str, str]]:
-    """
-    Returns entire match, title, url body and heading (including the # symbol) for non-HTTP links found
-    """
+class DocPath:
+    def __init__(self, path: Path, slugify: bool):
+        self.old_path = path.resolve()
+        self.old_rel_path = self.old_path.relative_to(raw_dir)
+        if slugify:
+            self.new_rel_path = slugify_path(self.old_rel_path)
+        else:
+            self.new_rel_path = self.old_rel_path
+        self.new_path = docs_dir / str(self.new_rel_path)
+        self.slugified = slugify
 
-    # (\[.+?\]): Capture [xxx] part
-    # \((?!http)(.+?)(?:.md)?\): Capture (yyy) part, ensuring that link is not http and remove .md from markdown files
-    # (#.+)?: Capture any heading tags after ".md"
-    return [
-        (combined, title, url, heading)
-        for combined, title, url, heading in re.findall(
-            r"(\[(.+?)\]\((?!http)(\S+?)(?:\.md)?(#\S+)?\))", line
+    @property
+    def md_path(self) -> str:
+        assert self.is_md
+        return f"/docs/{str(self.new_rel_path)[:-3]}"
+
+    def edge(self, other: str) -> Tuple[str, str]:
+        return tuple(sorted([self.md_path, f"/docs/{other}"]))
+
+    @property
+    def content(self) -> List[str]:
+        """Gets the lines of the file."""
+        return [l.rstrip() for l in open(self.old_path, "r").readlines()]
+
+    @property
+    def section_title(self) -> str:
+        """Gets the title of the section."""
+        title = str(self.old_rel_path)
+        return title if (title != "" and title != ".") else "main"
+
+    @property
+    def page_title(self) -> str:
+        """Gets the title of the page."""
+        return " ".join(
+            [
+                item if item[0].isupper() else item.title()
+                for item in self.old_path.stem.split(" ")
+            ]
         )
-        if not no_inner_link(combined)
-    ]
+
+    @property
+    def is_file(self) -> bool:
+        """Whether path points to a file."""
+        return self.old_path.is_file()
+
+    @property
+    def is_md(self) -> bool:
+        """Whether path points to a Markdown file."""
+        return self.is_file and self.old_path.suffix == ".md"
+
+    @property
+    def modified(self) -> datetime:
+        """Gets last modified time."""
+        return datetime.fromtimestamp(os.path.getmtime(self.old_path))
+
+    def copy(self):
+        """Copies file from old path to new path."""
+        self.new_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(self.old_path, self.new_path)
+
+    def write(self, content: Union[str, List[str]]):
+        """Writes content to new path."""
+        self.new_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(self.new_path, "w") as f:
+            if isinstance(content, str):
+                f.write(content)
+            else:
+                f.write("\n".join(content))
+
+    def write_to(self, child: str, content: Union[str, List[str]]):
+        """Writes content to a child path under new path."""
+        new_path = self.new_path / child
+        new_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(new_path, "w") as f:
+            if isinstance(content, str):
+                f.write(content)
+            else:
+                f.write("\n".join(content))
 
 
 # ---------------------------------------------------------------------------- #
@@ -101,7 +207,8 @@ def get_internal_links(line: str) -> List[Tuple[str, str, str, str]]:
 
 class Settings:
     """
-    Changes to mutable class variable fields are broadcasted across all instances no matter where the change happens. The class object and all instances would receive the change no matter the setting method:
+    Changes to mutable class variable fields are broadcasted across all instances no matter where the change happens.
+    The class object and all instances would receive the change no matter the setting method:
     - assign to Settings.default["xxx]
     - change cls.default["xxx"] inside class method
     - assign to instance.default["xxx"]
@@ -123,58 +230,11 @@ class Settings:
         "HOME_GRAPH": "n",
         "PAGE_GRAPH": "n",
     }
-    site_dir: Path = Path(__file__).resolve().parent / "build"
-    draft_dir: Path = site_dir / "__docs"
-    docs_dir: Path = site_dir / "content/docs"
 
     @classmethod
     def is_true(cls, key: str) -> bool:
         val = cls.options[key]
         return bool(strtobool(val)) if val else False
-
-    @classmethod
-    @property
-    def sections(cls) -> List[Path]:
-        """
-        Get the paths to different sections in the draft directory.
-        """
-
-        return list(sorted(cls.draft_dir.glob("**/**"), key=lambda x: str(x).lower()))
-
-    @classmethod
-    @property
-    def pages(cls) -> List[Path]:
-        """
-        Get the paths to different pages in the draft directory.
-        """
-
-        return list(cls.draft_dir.glob("**/*.md"))
-
-    # @classmethod
-    # def read_file(cls, path: Path) -> List[str]:
-    #     """
-    #     Reads the content from a file.
-    #     """
-
-    #     with open(path, "r") as f:
-    #         return [line.rstrip() for line in f.readlines()]
-
-    @classmethod
-    def write_doc(cls, path: str, content: Union[str, List[str]]):
-        """
-        Write content to a file in the docs directory.
-        """
-
-        # Make parent directories
-        file_path = cls.docs_dir / path
-        file_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # Write content
-        with open(file_path, "w") as f:
-            if isinstance(content, str):
-                f.write(content)
-            else:
-                f.write("\n".join(content))
 
     @classmethod
     def parse_env(cls):
@@ -207,124 +267,10 @@ class Settings:
         """
         Substitutes variable placeholders in a file.
         """
-
-        process_lines(path, cls.sub_line)
-
-
-# ---------------------------------------------------------------------------- #
-#                               Parsing Sections                               #
-# ---------------------------------------------------------------------------- #
-def section_info(path: Path, to_slug: bool) -> Tuple[str, str]:
-    """
-    Returns the title and (slugified, if to_slug) path of the section.
-    """
-
-    # Parse section title.
-    title = re.sub(r"^.*?__docs/*", "", str(path))
-
-    # Parse path to section folder
-    if to_slug:
-        slug_path = slugify_path(title)
-    else:
-        slug_path = title
-
-    # Root section is called "MAIN". Placed here to avoid messing up slugified path.
-    if title == "":
-        title = "main"
-    else:
-        slug_path += "/"
-    return title, slug_path
-
-
-# ---------------------------------------------------------------------------- #
-#                                 Parsing Pages                                #
-# ---------------------------------------------------------------------------- #
-
-
-def page_info(path: Path, to_slug: bool) -> Tuple[str, Path]:
-    """
-    Returns the (slugified) path to the page and its parent.
-    """
-
-    # Relative path of current file
-    # path: <site_dir>/content/xxx/yyy.md
-    # abs_path: xxx/yyy (slugified if needed)
-    abs_path = re.sub(r"^.*?__docs/*", "/docs/", str(path)).replace(".md", "")
-    if to_slug:
-        abs_path = slugify_path(abs_path)
-    return abs_path, Path(abs_path).parent
-
-
-def parse_page_line(
-    line: str, page_path: str, page_parent: Path, to_slug: bool
-) -> Tuple[str, List[Tuple[str, str]]]:
-
-    # Parse internal markdown references (knowledge graph edges)
-    edges: List[Tuple[str, str]] = []
-    for _, _, url in get_md_links(line):
-        # Turn markdown URL to a normalized (slugified) path
-        url_path = urlparse.unquote(str((page_parent / url).resolve()))
-        if to_slug:
-            url_path = slugify_path(url_path)
-        edges.append(tuple(sorted([page_path, url_path])))
-
-    # Parse the line
-    parsed_line = line
-
-    # Turn any relative links into (slugified) absolute links
-    for combined, title, url, heading in get_internal_links(line):
-        # Unquote, add parent dir, slugify if needed, quote
-        abs_url = str((page_parent / urlparse.unquote(url)).resolve())
-        if to_slug:
-            abs_url = slugify_path(abs_url)
-        abs_url = urlparse.quote(abs_url)
-
-        parsed_line = parsed_line.replace(combined, f"[{title}]({abs_url}{heading})")
-
-    # Replace ending double forward slashes (in LaTEX) to fix line breaks
-    parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
-
-    return parsed_line, edges
-
-
-def parse_page(
-    path: Path, to_slug: bool
-) -> Tuple[List[str], str, str, List[Tuple[str, str]]]:
-    """
-    Returns page content, page title, page (slugified path), page edges
-    """
-
-    # Parse path information
-    page_path, page_parent = page_info(path, to_slug)
-
-    # Parse each line and also get knowledge graph edges
-    edges: List[Tuple[str, str]] = []
-    parsed_lines: List[str] = []
-
-    for line in open(path, "r").readlines():
-        parsed_line, edges = parse_page_line(line, page_path, page_parent, to_slug)
-        parsed_lines.append(parsed_line)
-        edges.extend(edges)
-
-    # Write frontmatters
-
-    # Use Titlecase file name (preserving uppercase words) as title
-    page_title = " ".join(
-        [item if item[0].isupper() else item.title() for item in path.stem.split(" ")]
-    )
-    # Use last modified time as creation and updated time
-    modified = datetime.fromtimestamp(os.path.getmtime(path))
-    content = [
-        "---",
-        f"title: {page_title}",
-        f"date: {modified}",
-        f"updated: {modified}",
-        "template: docs/page.html",
-        "---",
-        *parsed_lines,
-    ]
-
-    return content, page_title, page_path, edges
+        content = "\n".join(
+            [cls.sub_line(line.rstrip()) for line in open(path, "r").readlines()]
+        )
+        open(path, "w").write(content)
 
 
 # ---------------------------------------------------------------------------- #
@@ -363,3 +309,52 @@ PASTEL_COLORS = [
     "#DFE7FD",
     "#CDDAFD",
 ]
+
+
+def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
+
+    # Assign increasing ID value to each node
+    node_ids = {k: i for i, k in enumerate(nodes.keys())}
+
+    # Filter out edges that does not connect two known nodes (i.e. ghost pages)
+    existing_edges = [
+        edge for edge in set(edges) if edge[0] in node_ids and edge[1] in node_ids
+    ]
+
+    # Count the number of edges connected to each node
+    edge_counts = {k: 0 for k in nodes.keys()}
+    for i, j in existing_edges:
+        edge_counts[i] += 1
+        edge_counts[j] += 1
+
+    # Choose the most connected nodes to be colored
+    top_nodes = {
+        node_url: i
+        for i, (node_url, _) in enumerate(
+            list(sorted(edge_counts.items(), key=lambda k: -k[1]))[: len(PASTEL_COLORS)]
+        )
+    }
+
+    # Generate graph data
+    graph_info = {
+        "nodes": [
+            {
+                "id": node_ids[url],
+                "label": title,
+                "url": url,
+                "color": PASTEL_COLORS[top_nodes[url]] if url in top_nodes else None,
+                "value": math.log10(edge_counts[url] + 1) + 1,
+                "opacity": 0.1,
+            }
+            for url, title in nodes.items()
+        ],
+        "edges": [
+            {"from": node_ids[edge[0]], "to": node_ids[edge[1]]}
+            for edge in set(edges)
+            if edge[0] in node_ids and edge[1] in node_ids
+        ],
+    }
+    graph_info = json.dumps(graph_info)
+
+    with open(site_dir / "static/js/graph_info.js", "w") as f:
+        f.write(f"var graph_data={graph_info}")

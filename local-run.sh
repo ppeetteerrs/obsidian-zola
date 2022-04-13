@@ -10,12 +10,12 @@ mkdir -p build/content/docs build/__docs
 bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $(cat .data_path) build/__docs
 
 # Set required environment variables (refer to build.environment in netlify.toml)
-# export SITE_URL=local
-# export REPO_URL=local
-# export SLUGIFY=y
+export SITE_URL=local
+export REPO_URL=local
+export SLUGIFY=y
 
-# # Run conversion script
-# python run.py
+# Run conversion script
+python convert.py
 
 # Serve Zola site
-# zola --root=build serve
+zola --root=build serve

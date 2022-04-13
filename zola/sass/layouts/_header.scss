@@ -117,9 +117,16 @@
 
 @include media-breakpoint-up(xl) {
   .navbar-form {
-    margin-left: 30rem;
+    margin-left: 20rem;
   }
 }
+
+@include media-breakpoint-up(xxl) {
+  .navbar-form {
+    margin-left: 40rem;
+  }
+}
+
 
 .form-control.is-search {
   /*
