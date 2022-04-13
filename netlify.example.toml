@@ -16,6 +16,8 @@ PYTHON_VERSION = "3.8"
 REPO_URL = "https://github.com/ppeetteerrs/obsidian-zola"
 # (Optional) Site title in navbar
 SITE_TITLE = "Someone's Second 🧠"
+# (Optional) Site title in browser tab (leave blank to use SITE_TITLE)
+SITE_TITLE_TAB = ""
 # (REQUIRED) Netlify site URL
 SITE_URL = ""
 # (Optional) Site Timezone

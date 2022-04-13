@@ -2,6 +2,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.1.1/css/hover-min.css" integrity="sha512-SJw7jzjMYJhsEnN/BuxTWXkezA2cRanuB8TdCNMXFJjxG9ZGSKOX5P3j03H6kdMxalKHZ7vlBMB4CagFP/de0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" type="text/css" href="https://csshake.surge.sh/csshake.min.css" />
 {% endmacro %}
 
 
@@ -57,7 +60,7 @@
 {% else %}
 	{% set page_path = "/404.html" %}
 {% endif %}
-<title>{{ title ~ title_addition }}</title>
+<title>{{ title_addition }}</title>
 <meta name="description" content="{{ description }}">
 <link rel="canonical" href="{{ page_url | safe }}">
 

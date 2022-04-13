@@ -242,6 +242,7 @@ class Settings:
         "REPO_URL": None,
         "LANDING_PAGE": None,
         "LANDING_TITLE": "I love obsidian-zola! 💖",
+        "SITE_TITLE_TAB": "",
         "LANDING_DESCRIPTION": "I have nothing but intelligence.",
         "LANDING_BUTTON": "Click to steal some👆",
         "SORT_BY": "title",
@@ -271,6 +272,8 @@ class Settings:
             else:
                 if required:
                     raise Exception(f"FATAL ERROR: build.environment.{key} not set!")
+        if cls.options["SITE_TITLE_TAB"] == "":
+            cls.options["SITE_TITLE_TAB"] = cls.options["SITE_TITLE"]
         print("Options:")
         pp(cls.options)
 

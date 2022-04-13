@@ -32,6 +32,7 @@ Credits: This repo was forked from [Adidoks](https://github.com/aaranxu/adidoks)
 
 **Step 3: You're Done 🎉!**
 - Push your changes and get ready to become famous!
+- Be Fancy: All text field settings in `netlify.toml` (e.g. `LANDING_TITLE`) supports HTML syntax. And I added `Animate.css` + `Hover.css` + `CSShake` for those of you who want to add a personal touch~ 
 
 **Step 4: Issues & Feature Requests**
 - If you encounter any issues, just post in the `Issues` tab. It would be good to include a copy of the error log found in the Netlify panel if the issue is related to deployment.
@@ -50,7 +51,8 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 - Knowledge graph (you can also treat it as backlinks)
 - LaTEX (powered by `KaTEX`, bye MathJAX fans 👋)
 - Partial string search (powered by `elasticlunr`)
-- Syntax highlighting
+- Syntax highlighting + Fira Code!
+- Customizable animations
 - Navigation
 - Table of content
 - Typical Markdown syntax
@@ -68,3 +70,6 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 - Comments
 - Inline / Multi-line footnotes
 - Mermaid Diagrams
+
+# WIPs / Ideas
+- Lottie animation?
