@@ -10,7 +10,7 @@ from os import environ
 from pathlib import Path
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
-from urllib.parse import quote, unquote
+from urllib.parse import unquote
 
 from slugify import slugify
 
@@ -105,7 +105,7 @@ class DocLink:
         )
         if doc_path.slugified:
             new_rel_path = slugify_path(new_rel_path)
-        return quote(f"/docs/{new_rel_path}")
+        return f"/docs/{new_rel_path}"
 
     @classmethod
     def parse(cls, line: str, doc_path: "DocPath") -> Tuple[str, List[str]]:
@@ -212,7 +212,7 @@ class DocPath:
     def abs_url(self) -> str:
         """Returns an absolute URL to the page."""
         assert self.is_md
-        return quote(f"/docs/{str(self.new_rel_path)[:-3]}")
+        return f"/docs/{str(self.new_rel_path)[:-3]}"
 
     def edge(self, other: str) -> Tuple[str, str]:
         """Gets an edge from page's URL to another URL."""
