@@ -16,7 +16,7 @@ if __name__ == "__main__":
     all_paths = list(sorted(raw_dir.glob("**/*")))
 
     for path in [raw_dir, *all_paths]:
-        doc_path = DocPath(path, False)
+        doc_path = DocPath(path, Settings.is_true("SLUGIFY"))
         if doc_path.is_file:
             if doc_path.is_md:
                 # Page
@@ -59,4 +59,6 @@ if __name__ == "__main__":
             doc_path.write_to("_index.md", content)
             print(f"Found section: {doc_path.new_rel_path}")
 
+    pp(nodes)
+    pp(edges)
     parse_graph(nodes, edges)

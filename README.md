@@ -28,7 +28,7 @@ Credits: This repo was forked from [Adidoks](https://github.com/aaranxu/adidoks)
 
 **Step 2: Edit `netlify.toml`**
 - Create `netlify.toml` in your Obsidian vault folder
-- Copy the content from `netlify.example.toml` in this repo and replace the appropriate settings (`SITE_URL` and `REPO_URL` cannot be left empty). 
+- Copy the content from `netlify.example.toml` in this repo and replace the appropriate settings (`SITE_URL`, `REPO_URL` and `LANDING_PAGE` cannot be left empty). 
 
 **Step 3: You're Done 🎉!**
 - Push your changes and get ready to become famous!

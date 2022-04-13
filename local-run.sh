@@ -12,9 +12,8 @@ bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds 
 # Set required environment variables (refer to build.environment in netlify.toml)
 export SITE_URL=local
 export REPO_URL=local
-export SLUGIFY=y
-export HOME_GRAPH=y
-export PAGE_GRAPH=y
+export LANDING_PAGE=home
+export SLUGIFY=
 
 # Run conversion script
 python convert.py
