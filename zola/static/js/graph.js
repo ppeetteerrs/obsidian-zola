@@ -3,11 +3,6 @@ function isDark() {
 	return localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia("(prefers-color-scheme: dark)").matches);
 }
 
-// Get URL of current page
-var curr_url = decodeURI(window.location.href.replace(location.origin, ""));
-if (curr_url.endsWith("/")) {
-	curr_url = curr_url.slice(0, -1)
-}
 
 // Get graph element
 var container = document.getElementById("graph");
@@ -15,6 +10,34 @@ var container = document.getElementById("graph");
 // Get nodes and edges from generated javascript
 var nodes = new vis.DataSet(graph_data.nodes);
 var edges = new vis.DataSet(graph_data.edges);
+var max_node_val = Math.max(...nodes.map((node) => node.value));
+
+// Get URL of current page and also current node
+var curr_url = decodeURI(window.location.href.replace(location.origin, ""));
+if (curr_url.endsWith("/")) {
+	curr_url = curr_url.slice(0, -1)
+}
+var curr_node = nodes.get({
+	filter: node => node.url == curr_url
+});
+
+// Highlight current node and set to center
+if (curr_node.length > 0) {
+	curr_node = curr_node[0];
+	nodes.update({
+		id: curr_node.id,
+		value: Math.max(4, max_node_val * 2.5),
+		shape: "star",
+		color: "#a6a7ed",
+		font: {
+			strokeWidth: 1
+		},
+		x: 0,
+		y: 0
+	});
+} else {
+	curr_node = null;
+}
 
 // Construct graph
 var options = {
@@ -65,27 +88,13 @@ graph.on("selectNode", function (params) {
 
 // Focus on current node + scaling
 graph.once("afterDrawing", function () {
-	var curr_node = nodes.get({
-		filter: node => node.url == curr_url
-	});
-	console.log(curr_url);
-	if (curr_node.length > 0) {
-		var idx = curr_node[0].id;
-		graph.focus(idx, {
+	if (curr_node) {
+		graph.focus(curr_node.id, {
 			scale: graph.getScale() * 1.8
-		});
-		nodes.update({
-			id: idx,
-			value: 3,
-			color: "#6667AB",
-			borderWidth: 3,
-			font: {
-				strokeWidth: 1
-			}
 		});
 	} else {
 		graph.moveTo({
-			scale: graph.getScale() * 1.8
+			scale: graph.getScale() * 1
 		});
 	}
 });

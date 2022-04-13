@@ -6,15 +6,16 @@ rsync -a zola/ build
 rsync -a content/ build/content
 
 # Use obsidian-export to export markdown content from obsidian
-mkdir -p build/content/docs
-bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $(cat .data_path) build/content/docs
+mkdir -p build/content/docs build/__docs
+bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $(cat .data_path) build/__docs
 
 # Set required environment variables (refer to build.environment in netlify.toml)
-export SITE_URL=local
-export REPO_URL=local
+# export SITE_URL=local
+# export REPO_URL=local
+# export SLUGIFY=y
 
-# Run conversion script
-python convert.py
+# # Run conversion script
+# python run.py
 
 # Serve Zola site
-zola --root=build serve
+# zola --root=build serve

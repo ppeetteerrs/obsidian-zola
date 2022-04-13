@@ -23,26 +23,30 @@
 {% endblock seo %}
 
 {% block content %}
-<div class="wrap container" role="document" style="flex: 0 1 auto;">
-  <div class="content">
-    <section class="section container-fluid mt-n3 pb-3">
-      <div class="row justify-content-center">
-        <div class="col-lg-12 text-center">
-          <h1 class="mt-0">{{ section.title | default(value="Modern Documentation Theme") }}</h1>
-        </div>
-        <div class="col-lg-9 col-xl-8 text-center">
-          <p class="lead">{{ section.extra.lead | default(value="Please start setting config.toml and adding your content.") | safe }}</p>
-          <a class="btn btn-primary btn-lg px-4 mb-2" href="{{ get_url(path=section.extra.url | default(value="/")) | safe }}" role="button">{{ section.extra.url_button | default(value="Read My Brain") }}</a>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
 
-<div  style="width: 100%; flex: 1 0 0px; min-height: 400px;">
+<div class="home">
+  <div class="home-background">
+    <div class="wrap container" role="document">
+      <div class="content">
+        <section class="section container-fluid mt-n3 pb-3">
+          <div class="row justify-content-center">
+            <div class="col-lg-12 text-center">
+              <h1 class="mt-0">{{ section.title | default(value="Modern Documentation Theme") }}</h1>
+            </div>
+            <div class="col-lg-9 col-xl-8 text-center">
+              <p class="lead">{{ section.extra.lead | default(value="Please start setting config.toml and adding your content.") | safe }}</p>
+              <a class="btn btn-primary btn-lg px-4 mb-2" href="{{ get_url(path=section.extra.url | default(value="/")) | safe }}" role="button">{{ section.extra.url_button | default(value="Read My Brain") }}</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
 {% if config.extra.home_graph %}
-  <div style="width: 100%; height: 100%;" id="graph"></div>
+  <div id="graph"></div>
 {% endif %}
+
 </div>
 
 {% block footer %}

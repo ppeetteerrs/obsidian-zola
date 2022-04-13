@@ -68,15 +68,13 @@ def step2():
 
     print_step("SUBSTITUTING CONFIG FILE AND LANDING PAGE")
 
-    if "LOCAL" not in environ:
+    def sub(line: str) -> str:
+        for env_var in DEFAULTS.keys():
+            line = line.replace(f"___{env_var}___", environ[env_var])
+        return line
 
-        def sub(line: str) -> str:
-            for env_var in DEFAULTS.keys():
-                line = line.replace(f"___{env_var}___", environ[env_var])
-            return line
-
-        process_lines(ZOLA_DIR / "config.toml", sub)
-        process_lines(ZOLA_DIR / "content" / "_index.md", sub)
+    process_lines(ZOLA_DIR / "config.toml", sub)
+    process_lines(ZOLA_DIR / "content" / "_index.md", sub)
 
 
 def step3():
@@ -187,6 +185,7 @@ def filter_lines(file: Path, content: List[str]) -> List[str]:
     2. Double escape latex newline
     """
     global nodes, edges
+
     # Relative path of current file
     rel_path = re.sub(r"^.*?content/*", "/", str(file)).replace(".md", "")
     nodes[rel_path] = file.stem
@@ -355,3 +354,9 @@ if __name__ == "__main__":
     step2()
     step3()
     step4()
+
+
+- cannot have `_index.md`
+- home page
+
+breaking: graph and slugify
