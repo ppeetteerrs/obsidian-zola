@@ -105,7 +105,7 @@ class DocLink:
         )
         if doc_path.slugified:
             new_rel_path = slugify_path(new_rel_path)
-        return f"/docs/{new_rel_path}"
+        return quote(f"/docs/{new_rel_path}")
 
     @classmethod
     def parse(cls, line: str, doc_path: "DocPath") -> Tuple[str, List[str]]:
@@ -117,7 +117,7 @@ class DocLink:
         for link in cls.get_links(line):
             abs_url = link.abs_url(doc_path)
             parsed = parsed.replace(
-                link.combined, f"[{link.title}]({quote(abs_url)}{link.header})"
+                link.combined, f"[{link.title}]({abs_url}{link.header})"
             )
             linked.append(abs_url)
         return parsed, linked
@@ -183,7 +183,7 @@ class DocPath:
     @property
     def content(self) -> List[str]:
         """Gets the lines of the file."""
-        return [l.rstrip() for l in open(self.old_path, "r").readlines()]
+        return [line.rstrip() for line in open(self.old_path, "r").readlines()]
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
@@ -212,7 +212,7 @@ class DocPath:
     def abs_url(self) -> str:
         """Returns an absolute URL to the page."""
         assert self.is_md
-        return f"/docs/{str(self.new_rel_path)[:-3]}"
+        return quote(f"/docs/{str(self.new_rel_path)[:-3]}")
 
     def edge(self, other: str) -> Tuple[str, str]:
         """Gets an edge from page's URL to another URL."""
