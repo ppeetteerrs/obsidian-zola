@@ -29,7 +29,7 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 def slugify_path(path: Union[str, Path]) -> Path:
     """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths."""
 
-    path = Path(path)
+    path = Path(str(path).lower())
     if Settings.is_true("SLUGIFY"):
         os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
         name = ".".join(slugify(item) for item in path.stem.split("."))
@@ -103,8 +103,7 @@ class DocLink:
             .resolve()
             .relative_to(docs_dir)
         )
-        if doc_path.slugified:
-            new_rel_path = slugify_path(new_rel_path)
+        new_rel_path = slugify_path(new_rel_path)
         return f"/docs/{new_rel_path}"
 
     @classmethod
@@ -133,12 +132,8 @@ class DocPath:
         """Path parsing."""
         self.old_path = path.resolve()
         self.old_rel_path = self.old_path.relative_to(raw_dir)
-        if slugify:
-            self.new_rel_path = slugify_path(self.old_rel_path)
-        else:
-            self.new_rel_path = self.old_rel_path
+        self.new_rel_path = slugify_path(self.old_rel_path)
         self.new_path = docs_dir / str(self.new_rel_path)
-        self.slugified = slugify
 
     # --------------------------------- Sections --------------------------------- #
 
