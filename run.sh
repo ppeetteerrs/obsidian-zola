@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pip install python-slugify
+
 echo "netlify.toml" >> __obsidian/.gitignore
 
 # Sync Zola template contents
