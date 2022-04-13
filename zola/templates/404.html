@@ -4,10 +4,10 @@
   {{ super() }} 
   {% set title = "404 Page not found" %}
   
-  {% if config.title %}
-    {% set title_addition = title_separator ~ config.title %}
+  {% if config.extra.title_addition %}
+    {% set title_addition = config.extra.title_addition %}
   {% else %}
-    {% set title_addition = "" %}
+    {% set title_addition = title %}
   {% endif %}
   
   {% set description = config.description %}

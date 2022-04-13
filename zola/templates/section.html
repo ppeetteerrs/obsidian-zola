@@ -4,15 +4,15 @@
 
 {% block seo %}
   {{ super() }}
+
   {% set title_addition = "" %}
-  
-  {% if section.title and config.title %}
-    {% set title = section.title %}
-    {% set title_addition = title_separator ~ config.title %}
-  {% elif section.title %}
-    {% set title = section.title %}
+  {% set title = "" %}
+  {% if section.title and config.extra.title_addition %}
+    {% set title_addition = section.title ~ title_separator ~ config.extra.title_addition %}
+  {% elif page.title %}
+    {% set title_addition = section.title %}
   {% else %}
-    {% set title = config.title %}
+    {% set title_addition = config.title %}
   {% endif %}
   
   {% if section.description %}
@@ -21,7 +21,7 @@
     {% set description = config.description %}
   {% endif %}
   
-  {{ macros_head::seo(title=title, title_addition=title_addition, description=description) }}
+  {{ macros_head::seo(title=title_addition, title_addition=title_addition, description=description) }}
 {% endblock seo %}
 
 {% block body %}
