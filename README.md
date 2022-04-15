@@ -13,6 +13,7 @@ Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.
 
 # Announcements
 **v1.1.0 Thanks for the support and Feedback 💓**
+
 I never expected to receive such attention from my Reddit post. Thank you for supporting this project! I have heard your feedback and made some minor but urgent improvements. I will continue to implement the rest of the crucial requests over the next few days!
 - Subsections / subfolders are now supported up to 3 levels! And you can choose a cute symbol / emoji / HTML code to represent a subsection on your sidebar!
 - All page and section titles (i.e. file / folder names) can now contain HTML code. Not sure what's the use case but why not :)
