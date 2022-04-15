@@ -43,11 +43,37 @@
   padding: 1.5rem 0 0 0;
 }
 
+.docs-links h4,
+.page-links h4 {
+  text-transform: uppercase;
+  font-size: $font-size-base;
+  margin: 1.50rem 0 0.5rem 0;
+  padding: 0 0 0 0;
+}
+
+.docs-links h5,
+.page-links h5 {
+  text-transform: uppercase;
+  font-size: $font-size-base;
+  margin: 1.25rem 0 0.5rem 0;
+  padding: 0 0 0 0;
+}
+
 @include media-breakpoint-up(lg) {
   .docs-links h3,
   .page-links h3 {
     margin: 1.125rem 1.5rem 0.75rem 0;
     padding: 1.375rem 0 0 0;
+  }
+  .docs-links h4,
+  .page-links h4 {
+    margin: 1.125rem 1.5rem 0.75rem 0;
+    padding: 0 0 0 0;
+  }
+  .docs-links h5,
+  .page-links h5 {
+    margin: 1.125rem 1.5rem 0.75rem 0;
+    padding: 0 0 0 0;
   }
 }
 
@@ -93,18 +119,31 @@ a.docs-link {
 }
 
 .docs-links h3.sidebar-link,
-.page-links h3.sidebar-link {
+.docs-links h4.sidebar-link,
+.docs-links h5.sidebar-link,
+.page-links h3.sidebar-link,
+.page-links h4.sidebar-link,
+.page-links h5.sidebar-link {
   text-transform: none;
   font-size: $font-size-md;
   font-weight: normal;
 }
 
 .docs-links h3.sidebar-link a,
-.page-links h3.sidebar-link a {
+.docs-links h4.sidebar-link a,
+.docs-links h5.sidebar-link a,
+.page-links h3.sidebar-link a,
+.page-links h4.sidebar-link a,
+.page-links h5.sidebar-link a {
   color: $body-color;
 }
 
 .docs-links h3.sidebar-link a:hover,
-.page-links h3.sidebar-link a:hover {
+.docs-links h4.sidebar-link a:hover,
+.docs-links h5.sidebar-link a:hover,
+.page-links h3.sidebar-link a:hover,
+.page-links h4.sidebar-link a:hover,
+.page-links h5.sidebar-link a:hover {
   text-decoration: underline;
 }
+

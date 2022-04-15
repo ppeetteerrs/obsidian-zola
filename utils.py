@@ -143,6 +143,16 @@ class DocPath:
         title = str(self.old_rel_path)
         return title if (title != "" and title != ".") else "main"
 
+    @property
+    def section_sidebar(self) -> str:
+        """Gets the title of the section."""
+        sidebar = str(self.old_rel_path)
+        assert Settings.options["SUBSECTION_SYMBOL"] is not None
+        sidebar = (
+            sidebar.count("/") * Settings.options["SUBSECTION_SYMBOL"]
+        ) + sidebar.split("/")[-1]
+        return sidebar if (sidebar != "" and sidebar != ".") else "main"
+
     def write_to(self, child: str, content: Union[str, List[str]]):
         """Writes content to a child path under new path."""
         new_path = self.new_path / child
@@ -151,7 +161,7 @@ class DocPath:
             if isinstance(content, str):
                 f.write(content)
             else:
-                f.write("\n".join(content))
+                f.write("".join(content))
 
     # ----------------------------------- Pages ---------------------------------- #
 
@@ -178,7 +188,7 @@ class DocPath:
     @property
     def content(self) -> List[str]:
         """Gets the lines of the file."""
-        return [line.rstrip() for line in open(self.old_path, "r").readlines()]
+        return [line for line in open(self.old_path, "r").readlines()]
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
@@ -187,7 +197,7 @@ class DocPath:
             if isinstance(content, str):
                 f.write(content)
             else:
-                f.write("\n".join(content))
+                f.write("".join(content))
 
     # --------------------------------- Resources -------------------------------- #
 
@@ -245,6 +255,7 @@ class Settings:
         "SLUGIFY": "y",
         "HOME_GRAPH": "y",
         "PAGE_GRAPH": "y",
+        "SUBSECTION_SYMBOL": "👉",
     }
 
     @classmethod
@@ -282,9 +293,7 @@ class Settings:
     @classmethod
     def sub_file(cls, path: Path):
         """Substitutes variable placeholders in a file."""
-        content = "\n".join(
-            [cls.sub_line(line.rstrip()) for line in open(path, "r").readlines()]
-        )
+        content = "".join([cls.sub_line(line) for line in open(path, "r").readlines()])
         open(path, "w").write(content)
 
 
