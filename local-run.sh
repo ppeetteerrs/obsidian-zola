@@ -7,8 +7,7 @@ rsync -a content/ build/content
 
 # Use obsidian-export to export markdown content from obsidian
 mkdir -p build/content/docs build/__docs
-# bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $(cat .data_path) build/__docs
-bin/obsidian-export --frontmatter=never --no-recursive-embeds $(cat .data_path) build/__docs
+bin/obsidian-export --frontmatter=never --hard-linebreaks --no-recursive-embeds $(cat .data_path) build/__docs
 
 # Set required environment variables (refer to build.environment in netlify.toml)
 export SITE_URL=local

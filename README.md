@@ -85,4 +85,5 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 
 # WIPs / Ideas
 - (Will do) Configurable line breaks. Currently, users need to allow standard Markdown line break conventions (single line breaks are ignored) because of some LaTEX bugs. It will be fixed soon and made configurable.
+- (Probably will do) Backlinks / Mentioned in
 - (Maybe) Lottie animations?

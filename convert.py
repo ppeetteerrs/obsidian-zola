@@ -29,12 +29,12 @@ if __name__ == "__main__":
                     edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 
                 content = [
-                    "---\n",
-                    f"title: {doc_path.page_title}\n",
-                    f"date: {doc_path.modified}\n",
-                    f"updated: {doc_path.modified}\n",
-                    "template: docs/page.html\n",
-                    "---\n",
+                    "---",
+                    f"title: {doc_path.page_title}",
+                    f"date: {doc_path.modified}",
+                    f"updated: {doc_path.modified}",
+                    "template: docs/page.html",
+                    "---",
                     *parsed_lines,
                 ]
                 doc_path.write(content)
@@ -48,14 +48,14 @@ if __name__ == "__main__":
             # Frontmatter
             # TODO: sort_by depends on settings
             content = [
-                "---\n",
-                f"title: {doc_path.section_title}\n",
-                "template: docs/section.html\n",
-                f"sort_by: {Settings.options['SORT_BY']}\n",
-                f"weight: {section_count}\n",
-                "extra:\n",
-                f"    sidebar: {doc_path.section_sidebar}\n",
-                "---\n",
+                "---",
+                f"title: {doc_path.section_title}",
+                "template: docs/section.html",
+                f"sort_by: {Settings.options['SORT_BY']}",
+                f"weight: {section_count}",
+                "extra:",
+                f"    sidebar: {doc_path.section_sidebar}",
+                "---",
             ]
             section_count += 1
             doc_path.write_to("_index.md", content)

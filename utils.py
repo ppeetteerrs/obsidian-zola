@@ -161,7 +161,7 @@ class DocPath:
             if isinstance(content, str):
                 f.write(content)
             else:
-                f.write("".join(content))
+                f.write("\n".join(content))
 
     # ----------------------------------- Pages ---------------------------------- #
 
@@ -188,7 +188,7 @@ class DocPath:
     @property
     def content(self) -> List[str]:
         """Gets the lines of the file."""
-        return [line for line in open(self.old_path, "r").readlines()]
+        return [line.rstrip() for line in open(self.old_path, "r").readlines()]
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
@@ -197,7 +197,7 @@ class DocPath:
             if isinstance(content, str):
                 f.write(content)
             else:
-                f.write("".join(content))
+                f.write("\n".join(content))
 
     # --------------------------------- Resources -------------------------------- #
 
