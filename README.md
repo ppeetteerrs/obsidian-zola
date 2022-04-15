@@ -46,6 +46,9 @@ I never expected to receive such attention from my Reddit post. Thank you for su
 - If you have any feature request, do post an issue also. However, please this repo is intended as a one-file setup. Advanced features / detailed configurability will not be supported unless it is wanted by most users. However, I can provide help for you to implement a fork that suits your needs 🥂.
 
 # Example Site
+
+> Do not copy `netlify.toml` from example site, it is unstable. Please reference from `netlify.example.toml`.
+
 The [example site](https://peteryuen.netlify.app/) shows the capabilities of `obsidian-zola`. Note that the example site uses the `dev` branch of `obsidian-zola`. If you see features that are available in the example site but are not available in the main branch yet, consider trying out the `dev` (unstable) branch. Exact method can be referenced from the [example repo's](https://github.com/ppeetteerrs/obsidian-pkm) `netlify.toml`.
 
 # Features 
