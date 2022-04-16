@@ -77,6 +77,9 @@ class DocLink:
         Returns:
             _type_: _description_
         """
+
+        # Removed starting "[" and ending ")" such that we can identify inner links [...](...)
+
         return [
             cls(f"[{combined})", title, url, md, header)
             for combined, title, url, md, header in re.findall(
@@ -153,19 +156,13 @@ class DocPath:
         self.new_rel_path = slugify_path(new_rel_path)
         self.new_path = docs_dir / str(self.new_rel_path)
 
-        # Take care of cases where Markdown file has a sibling directory of the same name
-        if self.is_md:
-            if (self.old_path.parent / self.old_path.stem).is_dir():
-                print(f"Name collision with sibling folder: {self.old_rel_path}")
-                print(f"GGGGGG: {self.old_path}")
-
     # --------------------------------- Sections --------------------------------- #
 
     @property
     def section_title(self) -> str:
         """Gets the title of the section."""
         title = str(self.old_rel_path).replace('"', r"\"")
-        return f'"{title}"' if (title != "" and title != ".") else "main"
+        return title if (title != "" and title != ".") else "main"
 
     @property
     def section_sidebar(self) -> str:
@@ -192,13 +189,15 @@ class DocPath:
     @property
     def page_title(self) -> str:
         """Gets the title of the page."""
+
+        # The replacement might not be necessary, filenames cannot contain double quotes
         title = " ".join(
             [
                 item if item[0].isupper() else item.title()
                 for item in self.old_path.stem.split(" ")
             ]
         ).replace('"', r"\"")
-        return f'"{title}"'
+        return title
 
     @property
     def is_md(self) -> bool:
@@ -213,12 +212,12 @@ class DocPath:
     @property
     def content(self) -> List[str]:
         """Gets the lines of the file."""
-        return [line.rstrip() for line in open(self.old_path, "r").readlines()]
+        return [line for line in open(self.old_path, "r").readlines()]
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
         if not isinstance(content, str):
-            content = "\n".join(content)
+            content = "".join(content)
         self.new_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.new_path, "w") as f:
             f.write(content)
@@ -282,6 +281,7 @@ class Settings:
         "SUBSECTION_SYMBOL": "👉",
         "LOCAL_GRAPH": "",
         "GRAPH_LINK_REPLACE": "",
+        "STRICT_LINE_BREAKS": "y",
     }
 
     @classmethod

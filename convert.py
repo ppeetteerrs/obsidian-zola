@@ -25,19 +25,25 @@ if __name__ == "__main__":
                 parsed_lines: List[str] = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)
-                    parsed_lines.append(re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line))
+
+                    # Fix LaTEX new lines
+                    parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
+
+                    parsed_lines.append(parsed_line)
+
                     edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 
                 content = [
                     "---",
-                    f"title: {doc_path.page_title}",
+                    f'title: "{doc_path.page_title}"',
                     f"date: {doc_path.modified}",
                     f"updated: {doc_path.modified}",
                     "template: docs/page.html",
                     "---",
-                    *parsed_lines,
+                    # To add last line-break
+                    "",
                 ]
-                doc_path.write(content)
+                doc_path.write(["\n".join(content), *parsed_lines])
                 print(f"Found page: {doc_path.new_rel_path}")
             else:
                 # Resource
@@ -49,16 +55,18 @@ if __name__ == "__main__":
             # TODO: sort_by depends on settings
             content = [
                 "---",
-                f"title: {doc_path.section_title}",
+                f'title: "{doc_path.section_title}"',
                 "template: docs/section.html",
                 f"sort_by: {Settings.options['SORT_BY']}",
                 f"weight: {section_count}",
                 "extra:",
                 f"    sidebar: {doc_path.section_sidebar}",
                 "---",
+                # To add last line-break
+                "",
             ]
             section_count += 1
-            doc_path.write_to("_index.md", content)
+            doc_path.write_to("_index.md", "\n".join(content))
             print(f"Found section: {doc_path.new_rel_path}")
 
     pp(nodes)
