@@ -37,6 +37,7 @@ if (curr_node.length > 0) {
 	}
 } else {
 	curr_node = null;
+	nodes = new vis.DataSet(graph_data.nodes);
 }
 
 // Get nodes and edges from generated javascript
