@@ -141,8 +141,23 @@ class DocPath:
         """Path parsing."""
         self.old_path = path.resolve()
         self.old_rel_path = self.old_path.relative_to(raw_dir)
-        self.new_rel_path = slugify_path(self.old_rel_path)
+        new_rel_path = self.old_rel_path
+
+        # Take care of cases where Markdown file has a sibling directory of the same name
+        if self.is_md and (self.old_path.parent / self.old_path.stem).is_dir():
+            print(f"Name collision with sibling folder, renaming: {self.old_rel_path}")
+            new_rel_path = self.old_rel_path.parent / (
+                self.old_rel_path.stem + "-nested" + self.old_rel_path.suffix
+            )
+
+        self.new_rel_path = slugify_path(new_rel_path)
         self.new_path = docs_dir / str(self.new_rel_path)
+
+        # Take care of cases where Markdown file has a sibling directory of the same name
+        if self.is_md:
+            if (self.old_path.parent / self.old_path.stem).is_dir():
+                print(f"Name collision with sibling folder: {self.old_rel_path}")
+                print(f"GGGGGG: {self.old_path}")
 
     # --------------------------------- Sections --------------------------------- #
 
