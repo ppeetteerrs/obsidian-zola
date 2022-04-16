@@ -12,6 +12,21 @@ Credits: This repo was forked from [Adidoks](https://github.com/aaranxu/adidoks)
 Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.com/zoni/obsidian-export).
 
 # Announcements
+**v1.2.0 More Features! 🥳**
+
+Bug Fixes:
+
+- Added the ability to deal with empty links (re-directed to 404 page)
+- Added the ability to deal with special characters in filenames
+- Added the ability to cope with overlapping name between sections and pages (so now u can have both `repeated/` and `repeated.md` in the same directory)
+
+Improvements:
+
+- Ability to configure tab-opening behaviour when clicking on graph node (same / new tab)
+- Ability to configure line break parsing (strict vs Obsidian-style)
+- Ability to configure graph display preference, you can now choose to display only directly connected nodes!
+
+
 **v1.1.0 Thanks for the support and Feedback 💓**
 
 I never expected to receive such attention from my Reddit post. Thank you for supporting this project! I have heard your feedback and made some minor but urgent improvements. I will continue to implement the rest of the crucial requests over the next few days!
@@ -43,7 +58,7 @@ I never expected to receive such attention from my Reddit post. Thank you for su
 - Be Fancy: All text field settings in `netlify.toml` (e.g. `LANDING_TITLE`) supports HTML syntax. And I added `Animate.css` + `Hover.css` + `CSShake` for those of you who want to add a personal touch~ 
 
 **Step 4: Issues & Feature Requests**
-- If you encounter any issues, just post in the `Issues` tab. It would be good to include a copy of the error log found in the Netlify panel if the issue is related to deployment.
+- If you encounter any issues, first refer to [Config+FAQ](https://github.com/ppeetteerrs/obsidian-zola/blob/main/CONFIG.md). If still unsolved, just post in the `Issues` tab. It would be good to include a copy of the error log found in the Netlify panel if the issue is related to deployment.
 - If you have any feature request, do post an issue also. However, please this repo is intended as a one-file setup. Advanced features / detailed configurability will not be supported unless it is wanted by most users. However, I can provide help for you to implement a fork that suits your needs 🥂.
 
 # Example Site
@@ -84,10 +99,9 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 
 # Gotchas
 1. Do not have files with name `index.md` or `_index.md`
-2. Do not have files that have the same name as its subfolder (e.g. having both `.../category1.md` and `.../category1/xxx.md` is not allowed)
+2. ~~Do not have files that have the same name as its subfolder (e.g. having both `.../category1.md` and `.../category1/xxx.md` is not allowed)~~ (Fixed)
 3. `LANDING_PAGE` needs to be set to the slugified file name if `SLUGIFY` is turned on (e.g. to use `I am Home.md`, `LANDING_PAGE` needs to be `i-am-home`)
 
 # WIPs / Ideas
-- (Will do) Configurable line breaks. Currently, users need to allow standard Markdown line break conventions (single line breaks are ignored) because of some LaTEX bugs. It will be fixed soon and made configurable.
 - (Probably will do) Backlinks / Mentioned in
 - (Maybe) Lottie animations?
