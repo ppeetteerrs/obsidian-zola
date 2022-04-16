@@ -15,10 +15,14 @@ export REPO_URL=local
 export LANDING_PAGE=home
 export SLUGIFY=y
 export HOME_GRAPH=
-export PAGE_GRAPH=
+export PAGE_GRAPH=y
+export LOCAL_GRAPH=y
+export GRAPH_LINK_REPLACE=y
 
 # Run conversion script
 python convert.py
 
 # Serve Zola site
 zola --root=build serve
+
+# Fix graph name

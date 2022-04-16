@@ -280,6 +280,8 @@ class Settings:
         "HOME_GRAPH": "y",
         "PAGE_GRAPH": "y",
         "SUBSECTION_SYMBOL": "👉",
+        "LOCAL_GRAPH": "",
+        "GRAPH_LINK_REPLACE": "",
     }
 
     @classmethod
@@ -408,4 +410,14 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
     graph_info = json.dumps(graph_info)
 
     with open(site_dir / "static/js/graph_info.js", "w") as f:
-        f.write(f"var graph_data={graph_info}")
+        is_local = "true" if Settings.is_true("LOCAL_GRAPH") else "false"
+        link_replace = "true" if Settings.is_true("GRAPH_LINK_REPLACE") else "false"
+        f.write(
+            "\n".join(
+                [
+                    f"var graph_data={graph_info}",
+                    f"var graph_is_local={is_local}",
+                    f"var graph_link_replace={link_replace}",
+                ]
+            )
+        )
