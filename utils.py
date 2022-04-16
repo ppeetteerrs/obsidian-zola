@@ -77,13 +77,12 @@ class DocLink:
         Returns:
             _type_: _description_
         """
-
         return [
-            cls(combined, title, url, md, header)
+            cls(f"[{combined})", title, url, md, header)
             for combined, title, url, md, header in re.findall(
-                r"(\[(.+?)\]\((?!http)(\S+?)(\.md)?(#\S+)?\))", line
+                r"\[((.*?)\]\((?!http)(\S*?)(\.md)?(#\S+)?)\)", line
             )
-            if not cls.no_inner_link(combined)
+            if cls.no_inner_link(combined)
         ]
 
     @property
@@ -94,17 +93,26 @@ class DocLink:
     @staticmethod
     def no_inner_link(item: str) -> bool:
         """Check that capture link does not contain inner links."""
-        return re.match(r"\[.+?\]\(\S+?\)", item) is None
+        return re.match(r"\[.*?\]\(\S*?\)", item) is None
 
     def abs_url(self, doc_path: "DocPath") -> str:
         """Returns an absolute URL based on quoted relative URL from obsidian-export."""
-        new_rel_path = (
-            (doc_path.new_path.parent / unquote(self.url))
-            .resolve()
-            .relative_to(docs_dir)
-        )
-        new_rel_path = slugify_path(new_rel_path)
-        return f"/docs/{new_rel_path}"
+
+        if self.url is None or self.url == "":
+            print(f"Empty link found: {doc_path.old_rel_path}")
+            return "/404"
+
+        try:
+            new_rel_path = (
+                (doc_path.new_path.parent / unquote(self.url))
+                .resolve()
+                .relative_to(docs_dir)
+            )
+            new_rel_path = slugify_path(new_rel_path)
+            return f"/docs/{new_rel_path}"
+        except Exception:
+            print(f"Invalid link found: {doc_path.old_rel_path}")
+            return "/404"
 
     @classmethod
     def parse(cls, line: str, doc_path: "DocPath") -> Tuple[str, List[str]]:
@@ -119,6 +127,7 @@ class DocLink:
                 link.combined, f"[{link.title}]({abs_url}{link.header})"
             )
             linked.append(abs_url)
+
         return parsed, linked
 
 
@@ -140,8 +149,8 @@ class DocPath:
     @property
     def section_title(self) -> str:
         """Gets the title of the section."""
-        title = str(self.old_rel_path)
-        return title if (title != "" and title != ".") else "main"
+        title = str(self.old_rel_path).replace('"', r"\"")
+        return f'"{title}"' if (title != "" and title != ".") else "main"
 
     @property
     def section_sidebar(self) -> str:
@@ -168,12 +177,13 @@ class DocPath:
     @property
     def page_title(self) -> str:
         """Gets the title of the page."""
-        return " ".join(
+        title = " ".join(
             [
                 item if item[0].isupper() else item.title()
                 for item in self.old_path.stem.split(" ")
             ]
-        )
+        ).replace('"', r"\"")
+        return f'"{title}"'
 
     @property
     def is_md(self) -> bool:
@@ -192,12 +202,11 @@ class DocPath:
 
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
+        if not isinstance(content, str):
+            content = "\n".join(content)
         self.new_path.parent.mkdir(parents=True, exist_ok=True)
         with open(self.new_path, "w") as f:
-            if isinstance(content, str):
-                f.write(content)
-            else:
-                f.write("\n".join(content))
+            f.write(content)
 
     # --------------------------------- Resources -------------------------------- #
 
