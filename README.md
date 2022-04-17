@@ -9,6 +9,7 @@ A free (but better?) alternative to Obsidian Publish.
 > This repo contains an easy-to-use (read: simplistic) solution for converting an Obsidian Personal Knowledge Management System (read: bunch of random Markdowns) into a Zola site.
 
 Credits: This repo was forked from [Adidoks](https://github.com/aaranxu/adidoks).
+
 Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.com/zoni/obsidian-export).
 
 # Announcements
