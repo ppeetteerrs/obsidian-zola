@@ -1,4 +1,6 @@
 {% macro javascript() %}
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script src="{{ get_url(path="js/settings.js") | safe }}" defer></script>
 <script src="{{ get_url(path="js/main.js") | safe }}" defer></script>
 {% if config.build_search_index %}
   <script src="{{ get_url(path="plugins/elasticlunr.min.js") | safe }}" defer></script>
