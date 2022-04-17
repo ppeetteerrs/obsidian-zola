@@ -1,7 +1,8 @@
 import re
 from typing import Dict, List, Tuple
 
-from utils import DocLink, DocPath, Settings, parse_graph, pp, raw_dir, site_dir
+from utils import (DocLink, DocPath, Settings, parse_graph, pp, raw_dir,
+                   site_dir, write_settings)
 
 if __name__ == "__main__":
 
@@ -72,3 +73,4 @@ if __name__ == "__main__":
     pp(nodes)
     pp(edges)
     parse_graph(nodes, edges)
+    write_settings()

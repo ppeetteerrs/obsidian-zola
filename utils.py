@@ -283,6 +283,7 @@ class Settings:
         "LOCAL_GRAPH": "",
         "GRAPH_LINK_REPLACE": "",
         "STRICT_LINE_BREAKS": "y",
+        "SIDEBAR_COLLAPSED": "",
     }
 
     @classmethod
@@ -419,6 +420,25 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
                     f"var graph_data={graph_info}",
                     f"var graph_is_local={is_local}",
                     f"var graph_link_replace={link_replace}",
+                ]
+            )
+        )
+
+
+# ---------------------------------------------------------------------------- #
+#                         Write Settings to Javascript                         #
+# ---------------------------------------------------------------------------- #
+def write_settings():
+    """
+    Writes settings to Javascript file.
+    """
+
+    with open(site_dir / "static/js/settings.js", "w") as f:
+        sidebar_collapsed = "true" if Settings.is_true("SIDEBAR_COLLAPSED") else "false"
+        f.write(
+            "\n".join(
+                [
+                    f"var sidebar_collapsed={sidebar_collapsed}",
                 ]
             )
         )

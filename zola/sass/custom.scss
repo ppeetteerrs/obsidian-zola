@@ -1,0 +1,25 @@
+.collapsible-section:hover {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+.collapsible-section:after {
+	content: "➕"; /* Unicode character for "plus" sign (+) */
+	font-size: 0.8rem;
+	float: right;
+}
+
+.collapsible-section.open:after {
+	content: "➖"; /* Unicode character for "minus" sign (-) */
+}
+
+.dark .collapsible-section:after,
+.dark .collapsible-section.open:after {
+	filter: brightness(150%);
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.docs-links .collapsible-wrapper {
+	overflow: hidden;
+	transition: height 0.5s ease-out;
+}
