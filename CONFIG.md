@@ -57,6 +57,9 @@ If "y", clicking on graph link replaces current tab. Else, page is opened in new
 ### `STRICT_LINE_BREAKS`
 Whether to use standard Markdown strict line breaks (single line breaks ignored unless followed by 2 whitespaces), or to use Obsidian-style line breaks. If "y", strict line break is used, else, Obsidian-style is used. Users who use LaTEX must set this to "y" for equations to render properly. Default: "y".
 
+### `SIDEBAR_COLLAPSED`
+Whether sidebar sections should be collapsed by default. Default: "".
+
 ## Animations
 `Animate.css`, `Hover.css` and `CSShake` classes can be used in all fields where HTML + CSS are supported. Refer to example repo's setup on how to do so.
 

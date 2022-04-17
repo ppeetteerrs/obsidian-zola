@@ -13,54 +13,67 @@ Credits: This repo was forked from [Adidoks](https://github.com/aaranxu/adidoks)
 Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.com/zoni/obsidian-export).
 
 # Announcements
-**v1.2.0 More Features! 🥳**
+
+**v1.2.2 Collapsible Sidebar! 📄**
 
 Bug Fixes:
 
-- Added the ability to deal with empty links (re-directed to 404 page)
-- Added the ability to deal with special characters in filenames
-- Added the ability to cope with overlapping name between sections and pages (so now u can have both `repeated/` and `repeated.md` in the same directory)
+- Breadcrumb List Schema had error (from Adidoks), now its fixed
+- Added instructions on automatic sitemap update to Google for search indexing
 
 Improvements:
 
-- Ability to configure tab-opening behaviour when clicking on graph node (same / new tab)
-- Ability to configure line break parsing (strict vs Obsidian-style)
-- Ability to configure graph display preference, you can now choose to display only directly connected nodes!
-
-
-**v1.1.0 Thanks for the support and Feedback 💓**
-
-I never expected to receive such attention from my Reddit post. Thank you for supporting this project! I have heard your feedback and made some minor but urgent improvements. I will continue to implement the rest of the crucial requests over the next few days!
-- Subsections / subfolders are now supported up to 3 levels! And you can choose a cute symbol / emoji / HTML code to represent a subsection on your sidebar!
-- All page and section titles (i.e. file / folder names) can now contain HTML code. Not sure what's the use case but why not :)
-
-
-**v1.0.0 Big Release**
-- Graph view is now supported! I assume this is a highly sought-after feature, hence it would be turned on by default 🙂.
-- URLs are now slugified by deafult (to adhere to best practices)! This will change the links to some pages. For those who wish to keep your shared links valid, please disable slugify in `netlify.toml`. Sorry for the inconvenience 🙇.
-- Shameless promotion 😳. Sorry for adding a `Powered by obsidian-zola` line on your home page. But I believe most people who use this repo think that it should be made known to those who need it. I don't make any 💰 from this anyways.
-- Markdown link parsing bug fixes.
-- Major refactoring. Everything is typed and commented and properly wrapped in classes. It should be much more maintainable and forkable now 🍴.
-- Local development setup (on WSL) is provided. Just provide a `.data_path` that points to your Obsidian folder, install the dependencies and run `./local-run.sh`.
-
+- Sidebar collapse + option to set default collapse state (implemented for those few crazy people with over a thousand notes...)
 
 # Setup
 
 **Step 1: Setup Netlify**
+
 - Turn your Obsidian vault folder into a Git repository
 - Create a Netlify site pointing to that Git repository
 
 **Step 2: Edit `netlify.toml`**
+
 - Create `netlify.toml` in your Obsidian vault folder
 - Copy the content from `netlify.example.toml` in this repo and replace the appropriate settings (`SITE_URL`, `REPO_URL` and `LANDING_PAGE` cannot be left empty). 
 
 **Step 3: You're Done 🎉!**
+
 - Push your changes and get ready to become famous!
 - Be Fancy: All text field settings in `netlify.toml` (e.g. `LANDING_TITLE`) supports HTML syntax. And I added `Animate.css` + `Hover.css` + `CSShake` for those of you who want to add a personal touch~ 
 
 **Step 4: Issues & Feature Requests**
+
 - If you encounter any issues, first refer to [Config+FAQ](https://github.com/ppeetteerrs/obsidian-zola/blob/main/CONFIG.md). If still unsolved, just post in the `Issues` tab. It would be good to include a copy of the error log found in the Netlify panel if the issue is related to deployment.
 - If you have any feature request, do post an issue also. However, please this repo is intended as a one-file setup. Advanced features / detailed configurability will not be supported unless it is wanted by most users. However, I can provide help for you to implement a fork that suits your needs 🥂.
+
+**Step 5: (Optional Enhancement) Auto Sitemap Submit**
+
+To make your site more friendly to search engines, you can add a netlify plugin to automatically submit the new sitemap everytime you re-deploy the site. Just add the following to your `netlify.toml`. Remember to replace `baseUrl` with your `SITE_URL`.
+
+```toml
+[[plugins]]
+package = "netlify-plugin-submit-sitemap"
+
+[plugins.inputs]
+
+# The base url of your site (optional, default = main URL set in Netlify)
+baseUrl = "https://peteryuen.netlify.app/"
+
+# Path to the sitemap URL (optional, default = /sitemap.xml)
+sitemapPath = "/sitemap.xml"
+
+# Time in seconds to not submit the sitemap after successful submission
+ignorePeriod = 0
+
+# Enabled providers to submit sitemap to (optional, default = 'google', 'bing', 'yandex'). Possible providers are currently only 'google', 'bing', 'yandex'.
+providers = [
+  "google",
+  "bing",
+  "yandex",
+]
+```
+
 
 # Example Site
 
@@ -106,3 +119,4 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 # WIPs / Ideas
 - (Probably will do) Backlinks / Mentioned in
 - (Maybe) Lottie animations?
+- (Dunno) Configurable collapse icon
