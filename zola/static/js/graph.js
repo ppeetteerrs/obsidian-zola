@@ -13,7 +13,11 @@ if (curr_url.endsWith("/")) {
 var container = document.getElementById("graph");
 
 // Parse nodes and edges
-var curr_node = graph_data.nodes.filter((node) => node.url == curr_url);
+try {
+	var curr_node = graph_data.nodes.filter((node) => decodeURI(node.url) == curr_url);
+} catch (error) {
+	var curr_node = null;
+}
 var nodes = null;
 var edges = new vis.DataSet(graph_data.edges);
 

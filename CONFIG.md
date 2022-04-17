@@ -40,7 +40,7 @@ How to sort your pages inside a folder ("title" or "date"). Default:  "title". F
 Google Analytics Measurement ID. Default: "".
 
 ### `SLUGIFY`
-Whether to slugify URLs. Set to "" to disable. Default: "y".
+Whether to slugify URLs. Set to "" to disable (use at your own risk, filenames with special symbols might not show up correctly in the graph view). Default: "y".
 
 ### `HOME_GRAPH`
 Shows knowledge graph on home page. Put "" to disable. Default: "y".
