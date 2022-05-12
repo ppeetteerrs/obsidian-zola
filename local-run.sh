@@ -1,5 +1,33 @@
 #!/bin/bash
 
+# Check for python-is-python3 installed
+if ! command -v python &> /dev/null
+then
+  echo "It appears you do not have python-is-python3 installed"
+  exit 1
+fi
+
+# Check for zola being installed
+if ! command -v zola &> /dev/null
+then
+  echo "zola could not be found please install it from https://www.getzola.org/documentation/getting-started/installation"
+  exit 1
+fi
+
+# Check for correct slugify package
+PYTHON_ERROR=$(eval "python -c 'from slugify import slugify; print(slugify(\"Test String One\"))'" 2>&1)
+
+if [[ $PYTHON_ERROR != "test-string-one" ]]
+then
+  if [[ $PYTHON_ERROR =~ "NameError" ]]
+  then
+    echo "It appears you have the wrong version of slugify installed, the required pip package is python-slugify"
+  else
+    echo "It appears you do not have slugify installed. Install it with 'pip install python-slugify'"
+  fi
+  exit 1
+fi
+
 # Path to the vault
 export VAULT=""
 # Check that the vault got set
