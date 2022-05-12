@@ -87,9 +87,11 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 
 # Local Building
 
-To build locally
+These steps were tested on an fresh install of Ubuntu Server 20.04 install as of 12 May 2022
 
-- Use ```git clone https://github.com/trwbox/obsidian-zola``` to clone the repo to somewhere other than inside the Obsidian vault folder
+- Install zola from the instuctions on the site ```https://www.getzola.org/documentation/getting-started/installation/```
+- Run the following commands to install other needed dependencies ```sudo apt install python-is-python3 python3-pip``` and ```pip3 install python-slugify```
+- Use ```git clone https://github.com/ppeetteerrs/obsidian-zola``` to clone the repo to somewhere other than inside the Obsidian vault folder
 - Set the path to the Obsisian vault in the ```local-run.sh``` script
 - use ```./local-run.sh``` to run the site
 
