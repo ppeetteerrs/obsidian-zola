@@ -85,6 +85,14 @@ providers = [
 
 The [example site](https://peteryuen.netlify.app/) shows the capabilities of `obsidian-zola`. Note that the example site uses the `dev` branch of `obsidian-zola`. If you see features that are available in the example site but are not available in the main branch yet, consider trying out the `dev` (unstable) branch. Exact method can be referenced from the [example repo's](https://github.com/ppeetteerrs/obsidian-pkm) `netlify.toml`.
 
+# Local Building
+
+To build locally
+
+- Use ```git clone https://github.com/trwbox/obsidian-zola``` to clone the repo to somewhere other than inside the Obsidian vault folder
+- Set the path to the Obsisian vault in the ```local-run.sh``` script
+- use ```./local-run.sh``` to run the site
+
 # Features 
 
 **Disclaimer**
