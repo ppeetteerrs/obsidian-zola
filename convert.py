@@ -1,8 +1,16 @@
 import re
 from typing import Dict, List, Tuple
 
-from utils import (DocLink, DocPath, Settings, parse_graph, pp, raw_dir,
-                   site_dir, write_settings)
+from utils import (
+    DocLink,
+    DocPath,
+    Settings,
+    parse_graph,
+    pp,
+    raw_dir,
+    site_dir,
+    write_settings,
+)
 
 if __name__ == "__main__":
 
@@ -17,7 +25,7 @@ if __name__ == "__main__":
     all_paths = list(sorted(raw_dir.glob("**/*")))
 
     for path in [raw_dir, *all_paths]:
-        doc_path = DocPath(path, Settings.is_true("SLUGIFY"))
+        doc_path = DocPath(path)
         if doc_path.is_file:
             if doc_path.is_md:
                 # Page

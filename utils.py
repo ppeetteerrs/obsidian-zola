@@ -26,14 +26,19 @@ docs_dir = site_dir / "content/docs"
 pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
-def slugify_path(path: Union[str, Path]) -> Path:
-    """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths."""
+def slugify_path(path: Union[str, Path], no_suffix: bool) -> Path:
+    """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths. `no_suffix=True` when path is URL or directory (slugify everything including extension)."""
 
     path = Path(str(path).lower())
     if Settings.is_true("SLUGIFY"):
-        os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
-        name = ".".join(slugify(item) for item in path.stem.split("."))
-        suffix = path.suffix
+        if no_suffix:
+            os_path = "/".join(slugify(item) for item in path.parts)
+            name = ""
+            suffix = ""
+        else:
+            os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
+            name = ".".join(slugify(item) for item in path.stem.split("."))
+            suffix = path.suffix
 
         if name != "" and suffix != "":
             return Path(os_path) / f"{name}{suffix}"
@@ -111,7 +116,7 @@ class DocLink:
                 .resolve()
                 .relative_to(docs_dir)
             )
-            new_rel_path = quote(str(slugify_path(new_rel_path)))
+            new_rel_path = quote(str(slugify_path(new_rel_path, True)))
 
             return f"/docs/{new_rel_path}"
         except Exception:
@@ -141,7 +146,7 @@ class DocPath:
     Can be a section (folder), page (Markdown file) or resource (non-Markdown file).
     """
 
-    def __init__(self, path: Path, slugify: bool):
+    def __init__(self, path: Path):
         """Path parsing."""
         self.old_path = path.resolve()
         self.old_rel_path = self.old_path.relative_to(raw_dir)
@@ -154,7 +159,7 @@ class DocPath:
                 self.old_rel_path.stem + "-nested" + self.old_rel_path.suffix
             )
 
-        self.new_rel_path = slugify_path(new_rel_path)
+        self.new_rel_path = slugify_path(new_rel_path, not self.is_file)
         self.new_path = docs_dir / str(self.new_rel_path)
 
     # --------------------------------- Sections --------------------------------- #
