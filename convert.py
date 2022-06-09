@@ -17,6 +17,8 @@ if __name__ == "__main__":
     Settings.parse_env()
     Settings.sub_file(site_dir / "config.toml")
     Settings.sub_file(site_dir / "content/_index.md")
+    Settings.sub_file(site_dir / "templates/macros/footer.html")
+    Settings.sub_file(site_dir / "static/js/graph.js")
 
     nodes: Dict[str, str] = {}
     edges: List[Tuple[str, str]] = []

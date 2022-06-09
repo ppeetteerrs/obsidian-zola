@@ -160,8 +160,7 @@ cython_debug/
 
 .vs
 .vscode
-.data_path
-.data_paths
+.vault_path
 
 backup
 data

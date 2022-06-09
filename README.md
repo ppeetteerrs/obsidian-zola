@@ -18,16 +18,18 @@ Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.
 
 # Announcements
 
-**v1.2.2 Collapsible Sidebar! 📄**
+**v1.3.0 Collapsible Sidebar! 📄**
 
 Bug Fixes:
 
-- Breadcrumb List Schema had error (from Adidoks), now its fixed
-- Added instructions on automatic sitemap update to Google for search indexing
+- Fixed some more bugs related to unconventional filenames (e.g. containing "." and other special characters)
+
 
 Improvements:
 
-- Sidebar collapse + option to set default collapse state (implemented for those few crazy people with over a thousand notes...)
+- Better local test setup (see `Local Testing` below)
+- Configurable root section name
+- Configurable footer content
 
 # Setup
 
@@ -78,22 +80,19 @@ providers = [
 ]
 ```
 
-
 # Example Site
 
 > Do not copy `netlify.toml` from example site, it is unstable. Please reference from `netlify.example.toml`.
 
 The [example site](https://peteryuen.netlify.app/) shows the capabilities of `obsidian-zola`. Note that the example site uses the `dev` branch of `obsidian-zola`. If you see features that are available in the example site but are not available in the main branch yet, consider trying out the `dev` (unstable) branch. Exact method can be referenced from the [example repo's](https://github.com/ppeetteerrs/obsidian-pkm) `netlify.toml`.
 
-# Local Building
+# Local Testing (Ubuntu) [thanks @trwbox]
 
-These steps were tested on an fresh install of Ubuntu Server 20.04 install as of 12 May 2022
-
-- Install zola from the instuctions on the site ```https://www.getzola.org/documentation/getting-started/installation/```
-- Run the following commands to install other needed dependencies ```sudo apt install python-is-python3 python3-pip``` and ```pip3 install python-slugify```
-- Use ```git clone https://github.com/ppeetteerrs/obsidian-zola``` to clone the repo to somewhere other than inside the Obsidian vault folder
-- Set the path to the Obsisian vault in the ```local-run.sh``` script
-- use ```./local-run.sh``` to run the site
+- Install zola from the instuctions on the site `https://www.getzola.org/documentation/getting-started/installation/`
+- Run the following commands to install other needed dependencies `sudo apt install python-is-python3 python3-pip` and `pip3 install python-slugify rtoml` (or use `conda` / `mamba`)
+- Use `git clone https://github.com/ppeetteerrs/obsidian-zola` to clone the repo to somewhere other than inside the Obsidian vault folder
+- Set the path to the Obsisian vault using a `.vault_path` file or the `$VAULT` environment variable
+- use `./local-run.sh` to run the site
 
 # Features 
 

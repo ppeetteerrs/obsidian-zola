@@ -168,7 +168,11 @@ class DocPath:
     def section_title(self) -> str:
         """Gets the title of the section."""
         title = str(self.old_rel_path).replace('"', r"\"")
-        return title if (title != "" and title != ".") else "main"
+        return (
+            title
+            if (title != "" and title != ".")
+            else Settings.options["ROOT_SECTION_NAME"] or "main"
+        )
 
     @property
     def section_sidebar(self) -> str:
@@ -178,7 +182,11 @@ class DocPath:
         sidebar = (
             sidebar.count("/") * Settings.options["SUBSECTION_SYMBOL"]
         ) + sidebar.split("/")[-1]
-        return sidebar if (sidebar != "" and sidebar != ".") else "main"
+        return (
+            sidebar
+            if (sidebar != "" and sidebar != ".")
+            else Settings.options["ROOT_SECTION_NAME"] or "main"
+        )
 
     def write_to(self, child: str, content: Union[str, List[str]]):
         """Writes content to a child path under new path."""
@@ -289,6 +297,42 @@ class Settings:
         "GRAPH_LINK_REPLACE": "",
         "STRICT_LINE_BREAKS": "y",
         "SIDEBAR_COLLAPSED": "",
+        "FOOTER": "",
+        "ROOT_SECTION_NAME": "main",
+        "GRAPH_OPTIONS": """
+        {
+        	nodes: {
+        		shape: "dot",
+        		color: isDark() ? "#8c8e91" : "#dee2e6",
+        		font: {
+        			face: "Inter",
+        			color: isDark() ? "#c9cdd1" : "#616469",
+        			strokeColor: isDark() ? "#c9cdd1" : "#616469",
+        		},
+        		scaling: {
+        			label: {
+        				enabled: true,
+        			},
+        		},
+        	},
+        	edges: {
+        		color: { inherit: "both" },
+        		width: 0.8,
+        		smooth: {
+        			type: "continuous",
+        		},
+        		hoverWidth: 4,
+        	},
+        	interaction: {
+        		hover: true,
+        	},
+        	height: "100%",
+        	width: "100%",
+        	physics: {
+        		solver: "repulsion",
+        	},
+        }
+        """,
     }
 
     @classmethod
