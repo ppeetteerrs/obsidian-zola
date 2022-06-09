@@ -18,7 +18,7 @@ Special Thanks: Wikilink parsing is powered by [obsidian-export](https://github.
 
 # Announcements
 
-**v1.3.0 Collapsible Sidebar! 📄**
+**v1.3.0 Satisfying Feature Requests! ✨**
 
 Bug Fixes:
 
