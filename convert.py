@@ -1,14 +1,24 @@
 import re
 from typing import Dict, List, Tuple
 
-from utils import (DocLink, DocPath, Settings, parse_graph, pp, raw_dir,
-                   site_dir, write_settings)
+from utils import (
+    DocLink,
+    DocPath,
+    Settings,
+    parse_graph,
+    pp,
+    raw_dir,
+    site_dir,
+    write_settings,
+)
 
 if __name__ == "__main__":
 
     Settings.parse_env()
     Settings.sub_file(site_dir / "config.toml")
     Settings.sub_file(site_dir / "content/_index.md")
+    Settings.sub_file(site_dir / "templates/macros/footer.html")
+    Settings.sub_file(site_dir / "static/js/graph.js")
 
     nodes: Dict[str, str] = {}
     edges: List[Tuple[str, str]] = []
@@ -17,7 +27,7 @@ if __name__ == "__main__":
     all_paths = list(sorted(raw_dir.glob("**/*")))
 
     for path in [raw_dir, *all_paths]:
-        doc_path = DocPath(path, Settings.is_true("SLUGIFY"))
+        doc_path = DocPath(path)
         if doc_path.is_file:
             if doc_path.is_md:
                 # Page

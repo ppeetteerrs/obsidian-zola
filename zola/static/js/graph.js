@@ -63,38 +63,7 @@ if (curr_node) {
 }
 
 // Construct graph
-var options = {
-	nodes: {
-		shape: "dot",
-		color: isDark() ? "#8c8e91" : "#dee2e6",
-		font: {
-			face: "Inter",
-			color: isDark() ? "#c9cdd1" : "#616469",
-			strokeColor: isDark() ? "#c9cdd1" : "#616469",
-		},
-		scaling: {
-			label: {
-				enabled: true,
-			},
-		},
-	},
-	edges: {
-		color: { inherit: "both" },
-		width: 0.8,
-		smooth: {
-			type: "continuous",
-		},
-		hoverWidth: 4,
-	},
-	interaction: {
-		hover: true,
-	},
-	height: "100%",
-	width: "100%",
-	physics: {
-		solver: "repulsion",
-	},
-};
+var options = ___GRAPH_OPTIONS___;
 
 var graph = new vis.Network(
 	container,

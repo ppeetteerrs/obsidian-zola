@@ -26,14 +26,19 @@ docs_dir = site_dir / "content/docs"
 pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
-def slugify_path(path: Union[str, Path]) -> Path:
-    """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths."""
+def slugify_path(path: Union[str, Path], no_suffix: bool) -> Path:
+    """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths. `no_suffix=True` when path is URL or directory (slugify everything including extension)."""
 
     path = Path(str(path).lower())
     if Settings.is_true("SLUGIFY"):
-        os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
-        name = ".".join(slugify(item) for item in path.stem.split("."))
-        suffix = path.suffix
+        if no_suffix:
+            os_path = "/".join(slugify(item) for item in path.parts)
+            name = ""
+            suffix = ""
+        else:
+            os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
+            name = ".".join(slugify(item) for item in path.stem.split("."))
+            suffix = path.suffix
 
         if name != "" and suffix != "":
             return Path(os_path) / f"{name}{suffix}"
@@ -111,7 +116,7 @@ class DocLink:
                 .resolve()
                 .relative_to(docs_dir)
             )
-            new_rel_path = quote(str(slugify_path(new_rel_path)))
+            new_rel_path = quote(str(slugify_path(new_rel_path, True)))
 
             return f"/docs/{new_rel_path}"
         except Exception:
@@ -141,7 +146,7 @@ class DocPath:
     Can be a section (folder), page (Markdown file) or resource (non-Markdown file).
     """
 
-    def __init__(self, path: Path, slugify: bool):
+    def __init__(self, path: Path):
         """Path parsing."""
         self.old_path = path.resolve()
         self.old_rel_path = self.old_path.relative_to(raw_dir)
@@ -154,7 +159,7 @@ class DocPath:
                 self.old_rel_path.stem + "-nested" + self.old_rel_path.suffix
             )
 
-        self.new_rel_path = slugify_path(new_rel_path)
+        self.new_rel_path = slugify_path(new_rel_path, not self.is_file)
         self.new_path = docs_dir / str(self.new_rel_path)
 
     # --------------------------------- Sections --------------------------------- #
@@ -163,7 +168,11 @@ class DocPath:
     def section_title(self) -> str:
         """Gets the title of the section."""
         title = str(self.old_rel_path).replace('"', r"\"")
-        return title if (title != "" and title != ".") else "main"
+        return (
+            title
+            if (title != "" and title != ".")
+            else Settings.options["ROOT_SECTION_NAME"] or "main"
+        )
 
     @property
     def section_sidebar(self) -> str:
@@ -173,7 +182,11 @@ class DocPath:
         sidebar = (
             sidebar.count("/") * Settings.options["SUBSECTION_SYMBOL"]
         ) + sidebar.split("/")[-1]
-        return sidebar if (sidebar != "" and sidebar != ".") else "main"
+        return (
+            sidebar
+            if (sidebar != "" and sidebar != ".")
+            else Settings.options["ROOT_SECTION_NAME"] or "main"
+        )
 
     def write_to(self, child: str, content: Union[str, List[str]]):
         """Writes content to a child path under new path."""
@@ -284,6 +297,42 @@ class Settings:
         "GRAPH_LINK_REPLACE": "",
         "STRICT_LINE_BREAKS": "y",
         "SIDEBAR_COLLAPSED": "",
+        "FOOTER": "",
+        "ROOT_SECTION_NAME": "main",
+        "GRAPH_OPTIONS": """
+        {
+        	nodes: {
+        		shape: "dot",
+        		color: isDark() ? "#8c8e91" : "#dee2e6",
+        		font: {
+        			face: "Inter",
+        			color: isDark() ? "#c9cdd1" : "#616469",
+        			strokeColor: isDark() ? "#c9cdd1" : "#616469",
+        		},
+        		scaling: {
+        			label: {
+        				enabled: true,
+        			},
+        		},
+        	},
+        	edges: {
+        		color: { inherit: "both" },
+        		width: 0.8,
+        		smooth: {
+        			type: "continuous",
+        		},
+        		hoverWidth: 4,
+        	},
+        	interaction: {
+        		hover: true,
+        	},
+        	height: "100%",
+        	width: "100%",
+        	physics: {
+        		solver: "repulsion",
+        	},
+        }
+        """,
     }
 
     @classmethod
