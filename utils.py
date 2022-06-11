@@ -117,8 +117,11 @@ class DocLink:
                 .relative_to(docs_dir)
             )
             new_rel_path = quote(str(slugify_path(new_rel_path, True)))
-
-            return f"/docs/{new_rel_path}"
+            if(Settings.options["BASE_PATH"] != ""):
+                return f"/{Settings.options['BASE_PATH']}/docs/{new_rel_path}"
+            else:
+                return f"/docs/{new_rel_path}"
+        
         except Exception:
             print(f"Invalid link found: {doc_path.old_rel_path}")
             return "/404"
@@ -254,7 +257,10 @@ class DocPath:
     def abs_url(self) -> str:
         """Returns an absolute URL to the page."""
         assert self.is_md
-        return quote(f"/docs/{str(self.new_rel_path)[:-3]}")
+        if(Settings.options['BASE_PATH'] != ""):
+            return quote(f"/{Settings.options['BASE_PATH']}/docs/{str(self.new_rel_path)[:-3]}")
+        else:
+            return quote(f"/docs/{str(self.new_rel_path)[:-3]}")
 
     def edge(self, other: str) -> Tuple[str, str]:
         """Gets an edge from page's URL to another URL."""
@@ -279,6 +285,7 @@ class Settings:
     # Default options
     options: Dict[str, Optional[str]] = {
         "SITE_URL": None,
+        "BASE_PATH": "",
         "SITE_TITLE": "Someone's Second 🧠",
         "TIMEZONE": "Asia/Hong_Kong",
         "REPO_URL": None,
@@ -438,7 +445,7 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
             list(sorted(edge_counts.items(), key=lambda k: -k[1]))[: len(PASTEL_COLORS)]
         )
     }
-
+    
     # Generate graph data
     graph_info = {
         "nodes": [

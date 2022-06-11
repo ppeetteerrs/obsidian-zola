@@ -20,6 +20,8 @@ SITE_TITLE = "Someone's Second 🧠"
 SITE_TITLE_TAB = ""
 # (REQUIRED) Netlify site URL
 SITE_URL = ""
+# (Optional) The base path of the website if not the root (e.g. /obsidian-zola/)
+BASE_PATH = ""
 # (Optional) Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
 ZOLA_VERSION = "0.15.2"
