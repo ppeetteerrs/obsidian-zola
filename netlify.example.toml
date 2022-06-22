@@ -20,7 +20,7 @@ SITE_TITLE = "Someone's Second 🧠"
 SITE_TITLE_TAB = ""
 # (REQUIRED) Netlify site URL
 SITE_URL = ""
-# (Optional) The base path of the website if not the root (e.g. /obsidian-zola/)
+# (Optional) The base path of the website if not the root (e.g. https://example.site.com/obsidian-zola/) this need to have no leading or trailing backslahes, alongside changing the SITE_URL to reflect the new location
 BASE_PATH = ""
 # (Optional) Site Timezone
 TIMEZONE = "Asia/Hong_Kong"
