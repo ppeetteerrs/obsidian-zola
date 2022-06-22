@@ -121,7 +121,7 @@ class DocLink:
                 return f"/{Settings.options['BASE_PATH']}/docs/{new_rel_path}"
             else:
                 return f"/docs/{new_rel_path}"
-        
+
         except Exception:
             print(f"Invalid link found: {doc_path.old_rel_path}")
             return "/404"
