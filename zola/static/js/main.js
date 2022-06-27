@@ -22,11 +22,6 @@ document.getElementById("mode").addEventListener("click", () => {
 	}
 });
 
-// enforce local storage setting but also fallback to user-agent preferences
-if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
-	document.body.classList.add("dark");
-}
-
 // Collapsible sidebar code (it's ugly but I don't care)
 var sections = $(".collapsible-section");
 if (!sidebar_collapsed) {
