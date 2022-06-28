@@ -44,10 +44,12 @@ fi
 
 # Pull environment variables from the vault's netlify.toml when building (by generating env.sh to be sourced)
 python env.py
+source env.sh && rm env.sh
 
-# Set the site and repo url as local since locally built
+# Set the site and repo url as local since locally built, alongside resetting the base path to none
 export SITE_URL=local
 export REPO_URL=local
+export BASE_PATH=""
 
 # Remove previous build and sync Zola template contents
 rm -rf build
@@ -63,7 +65,7 @@ else
 fi
 
 # Run conversion script
-source env.sh && python convert.py && rm env.sh
+python convert.py
 
 # Serve Zola site
 zola --root=build serve
