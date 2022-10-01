@@ -27,34 +27,45 @@
 							</div>
 					{% endif %}
 					{% if subsection.subsections %}
-						{% for s in subsection.subsections %}
-						{% set subsubsection = get_section(path=s) %}
-							{% if subsubsection.pages %}
-									<h4 class="collapsible-section">{{ subsubsection.extra.sidebar | safe }}</h4>
+						<h3 class="collapsible-section"> {{ subsection.extra.sidebar | safe }} </h3>
+						<div class="collapsible-wrapper">
+							<ul class="list-unstyled">
+							{% for s in subsection.subsections %}
+							{% set subsubsection = get_section(path=s) %}
+								{% if subsubsection.pages %}
+
+										<h4 class="collapsible-section">{{ subsubsection.extra.sidebar | safe }}</h4>
+										<div class="collapsible-wrapper">
+											<ul class="list-unstyled">
+											{% for page in subsubsection.pages %}                           
+													<li><a class="docs-link{% if current_url == page.permalink %} active{% endif %}" href="{{ page.permalink | safe }}">{{ page.title | safe }}</a></li>
+											{% endfor %}
+											</ul>
+										</div>
+								{% endif %}
+								{% if subsubsection.subsections %}
+									<h4 class="collapsible-section"> {{ subsubsection.extra.sidebar | safe }} </h4>
 									<div class="collapsible-wrapper">
 										<ul class="list-unstyled">
-										{% for page in subsubsection.pages %}                           
-												<li><a class="docs-link{% if current_url == page.permalink %} active{% endif %}" href="{{ page.permalink | safe }}">{{ page.title | safe }}</a></li>
+										{% for s in subsubsection.subsections %}
+										{% set subsubsubsection = get_section(path=s) %}
+											{% if subsubsubsection.pages %}
+													<h6 class="collapsible-section">{{ subsubsubsection.extra.sidebar | safe }}</h6>
+													<div class="collapsible-wrapper">
+														<ul class="list-unstyled">
+														{% for page in subsubsubsection.pages %}                           
+																<li><a class="docs-link{% if current_url == page.permalink %} active{% endif %}" href="{{ page.permalink | safe }}">{{ page.title | safe }}</a></li>
+														{% endfor %}
+														</ul>
+													</div>
+											{% endif %}
 										{% endfor %}
 										</ul>
 									</div>
-							{% endif %}
-							{% if subsubsection.subsections %}
-								{% for s in subsubsection.subsections %}
-								{% set subsubsubsection = get_section(path=s) %}
-									{% if subsubsubsection.pages %}
-											<h5 class="collapsible-section">{{ subsubsubsection.extra.sidebar | safe }}</h5>
-											<div class="collapsible-wrapper">
-												<ul class="list-unstyled">
-												{% for page in subsubsubsection.pages %}                           
-														<li><a class="docs-link{% if current_url == page.permalink %} active{% endif %}" href="{{ page.permalink | safe }}">{{ page.title | safe }}</a></li>
-												{% endfor %}
-												</ul>
-											</div>
-									{% endif %}
-								{% endfor %}
-							{% endif %}
-						{% endfor %}
+								{% endif %}
+							{% endfor %}
+							</ul>
+						</div>
 					{% endif %}
 					{% endfor %}
 			{% endif %}
