@@ -10,6 +10,7 @@ from os import environ
 from pathlib import Path
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
+from unicodedata import category
 from urllib.parse import quote, unquote
 
 from slugify import slugify
@@ -434,14 +435,17 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
         edge_counts[i] += 1
         edge_counts[j] += 1
 
+    # Node category if more than 2 nested level, take sub folder
+    node_categories = set([ key.split("/")[2 if key.count("/") < 5 else 3] for key in nodes.keys() ])
+    
     # Choose the most connected nodes to be colored
     top_nodes = {
         node_url: i
-        for i, (node_url, _) in enumerate(
-            list(sorted(edge_counts.items(), key=lambda k: -k[1]))[: len(PASTEL_COLORS)]
+        for i, node_url in enumerate(
+            list(node_categories)[: len(PASTEL_COLORS)]
         )
     }
-
+    
     # Generate graph data
     graph_info = {
         "nodes": [
@@ -449,7 +453,7 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
                 "id": node_ids[url],
                 "label": title,
                 "url": url,
-                "color": PASTEL_COLORS[top_nodes[url]] if url in top_nodes else None,
+                "color": PASTEL_COLORS[top_nodes[url.split("/")[2 if url.count("/") < 5 else 3]]] if url.split("/")[2 if url.count("/") < 5 else 3] in top_nodes else None,
                 "value": math.log10(edge_counts[url] + 1) + 1,
                 "opacity": 0.1,
             }
