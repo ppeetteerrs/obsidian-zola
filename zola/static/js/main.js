@@ -29,15 +29,17 @@ if (!sidebar_collapsed) {
 }
 
 const openlink = document.querySelector("li a.active");
-let parentCollapsibleWrapper = openlink.closest("ul").closest("div");
+if (openlink) {
+    let parentCollapsibleWrapper = openlink.closest("ul").closest("div");
 
-while (parentCollapsibleWrapper) {
-    parentCollapsibleWrapper.classList.add("open");
-    parentCollapsibleWrapper.previousSibling.classList.add("open");
-    parentCollapsibleWrapper =
-        parentCollapsibleWrapper.closest("ul") != null
-            ? parentCollapsibleWrapper.closest("ul").closest("div")
-            : null;
+    while (parentCollapsibleWrapper) {
+        parentCollapsibleWrapper.classList.add("open");
+        parentCollapsibleWrapper.previousSibling.classList.add("open");
+        parentCollapsibleWrapper =
+            parentCollapsibleWrapper.closest("ul") != null
+                ? parentCollapsibleWrapper.closest("ul").closest("div")
+                : null;
+    }
 }
 
 // Add click listener to all collapsible sections
