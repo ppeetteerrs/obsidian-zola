@@ -28,6 +28,18 @@ if (!sidebar_collapsed) {
     sections.addClass("open");
 }
 
+const openlink = document.querySelector("li a.active");
+let parentCollapsibleWrapper = openlink.closest("ul").closest("div");
+
+while (parentCollapsibleWrapper) {
+    parentCollapsibleWrapper.classList.add("open");
+    parentCollapsibleWrapper.previousSibling.classList.add("open");
+    parentCollapsibleWrapper =
+        parentCollapsibleWrapper.closest("ul") != null
+            ? parentCollapsibleWrapper.closest("ul").closest("div")
+            : null;
+}
+
 // Add click listener to all collapsible sections
 for (let i = 0; i < sections.length; i++) {
     // Initial setup
@@ -35,13 +47,10 @@ for (let i = 0; i < sections.length; i++) {
     let wrapper_children = wrapper.find("> ul");
 
     if (wrapper_children.length > 0) {
-        let page_list = $(wrapper_children[0]);
-        if (sidebar_collapsed) {
-            // wrapper.height(0);
+        if (sidebar_collapsed && !wrapper.hasClass("open")) {
             wrapper.hide();
         } else {
             wrapper.addClass("open");
-            // wrapper.height(page_list.outerHeight(true));
             wrapper.show();
         }
     }
