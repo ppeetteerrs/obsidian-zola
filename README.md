@@ -94,6 +94,13 @@ The [example site](https://peteryuen.netlify.app/) shows the capabilities of `ob
 - Set the path to the Obsisian vault using a `.vault_path` file or the `$VAULT` environment variable
 - use `./local-run.sh` to run the site
 
+# Local Testing (Docker)
+
+- Use docker-compose.yml and command 'docker-compose up -d --build'
+- Copy all your obsidian-vault files (folder/.md) into $PWD/obsidian 
+- Run docker again by docker-compose restart
+- View your site in http://{public_ip}:1111
+
 # Features 
 
 **Disclaimer**
