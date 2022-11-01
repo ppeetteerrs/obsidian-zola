@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  obsidian_server:
+    build:
+      context: .
+    container_name: obsidian
+    restart: always
+    
+    environment:
+      - TZ=Asia/Taipei
+      - SITE_URL=`curl -s https://icanhazip.com`
+    volumes:
+      - ./zola_parser:/obisidian-zola
+      - ./obsidian:/obsidian
+    ports:
+      - "1111:1111"
+    entrypoint: 
+      - sh
+      - local-run.sh
