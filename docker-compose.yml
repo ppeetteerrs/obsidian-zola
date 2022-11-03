@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  obsidian_server:
+    build:
+      context: .
+    container_name: obsidian
+    restart: always
+    environment:
+      - TZ=Asia/Taipei
+      - SITE_URL=""
+    volumes:
+      - ./obsidian:/obsidian
+    ports:
+      - "1111:1111"
+    command: sh local-run.sh
