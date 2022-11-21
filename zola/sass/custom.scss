@@ -1,16 +1,21 @@
+.collapsible-section{
+	position: relative;
+}
 .collapsible-section:hover {
 	cursor: pointer;
 	text-decoration: underline;
 }
 
 .collapsible-section:after {
-	content: "➕"; /* Unicode character for "plus" sign (+) */
+	content: url("/assets/arrowdown.svg"); 
 	font-size: 0.8rem;
+	width: 20px;
+	height: 20px;
 	float: right;
 }
 
 .collapsible-section.open:after {
-	content: "➖"; /* Unicode character for "minus" sign (-) */
+	content: url("/assets/arrowup.svg"); 
 }
 
 .dark .collapsible-section:after,
@@ -22,4 +27,8 @@
 .docs-links .collapsible-wrapper {
 	overflow: hidden;
 	transition: height 0.5s ease-out;
+}
+
+.collapsible-wrapper {
+	display: none;
 }

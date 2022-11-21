@@ -331,3 +331,17 @@ body.dark .copy-status:active::after {
 	display: block;
 	color: $link-color-dark;
 }
+
+
+body.dark .folder svg {
+	color: white;
+	fill: white;
+}
+
+body.dark .collapsible-section:after {
+	content: url("/assets/arrowdown-dark.svg");
+}
+
+body.dark .collapsible-section.open:after {
+	content: url("/assets/arrowup-dark.svg");
+}
