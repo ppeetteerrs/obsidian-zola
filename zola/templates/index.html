@@ -43,6 +43,7 @@
 
 {% if config.extra.home_graph %}
   <div id="graph"></div>
+
 {% endif %}
 
 </div>
@@ -53,6 +54,24 @@
 
 {% if config.extra.home_graph %}
   {{ macros_graph::graph_js() }}
-{% endif %}
 
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      var container = document.getElementById("graph");
+
+      graph.once("afterDrawing", function () {
+
+        graph.moveTo({
+            position: {
+                x: 0,
+                y: -container.clientHeight / 8,
+            },
+            scale: 0.5 - (100/container.clientWidth),
+        }); 
+      });
+
+    }, false);
+  </script>
+{% endif %}
 {% endblock content %}

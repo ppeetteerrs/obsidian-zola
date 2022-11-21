@@ -46,6 +46,22 @@ h6,
   }
 }
 
+h1.collapsible-section,
+h2.collapsible-section,
+h3.collapsible-section,
+h4.collapsible-section,
+h5.collapsible-section,
+h6.collapsible-section,
+.h1.collapsible-section,
+.h2.collapsible-section,
+.h3.collapsible-section,
+.h4.collapsible-section,
+.h5.collapsible-section,
+.h6.collapsible-section {
+  margin: 0.5em 24px 0.5em 0;
+}
+
+
 .home h1 {
   /* font-size: calc(1.375rem + 1.5vw); */
   font-size: calc(1.875rem + 1.5vw);
@@ -229,4 +245,11 @@ article {
   hr {
     margin: 3rem 0;
   }
+}
+
+.folder {
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  margin: 0 0.5em 0.5em 0;
 }

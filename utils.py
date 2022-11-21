@@ -10,6 +10,7 @@ from os import environ
 from pathlib import Path
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
+from unicodedata import category
 from urllib.parse import quote, unquote
 
 from slugify import slugify
@@ -179,9 +180,12 @@ class DocPath:
         """Gets the title of the section."""
         sidebar = str(self.old_rel_path)
         assert Settings.options["SUBSECTION_SYMBOL"] is not None
+        section_symbol = Settings.options["SUBSECTION_SYMBOL"] if sidebar.count("/") > 0 else ""
         sidebar = (
-            sidebar.count("/") * Settings.options["SUBSECTION_SYMBOL"]
+            section_symbol
         ) + sidebar.split("/")[-1]
+        
+        print("sidebar", sidebar)
         return (
             sidebar
             if (sidebar != "" and sidebar != ".")
@@ -292,7 +296,7 @@ class Settings:
         "SLUGIFY": "y",
         "HOME_GRAPH": "y",
         "PAGE_GRAPH": "y",
-        "SUBSECTION_SYMBOL": "👉",
+        "SUBSECTION_SYMBOL": "<div class='folder'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M448 96h-172.1L226.7 50.75C214.7 38.74 198.5 32 181.5 32H64C28.65 32 0 60.66 0 96v320c0 35.34 28.65 64 64 64h384c35.35 0 64-28.66 64-64V160C512 124.7 483.3 96 448 96zM64 80h117.5c4.273 0 8.293 1.664 11.31 4.688L256 144h192c8.822 0 16 7.176 16 16v32h-416V96C48 87.18 55.18 80 64 80zM448 432H64c-8.822 0-16-7.176-16-16V240h416V416C464 424.8 456.8 432 448 432z' /></svg></div>",
         "LOCAL_GRAPH": "",
         "GRAPH_LINK_REPLACE": "",
         "STRICT_LINE_BREAKS": "y",
@@ -431,14 +435,17 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
         edge_counts[i] += 1
         edge_counts[j] += 1
 
+    # Node category if more than 2 nested level, take sub folder
+    node_categories = set([ key.split("/")[2 if key.count("/") < 5 else 3] for key in nodes.keys() ])
+    
     # Choose the most connected nodes to be colored
     top_nodes = {
         node_url: i
-        for i, (node_url, _) in enumerate(
-            list(sorted(edge_counts.items(), key=lambda k: -k[1]))[: len(PASTEL_COLORS)]
+        for i, node_url in enumerate(
+            list(node_categories)[: len(PASTEL_COLORS)]
         )
     }
-
+    
     # Generate graph data
     graph_info = {
         "nodes": [
@@ -446,7 +453,7 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
                 "id": node_ids[url],
                 "label": title,
                 "url": url,
-                "color": PASTEL_COLORS[top_nodes[url]] if url in top_nodes else None,
+                "color": PASTEL_COLORS[top_nodes[url.split("/")[2 if url.count("/") < 5 else 3]]] if url.split("/")[2 if url.count("/") < 5 else 3] in top_nodes else None,
                 "value": math.log10(edge_counts[url] + 1) + 1,
                 "opacity": 0.1,
             }
