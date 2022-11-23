@@ -136,7 +136,7 @@ Source:
     var TERM_WEIGHT = 40;
     var NORMAL_WORD_WEIGHT = 2;
     var FIRST_WORD_WEIGHT = 8;
-    var TEASER_MAX_WORDS = 30;
+    var TEASER_MAX_WORDS = 60;
   
     var stemmedTerms = terms.map(function (w) {
       return elasticlunr.stemmer(w.toLowerCase());
