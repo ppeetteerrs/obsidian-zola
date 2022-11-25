@@ -12,8 +12,23 @@ function showPreview(mouseEvent, link) {
             .then((res) => res.text())
             .then((html) => {
                 let doc = new DOMParser().parseFromString(html, "text/html");
-                previewDiv.innerHTML =
-                    doc.querySelector(".docs-content").innerHTML;
+                let docContent = doc.querySelector(".docs-content");
+                previewDiv.innerHTML = docContent.innerHTML;
+
+                let blockId = link.href.match(/(?<=#).{6}/);
+
+                if (blockId != null) {
+                    blockId = [blockId];
+                    const blockContent = [
+                        ...docContent.querySelectorAll(
+                            "p, li, h1, h2, h3, h4, h5, h6"
+                        ),
+                    ].findLast((e) => {
+                        return e.textContent.includes(`^${blockId}`);
+                    });
+
+                    previewDiv.innerHTML = blockContent.outerHTML;
+                }
                 cache.set(link.href, previewDiv.innerHTML);
                 initPreview(`.${getPreviewUniqueClass(previewDiv)} a`);
             });
@@ -46,7 +61,7 @@ function showPreview(mouseEvent, link) {
 function getPreviewPosition(clientX, clientY) {
     const offset = 10,
         previewDivWidth = 400,
-        previewDivHeight = 300;
+        previewDivHeight = 100;
     const boundaryX = window.innerWidth,
         boundaryY = window.innerHeight;
     const overflowRight = clientX + offset + previewDivWidth > boundaryX;
