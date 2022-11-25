@@ -12,7 +12,7 @@ body.home {
 		z-index: 1;
 
 		div.home-background {
-			background: rgba(255,255,255,$transparency);
+			background: rgba(255,255,255,0.2);
 			z-index: 2;
 			pointer-events: none;
 		}
