@@ -1,4 +1,8 @@
 $transparency: 0.95;
+$text_backdrop_effect: {
+	backdrop-filter: blur(1px) saturate(150%);
+	padding-bottom: 4%
+}
 body.home {
 	
 	height: 100vh;
@@ -40,9 +44,14 @@ body.home {
 
 body.dark {
 	> div.home div.home-background,footer{
-		background: rgba($color: #212529, $alpha: $transparency);
+		background: rgba($color: #212529, $alpha: 0.2);
 		z-index: 2;
 		pointer-events: none;
+		> div > div > section > div > div.col-lg-9.col-xl-8.text-center >p{
+			//probably not the pretty way to do this, but it should work
+			backdrop-filter: blur(1px) saturate(150%);
+			padding-bottom: 4%
+		}
 	}
 }
 
