@@ -1,0 +1,25 @@
+.preview {
+    position: fixed;
+    max-height: 300px;
+    min-height: 100px;
+    width: 400px;
+    padding: 0;
+    overflow-y: auto;
+    border-bottom: none;
+    background-color: #ffffff;
+    border: 1px solid #f5f6f8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    color: black;
+    padding: 15px 30px;
+    font-size: 15px;
+    overscroll-behavior: contain;
+    z-index: 9999999;
+}
+
+body.dark .preview {
+    background-color: #212529;
+    border: 1px solid #39383b;
+    box-shadow: 0 2px 8px gba(0, 0, 0, 0.3);;
+    color: white;
+}
