@@ -15,11 +15,10 @@ body.home {
 			background: rgba(255,255,255,0.2);
 			z-index: 2;
 			pointer-events: none;
-			> div > div > section > div > div.col-lg-9.col-xl-8.text-center{ //probably not the pretty way to do this, but it should work
-				p{
-					backdrop-filter: blur(1px) saturate(150%);
-					padding-bottom: 4%
-				}
+			> div > div > section > div > div.col-lg-9.col-xl-8.text-center >p{ 
+				//probably not the pretty way to do this, but it should work 
+				backdrop-filter: blur(1px) saturate(150%);
+				padding-bottom: 4%
 			}
 		}
 
