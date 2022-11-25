@@ -15,7 +15,7 @@ body.home {
 			background: rgba(255,255,255,0.2);
 			z-index: 2;
 			pointer-events: none;
-			backdrop-filter: blur(1px);
+			backdrop-filter: blur(1px) saturate(150%);
 		}
 
 		#graph {
