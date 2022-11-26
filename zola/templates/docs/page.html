@@ -6,7 +6,7 @@
 
 {% block header %}
   {# This value is matched by the config.extra.menu.main~url #}
-  {% set current_section = "" %}
+  {% set current_section = "docs" %}
   {{ macros_header::header(current_section=current_section)}}
 {% endblock header %}
 
@@ -20,12 +20,13 @@
         <h1>{{ page.title | safe }}</h1>
         {% if page.extra.lead %}<p class="lead">{{ page.extra.lead | safe }}</p>{% endif %}
         {{ page.content | safe }}
-        {% if config.extra.edit_page %}
-          {{ macros_edit_page::docs_edit_page(current_path=current_path) }}
-        {% endif %}
+
         {% if config.extra.page_graph %}
           {{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}
           {% endif %}
+        {% if config.extra.edit_page %}
+          {{ macros_edit_page::docs_edit_page(current_path=current_path) }}
+        {% endif %}
         {% if config.extra.comments_giscuss %}
           {{ macros_comments::comments() }}
         {% endif %}
