@@ -1,4 +1,11 @@
 {% macro comments() %}
+%theme = "light"
+<script>
+    if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+        //put in variable
+        %theme = "dark"
+    }
+</script>
 <script src="https://giscus.app/client.js"
         data-repo="yarden-zmr/me"
         data-repo-id="R_kgDOIeeMfw"
@@ -9,7 +16,7 @@
         data-reactions-enabled="0"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme="preferred_color_scheme"
+        data-theme=%theme
         data-lang="en"
         crossorigin="anonymous"
         async>
