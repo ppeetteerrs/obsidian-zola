@@ -304,6 +304,7 @@ class Settings:
         "FOOTER": "",
         "ROOT_SECTION_NAME": "main",
         "COMMENTS_GISCUSS": "",
+        "EDIT_PAGE": "",
         "GRAPH_OPTIONS": """
         {
         	nodes: {
