@@ -264,9 +264,7 @@ class DocPath:
         """Gets an edge from page's URL to another URL."""
         return tuple(sorted([self.abs_url, other]))
 
-    @property
-    def old_path(self) -> Path:
-        return self.old_path
+
 # ---------------------------------------------------------------------------- #
 #                                   Settings                                   #
 # ---------------------------------------------------------------------------- #

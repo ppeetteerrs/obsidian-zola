@@ -24,7 +24,7 @@
           {{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}
           {% endif %}
         {% if config.extra.edit_page %}
-          {{ macros_edit_page::docs_edit_page(current_path=page.old_path) }}
+          {{ macros_edit_page::docs_edit_page(current_path=page.title) }}
         {% endif %}
         {% if config.extra.comments_giscuss %}
           {{ macros_comments::comments() }}
