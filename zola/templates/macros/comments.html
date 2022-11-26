@@ -10,15 +10,8 @@
         data-reactions-enabled="0"
         data-emit-metadata="0"
         data-input-position="top"
-        data-theme=light
+        data-theme="preferred_color_scheme"
         data-lang="en"
         crossorigin="anonymous"
         async>
-    console.log(localStorage.getItem("theme"))
-    if (isDark()) {
-        console.log("dark!")
-        //put in variable
-        document.getElementById('commentSection').setAttribute('data-theme', 'dark');
-    }
 </script>
-{% endmacro %}
