@@ -303,6 +303,7 @@ class Settings:
         "SIDEBAR_COLLAPSED": "",
         "FOOTER": "",
         "ROOT_SECTION_NAME": "main",
+        "COMMENTS_GISCUSS": "",
         "GRAPH_OPTIONS": """
         {
         	nodes: {
