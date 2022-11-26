@@ -167,3 +167,5 @@ data
 public
 build
 .idea/
+zola/sass/bootstrap/node_modules/
+zola/sass/bootstrap/package-lock.json
