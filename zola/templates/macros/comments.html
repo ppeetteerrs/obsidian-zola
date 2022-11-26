@@ -1,7 +1,4 @@
 {% macro comments() %}
-<script>
-
-</script>
 <script id="commentSection"
         src="https://giscus.app/client.js"
         data-repo="yarden-zmr/me"
@@ -17,7 +14,9 @@
         data-lang="en"
         crossorigin="anonymous"
         async>
-    if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+    console.log(localStorage.getItem("theme"))
+    if (isDark()) {
+        console.log("dark!")
         //put in variable
         document.getElementById('commentSection').setAttribute('data-theme', 'dark');
     }
