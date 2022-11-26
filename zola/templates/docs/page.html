@@ -23,6 +23,21 @@
         {% if config.extra.edit_page %}
           {{ macros_edit_page::docs_edit_page(current_path=current_path) }}
         {% endif %}
+          <script src="https://giscus.app/client.js"
+                  data-repo="yarden-zmr/me"
+                  data-repo-id="R_kgDOIeeMfw"
+                  data-category="Announcements"
+                  data-category-id="DIC_kwDOIeeMf84CSwc3"
+                  data-mapping="pathname"
+                  data-strict="0"
+                  data-reactions-enabled="1"
+                  data-emit-metadata="0"
+                  data-input-position="top"
+                  data-theme="preferred_color_scheme"
+                  data-lang="en"
+                  crossorigin="anonymous"
+                  async>
+          </script>
         {% if config.extra.page_graph %}
           {{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}
           {% endif %}
