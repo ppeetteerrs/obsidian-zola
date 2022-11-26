@@ -265,7 +265,7 @@ class DocPath:
         return tuple(sorted([self.abs_url, other]))
 
     @property
-    def old_path(self) -> Path:
+    def old_path_tmp(self) -> Path:
         return self.old_path
 # ---------------------------------------------------------------------------- #
 #                                   Settings                                   #
