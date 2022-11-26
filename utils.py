@@ -305,6 +305,7 @@ class Settings:
         "ROOT_SECTION_NAME": "main",
         "COMMENTS_GISCUSS": "",
         "EDIT_PAGE": "",
+        "EDIT_PAGE_BUTTON_TEXT": "Edit this page on Github",
         "GRAPH_OPTIONS": """
         {
         	nodes: {

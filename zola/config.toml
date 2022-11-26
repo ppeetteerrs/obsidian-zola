@@ -27,6 +27,7 @@ page_graph = "___PAGE_GRAPH___"
 title_addition = "___SITE_TITLE_TAB___"
 
 edit_page = "___EDIT_PAGE___"
+edit_page_button_text = "___EDIT_PAGE_BUTTON_TEXT___"
 comments_giscuss = "___COMMENTS_GISCUSS___"
 docs_repo = "___REPO_URL___"
 repo_branch = "main"
