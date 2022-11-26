@@ -26,6 +26,10 @@ is_netlify = true
 page_graph = "___PAGE_GRAPH___"
 title_addition = "___SITE_TITLE_TAB___"
 
+edit_page = "___EDIT_PAGE___"
+comments_giscuss = "___COMMENTS_GISCUSS___"
+
+
 language_code = "en-US"
 theme_color = "#fff"
 
