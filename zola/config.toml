@@ -29,8 +29,7 @@ title_addition = "___SITE_TITLE_TAB___"
 edit_page = "___EDIT_PAGE___"
 comments_giscuss = "___COMMENTS_GISCUSS___"
 docs_repo = "___REPO_URL___"
-docs_repo_branch = "main"
-
+repo_branch = "main"
 
 language_code = "en-US"
 theme_color = "#fff"
