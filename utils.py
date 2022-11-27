@@ -42,14 +42,14 @@ def convert_metadata_to_html(metadata: dict) -> str:
         print(name)
         if name in metadata:
             parsed_metadata += func(metadata[name])
-    print(parsed_metadata)
+    return parsed_metadata
     # names = [func[0] for func in m]
     # print(names)
     # get all
     # for key, value in metadata.items():
 
 
-convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
+# convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
 
 
 def slugify_path(path: Union[str, Path], no_suffix: bool, lowercase=False) -> Path:
@@ -265,12 +265,12 @@ class DocPath:
             return lines
         # return [line for line in open(self.old_path, "r").readlines()]
 
-    @property
-    def metadata(self) -> Dict[str, str]:
-        """Gets the metadata of the file. Made up of the front matter and some file properties."""
-        metadata = self.frontmatter
-        metadata["modified"] = self.modified.strftime("%Y-%m-%d %H:%M:%S")
-        return self.frontmatter
+    # @property
+    # def metadata(self) -> Dict[str, str]:
+    #     """Gets the metadata of the file. Made up of the front matter and some file properties."""
+    #     metadata = self.frontmatter
+    #     metadata["modified"] = self.modified.strftime("%Y-%m-%d %H:%M:%S")
+    #     return self.frontmatter
 
     @property
     def frontmatter(self) -> Dict[str, str]:
