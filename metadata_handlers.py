@@ -29,7 +29,7 @@ def _chip(key, value, should_link=True) -> str:
     if not value.startswith("http"):
         value = str(value).replace(" ", "--")
     if not key.startswith("http"):
-        key = f"https://img.shields.io/badge/{_clean_url(key)}-{_clean_url(value)}-{_random_color(key)}"
+        key = f"https://img.shields.io/badge/{_clean_key(key)}-{_clean_url(value)}-{_random_color(key)}"
     if should_link:
         return f"[![alt text]({key})]({value})".strip() + "\n"
     else :
@@ -48,12 +48,14 @@ def tags(tags_list: list) -> str:
         tags_out += f"![{tag}](https://img.shields.io/badge/{tag}-{_random_color(tag)})\n"
     return tags_out
 
+def _clean_key(key: str) -> str:
+    return key.replace(" ", "%20").replace("_", "-")
 
 def _clean_url(url: str) -> str:
     if "/" in url:
-        return url.split("/")[-1].replace("-", "--").replace(" ", "--")
+        return url.split("/")[-1].replace("-", "--").replace(" ", "%20")
     else:
-        return url.replace("-", "--").replace(" ", "--")
+        return url.replace("-", "--").replace(" ", "%20")
 
 
 def _random_color(random_seed=0) -> str:
