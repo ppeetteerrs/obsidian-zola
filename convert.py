@@ -33,6 +33,8 @@ if __name__ == "__main__":
                 # Page
                 nodes[doc_path.abs_url] = doc_path.page_title
                 content = doc_path.content
+                meta_data = doc_path.frontmatter
+                print(f"Found metadata for {doc_path.abs_url}: {meta_data}")
                 parsed_lines: List[str] = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)

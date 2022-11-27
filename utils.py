@@ -14,7 +14,7 @@ from unicodedata import category
 from urllib.parse import quote, unquote
 
 from slugify import slugify
-
+import yaml
 site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
 docs_dir = site_dir / "content/docs"
@@ -30,7 +30,7 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 def slugify_path(path: Union[str, Path], no_suffix: bool) -> Path:
     """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths. `no_suffix=True` when path is URL or directory (slugify everything including extension)."""
 
-    path = Path(str(path)) #.lower()
+    path = Path(str(path))  # .lower()
     if Settings.is_true("SLUGIFY"):
         if no_suffix:
             os_path = "/".join(slugify(item) for item in path.parts)
@@ -157,7 +157,7 @@ class DocPath:
         if self.is_md and (self.old_path.parent / self.old_path.stem).is_dir():
             print(f"Name collision with sibling folder, renaming: {self.old_rel_path}")
             new_rel_path = self.old_rel_path.parent / (
-                self.old_rel_path.stem + "-nested" + self.old_rel_path.suffix
+                    self.old_rel_path.stem + "-nested" + self.old_rel_path.suffix
             )
 
         self.new_rel_path = slugify_path(new_rel_path, not self.is_file)
@@ -182,9 +182,9 @@ class DocPath:
         assert Settings.options["SUBSECTION_SYMBOL"] is not None
         section_symbol = Settings.options["SUBSECTION_SYMBOL"] if sidebar.count("/") > 0 else ""
         sidebar = (
-            section_symbol
-        ) + sidebar.split("/")[-1]
-        
+                      section_symbol
+                  ) + sidebar.split("/")[-1]
+
         print("sidebar", sidebar)
         return (
             sidebar
@@ -229,9 +229,29 @@ class DocPath:
 
     @property
     def content(self) -> List[str]:
-        """Gets the lines of the file."""
-        return [line for line in open(self.old_path, "r").readlines()]
+        """Gets the lines of the file but ignores the front matter."""
+        with open(self.old_path, "r") as f:
+            lines = f.readlines()
+            if lines[0].startswith("---"):
+                # find the end of the front matter
+                for i, line in enumerate(lines[1:]):
+                    if line.startswith("---"):
+                        return lines[i + 2:]
+            return lines
+        # return [line for line in open(self.old_path, "r").readlines()]
 
+    @property
+    def frontmatter(self) -> Dict[str, str]:
+        """Gets the front matter of the file."""
+        with open(self.old_path, "r") as f:
+            lines = f.readlines()
+            if lines[0].startswith("---"):
+                # find the end of the front matter
+                for i, line in enumerate(lines[1:]):
+                    if line.startswith("---"):
+                        return yaml.load("".join(lines[1:i+1]), Loader=yaml.FullLoader) # using yaml lib called pyyaml
+            return {}
+        # return [line for line in open(self.old_path, "r").readlines()]
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
         if not isinstance(content, str):
@@ -264,6 +284,7 @@ class DocPath:
         """Gets an edge from page's URL to another URL."""
         return tuple(sorted([self.abs_url, other]))
 
+
 # ---------------------------------------------------------------------------- #
 #                                   Settings                                   #
 # ---------------------------------------------------------------------------- #
@@ -281,31 +302,31 @@ class Settings:
 
     # Default options
     options: Dict[str, Optional[str]] = {
-        "SITE_URL": None,
-        "SITE_TITLE": "Someone's Second 🧠",
-        "TIMEZONE": "Asia/Hong_Kong",
-        "REPO_URL": None,
-        "LANDING_PAGE": None,
-        "LANDING_TITLE": "I love obsidian-zola! 💖",
-        "SITE_TITLE_TAB": "",
-        "LANDING_DESCRIPTION": "I have nothing but intelligence.",
-        "LANDING_BUTTON": "Click to steal some👆",
-        "SORT_BY": "title",
-        "GANALYTICS": "",
-        "SLUGIFY": "y",
-        "HOME_GRAPH": "y",
-        "PAGE_GRAPH": "y",
-        "SUBSECTION_SYMBOL": "<div class='folder'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M448 96h-172.1L226.7 50.75C214.7 38.74 198.5 32 181.5 32H64C28.65 32 0 60.66 0 96v320c0 35.34 28.65 64 64 64h384c35.35 0 64-28.66 64-64V160C512 124.7 483.3 96 448 96zM64 80h117.5c4.273 0 8.293 1.664 11.31 4.688L256 144h192c8.822 0 16 7.176 16 16v32h-416V96C48 87.18 55.18 80 64 80zM448 432H64c-8.822 0-16-7.176-16-16V240h416V416C464 424.8 456.8 432 448 432z' /></svg></div>",
-        "LOCAL_GRAPH": "",
-        "GRAPH_LINK_REPLACE": "",
-        "STRICT_LINE_BREAKS": "",
-        "SIDEBAR_COLLAPSED": "",
-        "FOOTER": "",
-        "ROOT_SECTION_NAME": "main",
-        "COMMENTS_GISCUSS": "",
-        "EDIT_PAGE": "",
+        "SITE_URL"             : None,
+        "SITE_TITLE"           : "Someone's Second 🧠",
+        "TIMEZONE"             : "Asia/Hong_Kong",
+        "REPO_URL"             : None,
+        "LANDING_PAGE"         : None,
+        "LANDING_TITLE"        : "I love obsidian-zola! 💖",
+        "SITE_TITLE_TAB"       : "",
+        "LANDING_DESCRIPTION"  : "I have nothing but intelligence.",
+        "LANDING_BUTTON"       : "Click to steal some👆",
+        "SORT_BY"              : "title",
+        "GANALYTICS"           : "",
+        "SLUGIFY"              : "y",
+        "HOME_GRAPH"           : "y",
+        "PAGE_GRAPH"           : "y",
+        "SUBSECTION_SYMBOL"    : "<div class='folder'><svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M448 96h-172.1L226.7 50.75C214.7 38.74 198.5 32 181.5 32H64C28.65 32 0 60.66 0 96v320c0 35.34 28.65 64 64 64h384c35.35 0 64-28.66 64-64V160C512 124.7 483.3 96 448 96zM64 80h117.5c4.273 0 8.293 1.664 11.31 4.688L256 144h192c8.822 0 16 7.176 16 16v32h-416V96C48 87.18 55.18 80 64 80zM448 432H64c-8.822 0-16-7.176-16-16V240h416V416C464 424.8 456.8 432 448 432z' /></svg></div>",
+        "LOCAL_GRAPH"          : "",
+        "GRAPH_LINK_REPLACE"   : "",
+        "STRICT_LINE_BREAKS"   : "",
+        "SIDEBAR_COLLAPSED"    : "",
+        "FOOTER"               : "",
+        "ROOT_SECTION_NAME"    : "main",
+        "COMMENTS_GISCUSS"     : "",
+        "EDIT_PAGE"            : "",
         "EDIT_PAGE_BUTTON_TEXT": "Edit this page on Github",
-        "GRAPH_OPTIONS": """
+        "GRAPH_OPTIONS"        : """
         {
         	nodes: {
         		shape: "dot",
@@ -438,8 +459,8 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
         edge_counts[j] += 1
 
     # Node category if more than 2 nested level, take sub folder
-    node_categories = set([ key.split("/")[2 if key.count("/") < 5 else 3] for key in nodes.keys() ])
-    
+    node_categories = set([key.split("/")[2 if key.count("/") < 5 else 3] for key in nodes.keys()])
+
     # Choose the most connected nodes to be colored
     top_nodes = {
         node_url: i
@@ -447,16 +468,18 @@ def parse_graph(nodes: Dict[str, str], edges: List[Tuple[str, str]]):
             list(node_categories)[: len(PASTEL_COLORS)]
         )
     }
-    
+
     # Generate graph data
     graph_info = {
         "nodes": [
             {
-                "id": node_ids[url],
-                "label": title,
-                "url": url,
-                "color": PASTEL_COLORS[top_nodes[url.split("/")[2 if url.count("/") < 5 else 3]]] if url.split("/")[2 if url.count("/") < 5 else 3] in top_nodes else None,
-                "value": math.log10(edge_counts[url] + 1) + 1,
+                "id"     : node_ids[url],
+                "label"  : title,
+                "url"    : url,
+                "color"  : PASTEL_COLORS[top_nodes[url.split("/")[2 if url.count("/") < 5 else 3]]] if url.split("/")[
+                                                                                                           2 if url.count(
+                                                                                                               "/") < 5 else 3] in top_nodes else None,
+                "value"  : math.log10(edge_counts[url] + 1) + 1,
                 "opacity": 0.1,
             }
             for url, title in nodes.items()
