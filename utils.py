@@ -33,20 +33,12 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 
 def convert_metadata_to_html(metadata: dict) -> str:
     """Convert yaml metadata to HTML depending on metadata type"""
-    # get all functions in metadata_handlers.py
-    m = getmembers(metadata_handlers, isfunction)
-    # lists names
-    print(metadata)
     parsed_metadata = ""
-    for name, func in m:
-        if "_" in name: continue
+    for name, func in getmembers(metadata_handlers, isfunction):
+        if "_" in name: continue    # ignore internal functions
         if name in metadata:
             parsed_metadata += str(func(metadata[name])).strip()+"\n"
     return parsed_metadata
-    # names = [func[0] for func in m]
-    # print(names)
-    # get all
-    # for key, value in metadata.items():
 
 
 # convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
