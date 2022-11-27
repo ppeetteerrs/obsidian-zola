@@ -50,7 +50,6 @@ def _random_color():
         "yellow",
         "orange",
         "red",
-        "lightgrey",
         "blue",
         "purple",
     ])
