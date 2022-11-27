@@ -25,15 +25,16 @@ def chips(chips_dict: dict):
 
 
 def _chip(key, value, should_link=True) -> str:
-    front, link = "", ""
+    key = str(key)
     if not value.startswith("http"):
         value = str(value).replace(" ", "%20")
     if not key.startswith("http"):
         key = f"https://img.shields.io/badge/{_clean_key(key)}-{_clean_url(value)}-{_random_color(key)}"
     if should_link:
         return f"[![alt text]({key})]({value})".strip() + "\n"
-    else :
+    else:
         return f"![alt text]({key})".strip() + "\n"
+
 
 # def source(text: str) -> str:
 #     return _chip("Source 🔎", text)
@@ -48,8 +49,10 @@ def tags(tags_list: list) -> str:
         tags_out += f"![{tag}](https://img.shields.io/badge/{tag}-{_random_color(tag)})\n"
     return tags_out
 
+
 def _clean_key(key: str) -> str:
     return key.replace(" ", "%20").replace("_", "-")
+
 
 def _clean_url(url: str) -> str:
     if "/" in url:
