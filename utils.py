@@ -149,9 +149,18 @@ class DocLink:
 
         for link in cls.get_links(line):
             abs_url = link.abs_url(doc_path)
-            parsed = parsed.replace(
-                link.combined, f"[{link.title}]({abs_url}{link.header})"
-            )
+
+            if any(link.title.endswith(ext) for ext in (".webm", ".mp4")):
+                # use shortcode for videos
+                parsed = parsed.replace(
+                    link.combined,
+                    r"{{ " + f'video(url="{abs_url}", alt="{link.title}")' + r" }}",
+                )
+            else:
+                parsed = parsed.replace(
+                    link.combined, f"[{link.title}]({abs_url}{link.header})"
+                )
+
             linked.append(abs_url)
 
         return parsed, linked
