@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip install -r requirements.txt
+pip install -r __site/requirements.txt
 
 # Avoid copying over netlify.toml (will ebe exposed to public API)
 echo "netlify.toml" >>__obsidian/.gitignore
