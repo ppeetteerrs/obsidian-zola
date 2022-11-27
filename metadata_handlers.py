@@ -26,6 +26,7 @@ def chips(chips_dict: dict):
 
 def _chip(key, value, should_link=True) -> str:
     key = str(key)
+    value = str(value)
     if not value.startswith("http"):
         value = str(value).replace(" ", "%20")
     if not key.startswith("http"):
