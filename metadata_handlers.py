@@ -24,20 +24,23 @@ def chips(chips_dict: dict):
     return ' '.join([_chip(key, value) for key, value in chips_dict.items()])
 
 
-def _chip(key, value):
+def _chip(key, value, should_link=True) -> str:
     front, link = "", ""
     if not value.startswith("http"):
         value = str(value).replace(" ", "--")
     if not key.startswith("http"):
         key = f"https://img.shields.io/badge/{_clean_url(key)}-{_clean_url(value)}-{_random_color(key)}"
-    return f"[![alt text]({key})]({value})".strip() + "\n"
-
+    if should_link:
+        return f"[![alt text]({key})]({value})".strip() + "\n"
+    else :
+        return f"![alt text]({key})".strip() + "\n"
 
 # def source(text: str) -> str:
 #     return _chip("Source 🔎", text)
 def aliases(list_of_aliases: list) -> str:
     # using list comprehension
-    return ' '.join([_chip("Alias 🔎", alias) for alias in list_of_aliases])
+    return ' '.join([_chip("Alias 🔎", alias, False) for alias in list_of_aliases])
+
 
 def tags(tags_list: list) -> str:
     tags_out = ""
