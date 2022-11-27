@@ -163,6 +163,7 @@ class DocPath:
 
         self.new_rel_path = slugify_path(new_rel_path, not self.is_file)
         self.new_path = docs_dir / str(self.new_rel_path)
+        print(f"New path: {self.new_path}")
 
     # --------------------------------- Sections --------------------------------- #
 
