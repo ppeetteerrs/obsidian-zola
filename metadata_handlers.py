@@ -34,6 +34,12 @@ def chips(chips_dict: dict):
     return chips
 
 
+def tags(tags: list) -> str:
+    tags = ""
+    for tag in tags:
+        tags += f"https://img.shields.io/badge/{tag}-{_random_color(tag)}\n"
+    return tags
+
 def _clean_url(url: str) -> str:
     if "/" in url:
         return url.split("/")[-1].replace("-", "--").replace(" ", "--")
