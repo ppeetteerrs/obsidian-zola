@@ -1,2 +1,2 @@
-pyyaml
-python-slugify
+PyYAML==6.0
+python-slugify==7.0.0
