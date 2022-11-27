@@ -15,6 +15,7 @@ from urllib.parse import quote, unquote
 
 from slugify import slugify
 import yaml
+
 site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
 docs_dir = site_dir / "content/docs"
@@ -27,19 +28,17 @@ docs_dir = site_dir / "content/docs"
 pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
-def slugify_path(path: Union[str, Path], no_suffix: bool) -> Path:
+def slugify_path(path: Union[str, Path], no_suffix: bool, lowercase=False) -> Path:
     """Slugifies every component of a path. Note that '../xxx' will get slugified to '/xxx'. Always use absolute paths. `no_suffix=True` when path is URL or directory (slugify everything including extension)."""
-    print("Before slugify_path: ", path)
     path = Path(str(path))  # .lower()
-    print("After slugify_path: ", path)
     if Settings.is_true("SLUGIFY"):
         if no_suffix:
-            os_path = "/".join(slugify(item) for item in path.parts)
+            os_path = "/".join(slugify(item, lowercase=lowercase) for item in path.parts)
             name = ""
             suffix = ""
         else:
-            os_path = "/".join(slugify(item) for item in str(path.parent).split("/"))
-            name = ".".join(slugify(item) for item in path.stem.split("."))
+            os_path = "/".join(slugify(item, lowercase=lowercase) for item in str(path.parent).split("/"))
+            name = ".".join(slugify(item, lowercase=lowercase) for item in path.stem.split("."))
             suffix = path.suffix
 
         if name != "" and suffix != "":
@@ -251,9 +250,11 @@ class DocPath:
                 # find the end of the front matter
                 for i, line in enumerate(lines[1:]):
                     if line.startswith("---"):
-                        return yaml.load("".join(lines[1:i+1]), Loader=yaml.FullLoader) # using yaml lib called pyyaml
+                        return yaml.load("".join(lines[1:i + 1]),
+                                         Loader=yaml.FullLoader)  # using yaml lib called pyyaml
             return {}
         # return [line for line in open(self.old_path, "r").readlines()]
+
     def write(self, content: Union[str, List[str]]):
         """Writes content to new path."""
         if not isinstance(content, str):
