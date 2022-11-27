@@ -58,7 +58,9 @@ def _clean_url(url: str) -> str:
         return url.replace("-", "--").replace(" ", "%20")
 
 
-def _random_color(random_seed=0) -> str:
+def _random_color(random_seed="") -> str:
+    if "/" in random_seed:
+        random_seed = random_seed.split("/")[0]
     seed(random_seed)
     return choice([
         "brightgreen",
