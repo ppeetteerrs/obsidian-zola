@@ -37,6 +37,14 @@ def _chip(key, value, should_link=True) -> str:
         return f"![alt text]({key})".strip() + "\n"
 
 
+def consumed(value):
+    return _chip("Consumed", value)
+
+
+def rating(value):
+    return _chip("Rating", value)
+
+
 # def source(text: str) -> str:
 #     return _chip("Source 🔎", text)
 def aliases(list_of_aliases: list) -> str:
