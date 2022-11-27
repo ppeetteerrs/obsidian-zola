@@ -41,8 +41,8 @@ def convert_metadata_to_html(metadata: dict) -> str:
     for name, func in m:
         if "_" in name: continue
         if name in metadata:
-            parsed_metadata += str(func(metadata[name])).strip()
-    return parsed_metadata + "\n"
+            parsed_metadata += str(func(metadata[name])).strip()+"\n"
+    return parsed_metadata
     # names = [func[0] for func in m]
     # print(names)
     # get all
