@@ -37,7 +37,7 @@ def chips(chips_dict: dict):
 def tags(tags_list: list) -> str:
     tags_out = ""
     for tag in tags_list:
-        tags_out += f"https://img.shields.io/badge/{tag}-{_random_color(tag)}\n"
+        tags_out += f"![{tag}](https://img.shields.io/badge/{tag}-{_random_color(tag)})\n"
     return tags_out
 
 def _clean_url(url: str) -> str:
