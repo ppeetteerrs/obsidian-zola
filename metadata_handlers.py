@@ -38,11 +38,11 @@ def _chip(key, value, should_link=True) -> str:
 
 
 def consumed(value):
-    return _chip("Consumed", value)
+    return _chip("Consumed", value, False)
 
 
 def rating(value):
-    return _chip("Rating", value)
+    return _chip("Rating", value, False)
 
 
 # def source(text: str) -> str:
