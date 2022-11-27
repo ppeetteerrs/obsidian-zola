@@ -27,7 +27,7 @@ def chips(chips_dict: dict):
 def _chip(key, value, should_link=True) -> str:
     front, link = "", ""
     if not value.startswith("http"):
-        value = str(value).replace(" ", "--")
+        value = str(value).replace(" ", "%20")
     if not key.startswith("http"):
         key = f"https://img.shields.io/badge/{_clean_key(key)}-{_clean_url(value)}-{_random_color(key)}"
     if should_link:
