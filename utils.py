@@ -6,6 +6,7 @@ import shutil
 from dataclasses import dataclass
 from datetime import datetime
 from distutils.util import strtobool
+from inspect import getmembers, isfunction
 from os import environ
 from pathlib import Path
 from pprint import PrettyPrinter
@@ -15,6 +16,8 @@ from urllib.parse import quote, unquote
 
 from slugify import slugify
 import yaml
+
+import metadata_handlers
 
 site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
@@ -26,6 +29,27 @@ docs_dir = site_dir / "content/docs"
 
 # Pretty printer
 pp = PrettyPrinter(indent=4, compact=False).pprint
+
+
+def convert_metadata_to_html(metadata: dict) -> str:
+    """Convert yaml metadata to HTML depending on metadata type"""
+    # get all functions in metadata_handlers.py
+    m = getmembers(metadata_handlers, isfunction)
+    # lists names
+    print(metadata)
+    parsed_metadata = ""
+    for name, func in m:
+        print(name)
+        if name in metadata:
+            parsed_metadata += func(metadata[name])
+    print(parsed_metadata)
+    # names = [func[0] for func in m]
+    # print(names)
+    # get all
+    # for key, value in metadata.items():
+
+
+convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
 
 
 def slugify_path(path: Union[str, Path], no_suffix: bool, lowercase=False) -> Path:
@@ -240,6 +264,13 @@ class DocPath:
                         return lines[i + 2:]
             return lines
         # return [line for line in open(self.old_path, "r").readlines()]
+
+    @property
+    def metadata(self) -> Dict[str, str]:
+        """Gets the metadata of the file. Made up of the front matter and some file properties."""
+        metadata = self.frontmatter
+        metadata["modified"] = self.modified.strftime("%Y-%m-%d %H:%M:%S")
+        return self.frontmatter
 
     @property
     def frontmatter(self) -> Dict[str, str]:

@@ -1,7 +1,6 @@
 import re
 from typing import Dict, List, Tuple
 
-from convert_metadata import convert_metadata_to_html
 from utils import (
     DocLink,
     DocPath,
@@ -10,7 +9,7 @@ from utils import (
     pp,
     raw_dir,
     site_dir,
-    write_settings,
+    write_settings, convert_metadata_to_html,
 )
 
 if __name__ == "__main__":
@@ -34,7 +33,7 @@ if __name__ == "__main__":
                 # Page
                 nodes[doc_path.abs_url] = doc_path.page_title
                 content = doc_path.content
-                meta_data = doc_path.frontmatter # maybe in the future we can extract metadata from inline yaml
+                meta_data = doc_path.metadata # maybe in the future we can extract metadata from inline yaml
                 print(f"Found metadata for {doc_path.abs_url}: {meta_data}")
                 parsed_lines: List[str] = []
                 for line in content:
@@ -57,7 +56,10 @@ if __name__ == "__main__":
                     # To add last line-break
                     "",
                 ]
-                doc_path.write(["\n".join(content), *parsed_lines, convert_metadata_to_html(meta_data)])
+                doc_path.write([
+                    "\n".join(content),
+                    convert_metadata_to_html(meta_data),
+                    *parsed_lines])
                 print(f"Found page: {doc_path.new_rel_path}")
             else:
                 # Resource
