@@ -11,9 +11,9 @@ from os import environ
 from pathlib import Path
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
-from unicodedata import category
 from urllib.parse import quote, unquote
 
+from requests.structures import CaseInsensitiveDict
 from slugify import slugify
 import yaml
 
@@ -32,21 +32,17 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
 def convert_metadata_to_html(metadata: dict) -> str:
+    metadata = CaseInsensitiveDict(metadata)
     """Convert yaml metadata to HTML depending on metadata type"""
     parsed_metadata = ""
     for name, func in getmembers(metadata_handlers, isfunction):
-        if "_" in name: continue    # ignore internal functions
+        if "_" in name: continue  # ignore internal functions
         # ignore case
-        if _is_in_dict(metadata, name):
-            parsed_metadata += str(func(metadata[name])).strip()+"\n"
+        if name in metadata:
+            parsed_metadata += str(func(metadata[name])).strip() + "\n"
     return parsed_metadata
 
-def _is_in_dict(dict,k):
-    """
-    case-insensitive search for key in dict
-    """
-    k = k.lower()
-    return [dict[key] for key in dict if key.lower() == k]
+
 # convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
 
 
