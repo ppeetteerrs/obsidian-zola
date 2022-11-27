@@ -3,7 +3,7 @@ Any function in this file is treated as a metadata handler. The function name is
 The function takes the value of the metadata key and returns the html to be inserted into the page.
 You can use existing elements or create new ones, just make sure to also create css for them.
 """
-from random import choice
+from random import choice, seed
 
 
 def modified(date: str) -> str:
@@ -27,22 +27,22 @@ def chips(chips_dict: dict):
         if not value.startswith("http"):
             value = str(value).replace(" ", "--")
         if not key.startswith("http"):
-            key = f"https://img.shields.io/badge/{_clean_url(key)}-{_clean_url(value)}-{_random_color()}"
+            key = f"https://img.shields.io/badge/{_clean_url(key)}-{_clean_url(value)}-{_random_color(key)}"
         chips += f"""
         [![alt text]({key})]({value})
-        """.strip()+"\n"
+        """.strip() + "\n"
     return chips
 
 
 def _clean_url(url: str) -> str:
-
     if "/" in url:
         return url.split("/")[-1].replace("-", "--").replace(" ", "--")
     else:
         return url.replace("-", "--").replace(" ", "--")
 
 
-def _random_color():
+def _random_color(random_seed=0) -> str:
+    seed(random_seed)
     return choice([
         "brightgreen",
         "green",
