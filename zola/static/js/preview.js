@@ -122,6 +122,9 @@ function createPreview() {
 }
 
 function initPreview(query = ".docs-content a") {
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        return;
+    }
     document.querySelectorAll(query).forEach((a) => {
         if (isDocLink(a.href)) {
             a.addEventListener("mouseover", (e) => showPreview(e, a), false);
