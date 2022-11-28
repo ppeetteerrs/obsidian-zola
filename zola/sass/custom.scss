@@ -1,32 +1,33 @@
-.collapsible-section{
-	position: relative;
+.collapsible-section {
+  position: relative;
 }
+
 .collapsible-section:hover {
-	cursor: pointer;
-	text-decoration: underline;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .collapsible-section:after {
-	content: url("/assets/arrowdown.svg"); 
-	font-size: 0.8rem;
-	width: 20px;
-	height: 20px;
-	float: right;
+  content: url("/assets/arrowdown.svg");
+  font-size: 0.8rem;
+  width: 20px;
+  height: 20px;
+  float: right;
 }
 
 .collapsible-section.open:after {
-	content: url("/assets/arrowup.svg"); 
+  content: url("/assets/arrowup.svg");
 }
 
 .dark .collapsible-section:after,
 .dark .collapsible-section.open:after {
-	filter: brightness(150%);
+  filter: brightness(150%);
 }
 
 /* Style the collapsible content. Note: hidden by default */
 .docs-links .collapsible-wrapper {
-	overflow: hidden;
-	transition: height 0.5s ease-out;
+  overflow: hidden;
+  transition: height 0.5s ease-out;
 }
 
 /* rich link */
@@ -34,7 +35,7 @@
 .rich-link-card {
   border: 1px solid #dddddd !important;
   margin: 20px;
-  border-radius: 3px;
+  border-radius: 10px;
   width: 100%;
   display: flex;
   text-decoration: none !important;
@@ -57,6 +58,7 @@
   min-width: 120px;
   overflow: hidden;
   background-color: #dddddd !important;
+  border-radius: 10px 0 0 10px;
 }
 
 .rich-link-card .rich-link-image {
