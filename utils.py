@@ -32,16 +32,19 @@ pp = PrettyPrinter(indent=4, compact=False).pprint
 
 
 def convert_metadata_to_html(metadata: dict) -> str:
-    metadata = CaseInsensitiveDict(metadata)
     """Convert yaml metadata to HTML depending on metadata type"""
     parsed_metadata = ""
-    for name, func in getmembers(metadata_handlers, isfunction):
-        if "_" in name: continue  # ignore internal functions
-        # ignore case
-        if name in metadata:
-            parsed_metadata += str(func(metadata[name])).strip() + "\n"
+    handlers = get_metadata_handlers()
+
+    for metadata_key in metadata:
+        if metadata_key.lower() in handlers:
+            parsed_metadata += handlers[metadata_key.lower()](metadata[metadata_key]) + "\n"
     return parsed_metadata
 
+
+
+def get_metadata_handlers():
+    return [func for name, func in getmembers(metadata_handlers, isfunction) if "_" not in name]
 
 # convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
 
