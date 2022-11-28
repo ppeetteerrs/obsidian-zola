@@ -37,16 +37,17 @@ def convert_metadata_to_html(metadata: dict) -> str:
     handlers = get_metadata_handlers()
 
     for metadata_key in metadata:
-        if metadata_key.lower() in handlers:
-            parsed_metadata += handlers[metadata_key.lower()](metadata[metadata_key]) + "\n"
+        if metadata_key.lower() in [name for name, _ in handlers]:
+            func = [func for name, func in handlers if name.lower() == metadata_key.lower()][0]
+            parsed_metadata += func(metadata[metadata_key]) + "\n"
     return parsed_metadata
 
 
-
 def get_metadata_handlers():
-    return [func for name, func in getmembers(metadata_handlers, isfunction) if "_" not in name]
+    return [(name, func) for name, func in getmembers(metadata_handlers, isfunction) if not name.startswith("_")]
 
-# convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1"})
+
+# print(convert_metadata_to_html({"modified": "2021-07-01 12:00:00", "tags": ["tag1", "tag2"], "button": "button1", "source": "https://www.google.com"}))
 
 
 def slugify_path(path: Union[str, Path], no_suffix: bool, lowercase=False) -> Path:

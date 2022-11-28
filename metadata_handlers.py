@@ -121,6 +121,3 @@ def _random_color(random_seed="") -> str:
         "blue",
         "purple",
     ])
-
-
-print(source("https://www.netflix.com/watch/81446667?trackId=14183263"))
