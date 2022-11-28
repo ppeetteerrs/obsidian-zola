@@ -45,7 +45,7 @@ if __name__ == "__main__":
                     parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
 
                     parsed_lines.append(parsed_line)
-                    
+
                     if meta_data.get('graph', True):
                         edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 

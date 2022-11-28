@@ -20,9 +20,9 @@
         <h1>{{ page.title | safe }}</h1>
         {% if page.extra.lead %}<p class="lead">{{ page.extra.lead | safe }}</p>{% endif %}
         {{ page.content | safe }}
-        {% if config.extra.page_graph %}
-          {{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}
-          {% endif %}
+<!--        {% if config.extra.page_graph %}-->
+<!--          {{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}-->
+<!--        {% endif %}-->
         {% if config.extra.edit_page %}
           {{ macros_edit_page::docs_edit_page(current_path=page.path) }}
         {% endif %}
