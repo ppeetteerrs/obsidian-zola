@@ -63,9 +63,8 @@ div.docs-graph {
 	}
 	// if desktop
 	@media (min-width: 768px) {
-		margin-left: -100%;
-		width: 200%;
+		margin-left: -80%;
+		width: 180%;
 		aspect-ratio: 1.5;
 	}
-	margin-bottom: -15%;
 }
