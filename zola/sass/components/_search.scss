@@ -55,7 +55,8 @@
 
 @include media-breakpoint-up(sm) {
   #suggestions {
-    width: max-content;
+    width: -webkit-fill-available;
+    width: -moz-available;
   }
 
   #suggestions a {

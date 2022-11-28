@@ -1,5 +1,5 @@
-var suggestions = document.getElementById('suggestions');
-var userinput = document.getElementById('userinput');
+const suggestions = document.getElementById('suggestions');
+const userinput = document.getElementById('userinput');
 
 document.addEventListener('keydown', inputFocus);
 
@@ -21,7 +21,7 @@ function inputFocus(e) {
 
 document.addEventListener('click', function(event) {
 
-  var isClickInsideElement = suggestions.contains(event.target);
+  const isClickInsideElement = suggestions.contains(event.target);
 
   if (!isClickInsideElement) {
     suggestions.classList.add('d-none');
@@ -68,13 +68,13 @@ Source:
   - https://github.com/getzola/zola/blob/master/docs/static/search.js
 */
 (function(){
-  var index = elasticlunr.Index.load(window.searchIndex);
+  let index = elasticlunr.Index.load(window.searchIndex);
   userinput.addEventListener('input', show_results, true);
   suggestions.addEventListener('click', accept_suggestion, true);
   
   function show_results(){
-    var value = this.value.trim();
-    var options = {
+    const value = this.value.trim();
+    const options = {
       bool: "OR",
       fields: {
         title: {boost: 2, expand: true},
@@ -82,11 +82,12 @@ Source:
         expand: true
       }
     };
-    var results = index.search(value, options);
+    const results = index.search(value, options);
 
-    var entry, childs = suggestions.childNodes;
-    var i = 0, len = results.length;
-    var items = value.split(/\s+/);
+    let entry;
+    const childs = suggestions.childNodes;
+    const i = 0, len = results.length;
+    const items = value.split(/\s+/);
     suggestions.classList.remove('d-none');
 
     results.forEach(function(page) {
@@ -133,29 +134,36 @@ Source:
   // maximum sum. If there are multiple maximas, then get the last one.
   // Enclose the terms in <b>.
   function makeTeaser(body, terms) {
-    var TERM_WEIGHT = 40;
-    var NORMAL_WORD_WEIGHT = 2;
-    var FIRST_WORD_WEIGHT = 8;
-    var TEASER_MAX_WORDS = 60;
-  
-    var stemmedTerms = terms.map(function (w) {
+    let TEASER_MAX_WORDS;
+    const TERM_WEIGHT = 40;
+    const NORMAL_WORD_WEIGHT = 2;
+    const FIRST_WORD_WEIGHT = 8;
+    //if mobile
+    if (window.innerWidth < 768) {
+      TEASER_MAX_WORDS = 20;
+    }else{
+      TEASER_MAX_WORDS = 60;
+    }
+
+
+    const stemmedTerms = terms.map(function (w) {
       return elasticlunr.stemmer(w.toLowerCase());
     });
-    var termFound = false;
-    var index = 0;
-    var weighted = []; // contains elements of ["word", weight, index_in_document]
+    let termFound = false;
+    let index = 0;
+    const weighted = []; // contains elements of ["word", weight, index_in_document]
   
     // split in sentences, then words
-    var sentences = body.toLowerCase().split(". ");
+    const sentences = body.toLowerCase().split(". ");
     for (var i in sentences) {
-      var words = sentences[i].split(/[\s\n]/);
-      var value = FIRST_WORD_WEIGHT;
-      for (var j in words) {
+      const words = sentences[i].split(/[\s\n]/);
+      let value = FIRST_WORD_WEIGHT;
+      for (let j in words) {
         
         var word = words[j];
   
         if (word.length > 0) {
-          for (var k in stemmedTerms) {
+          for (let k in stemmedTerms) {
             if (elasticlunr.stemmer(word).startsWith(stemmedTerms[k])) {
               value = TERM_WEIGHT;
               termFound = true;
@@ -179,11 +187,11 @@ Source:
         return body;
       }
     }
-  
-    var windowWeights = [];
-    var windowSize = Math.min(weighted.length, TEASER_MAX_WORDS);
+
+    const windowWeights = [];
+    const windowSize = Math.min(weighted.length, TEASER_MAX_WORDS);
     // We add a window with all the weights first
-    var curSum = 0;
+    let curSum = 0;
     for (var i = 0; i < windowSize; i++) {
       curSum += weighted[i][1];
     }
@@ -196,9 +204,9 @@ Source:
     }
   
     // If we didn't find the term, just pick the first window
-    var maxSumIndex = 0;
+    let maxSumIndex = 0;
     if (termFound) {
-      var maxFound = 0;
+      let maxFound = 0;
       // backwards
       for (var i = windowWeights.length - 1; i >= 0; i--) {
         if (windowWeights[i] > maxFound) {
@@ -207,9 +215,9 @@ Source:
         }
       }
     }
-  
-    var teaser = [];
-    var startIndex = weighted[maxSumIndex][2];
+
+    const teaser = [];
+    let startIndex = weighted[maxSumIndex][2];
     for (var i = maxSumIndex; i < maxSumIndex + windowSize; i++) {
       var word = weighted[i];
       if (startIndex < word[2]) {
@@ -225,12 +233,12 @@ Source:
 
       startIndex = word[2] + word[0].length;
       // Check the string is ascii characters or not
-      var re = /^[\x00-\xff]+$/
+      const re = /^[\x00-\xff]+$/;
       if (word[1] !== TERM_WEIGHT && word[0].length >= 12 && !re.test(word[0])) {
         // If the string's length is too long, it maybe a Chinese/Japance/Korean article
         // if using substring method directly, it may occur error codes on emoji chars
-        var strBefor = body.substring(word[2], startIndex);
-        var strAfter = substringByByte(strBefor, 12);
+        const strBefor = body.substring(word[2], startIndex);
+        const strAfter = substringByByte(strBefor, 12);
         teaser.push(strAfter);
       } else {
         teaser.push(body.substring(word[2], startIndex));
@@ -250,13 +258,13 @@ Source:
 // If using JavaScript inline substring method, it will return error codes 
 // Source: https://www.52pojie.cn/thread-1059814-1-1.html
 function substringByByte(str, maxLength) {
-  var result = "";
-  var flag = false;
-  var len = 0;
-  var length = 0;
-  var length2 = 0;
-  for (var i = 0; i < str.length; i++) {
-    var code = str.codePointAt(i).toString(16);
+  let result = "";
+  let flag = false;
+  let len = 0;
+  let length = 0;
+  let length2 = 0;
+  for (let i = 0; i < str.length; i++) {
+    const code = str.codePointAt(i).toString(16);
     if (code.length > 4) {
       i++;
       if ((i + 1) < str.length) {
@@ -307,8 +315,8 @@ function getByteByBinary(binaryCode) {
   // Binary system, starts with `0b` in ES6
   // Octal number system, starts with `0` in ES5 and starts with `0o` in ES6
   // Hexadecimal, starts with `0x` in both ES5 and ES6
-  var byteLengthDatas = [0, 1, 2, 3, 4];
-  var len = byteLengthDatas[Math.ceil(binaryCode.length / 8)];
+  const byteLengthDatas = [0, 1, 2, 3, 4];
+  const len = byteLengthDatas[Math.ceil(binaryCode.length / 8)];
   return len;
 }
 
