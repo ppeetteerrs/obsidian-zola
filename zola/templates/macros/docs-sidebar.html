@@ -1,5 +1,5 @@
 {% macro docs_sidebar(current_section) %}
-<div class="col-lg-5 col-xl-4 docs-sidebar">
+<div class="col-lg-5 col-xl-4 docs-sidebar" style="padding-right: 0">
 	{% if config.extra.page_graph %}
 	{{ macros_docs_graph::docs_graph(page=page, current_section=current_section) }}
 	{% endif %}
