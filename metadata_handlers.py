@@ -59,7 +59,7 @@ def _rich_link_card(url: str) -> str:
                 </div>
             </div>
             <span style="flex: auto">
-                <div class="rich-link-card-text" style="height: 80%">
+                <div class="rich-link-card-text" style="height: 80%; width: auto;">
                     <h1 class="rich-link-card-title">{resp['meta']['title'] if 'title' in resp['meta'] else _clean_url(url)}</h1>
                         <p class="rich-link-card-description">
                            {resp['meta']['description'] if 'description' in resp['meta'] else ""}
