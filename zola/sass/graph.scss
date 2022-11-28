@@ -57,9 +57,20 @@ a {
 }
 
 div.docs-graph {
-	margin-left: -100%;
-	margin-bottom: -15%;
-	width: 200%;
-	// height: 30vh;
-	aspect-ratio: 1.5;
+	// if mobile
+	@media (max-width: 767px) {
+		// make the graph smaller
+		width: 100%;
+		aspect-ratio: 1.9;
+	}
+	// if desktop
+	@media (min-width: 768px) {
+		// make the graph bigger
+		margin-left: -100%;
+		margin-bottom: -15%;
+		width: 200%;
+		// height: 30vh;
+		aspect-ratio: 1.5;
+	}
+
 }
