@@ -4,7 +4,7 @@ function showPreview(mouseEvent, link) {
     const { clientX, clientY } = mouseEvent;
     let previewDiv = createPreview();
 
-    previewDiv.innerHTML = "Loading...";
+    previewDiv.innerHTML = "Loading... ⏳";
 
     const html = cache.get(link.href);
     if (!html) {
@@ -30,6 +30,10 @@ function showPreview(mouseEvent, link) {
                     previewDiv.innerHTML = blockContent.outerHTML;
                 }
                 cache.set(link.href, previewDiv.innerHTML);
+                previewDiv.addEventListener("dragstart", (e) => {
+                    e.preventDefault();
+                    console.log(e.offsetX, e.offsetY);
+                }, false);
                 initPreview(`.${getPreviewUniqueClass(previewDiv)} a`);
             });
     } else {
@@ -122,9 +126,8 @@ function createPreview() {
 }
 
 function initPreview(query = ".docs-content a") {
-    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-        return;
-    }
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) return;
+
     document.querySelectorAll(query).forEach((a) => {
         if (isDocLink(a.href)) {
             a.addEventListener("mouseover", (e) => showPreview(e, a), false);
