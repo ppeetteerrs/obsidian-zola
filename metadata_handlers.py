@@ -48,28 +48,34 @@ def rating(value):
 
 
 def _rich_link_card(url: str) -> str:
-    try:
-        resp = get(f"http://iframely.server.crestify.com/iframely?url={url}").json()
-        image = [link['href'] for link in resp['links'] if 'thumbnail' in link['rel']][0]
-        return f"""
+    # try:
+    resp = get(f"http://iframely.server.crestify.com/iframely?url={url}").json()
+    image = [link['href'] for link in resp['links'] if
+             'thumbnail' in link['rel'] or str(link['type']).startswith("image/")][0]
+    return f"""
         <div class="rich-link-card-container"><a class="rich-link-card" href="{url}" target="_blank">
             <div class="rich-link-image-container">
                 <div class="rich-link-image" style="background-image: url('{image}')">
             </div>
-            </div>
-            <div class="rich-link-card-text">
-                <h1 class="rich-link-card-title">{resp['meta']['title']}</h1>
-                <p class="rich-link-card-description">
-                    {resp['meta']['description']}
-                </p>
-                <p class="rich-link-href">
-                {url}
-                </p>
-            </div>
+        </div>
+        <span style="flex: auto">
+            <div class="rich-link-card-text" style="height: 80%">
+                <h1 class="rich-link-card-title">{resp['meta']['title'] if 'title' in resp['meta'] else _clean_url(url)}</h1>
+                    <p class="rich-link-card-description">
+                       {resp['meta']['description'] if 'description' in resp['meta'] else ""}
+                    </p>
+                </div>
+                <p class="rich-link-href" style="
+                    padding-right: 1rem;
+                    direction: rtl;">
+                <b>Source 🔎</b> </p> 
+            </span>
         </a></div>
         """
-    except:
-        return _chip("Link 🔗", url)
+
+
+# except:
+#     return _chip("Link 🔗", url)
 
 
 def source(value):
@@ -117,3 +123,6 @@ def _random_color(random_seed="") -> str:
         "blue",
         "purple",
     ])
+
+
+print(source("https://www.netflix.com/watch/81446667?trackId=14183263"))
