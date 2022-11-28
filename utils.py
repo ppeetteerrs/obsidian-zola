@@ -39,7 +39,7 @@ def convert_metadata_to_html(metadata: dict) -> str:
     for metadata_key in metadata:
         if metadata_key.lower() in [name for name, _ in handlers]:
             func = [func for name, func in handlers if name.lower() == metadata_key.lower()][0]
-            parsed_metadata += str(func(metadata[metadata_key])).strip() + "\n"
+            parsed_metadata += str(func(metadata[metadata_key])).strip()+" "
     return parsed_metadata
 
 
