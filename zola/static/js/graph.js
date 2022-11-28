@@ -59,6 +59,9 @@ if (curr_node.length > 0) {
 var max_node_val = Math.max(...nodes.map((node) => node.value));
 
 // Highlight current node and set to center
+console.log(curr_node);
+console.log("-")
+console.log(nodes);
 if (curr_node) {
     nodes.update({
         id: curr_node.id,
