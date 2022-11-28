@@ -19,7 +19,7 @@ var container = document.getElementById("graph");
 // Parse nodes and edges
 try {
     var curr_node = graph_data.nodes.filter(
-        (node) => decodeURI(node.url) == curr_url
+        (node) => decodeURI(node.url).toLowerCase() == curr_url //TODO: when I fix case in url fix this
     );
 } catch (error) {
     var curr_node = null;
