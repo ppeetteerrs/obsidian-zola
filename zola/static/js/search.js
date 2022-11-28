@@ -140,7 +140,7 @@ Source:
     const FIRST_WORD_WEIGHT = 8;
     //if mobile
     if (window.innerWidth < 768) {
-      TEASER_MAX_WORDS = 20;
+      TEASER_MAX_WORDS = 15;
     }else{
       TEASER_MAX_WORDS = 60;
     }
