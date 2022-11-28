@@ -5,6 +5,8 @@ You can use existing elements or create new ones, just make sure to also create 
 """
 from random import choice, seed
 
+from requests import get
+
 
 def modified(date: str) -> str:
     """Converts date into html format element"""
@@ -43,6 +45,37 @@ def consumed(value):
 
 def rating(value):
     return _chip("Rating", value, False)
+
+
+def _rich_link_card(url: str) -> str:
+    try:
+        resp = get(f"http://iframely.server.crestify.com/iframely?url={url}").json()
+        image = [link['href'] for link in resp['links'] if 'thumbnail' in link['rel']][0]
+        return f"""
+        <div class="rich-link-card-container"><a class="rich-link-card" href="{url}" target="_blank">
+            <div class="rich-link-image-container">
+                <div class="rich-link-image" style="background-image: url('{image}')">
+            </div>
+            </div>
+            <div class="rich-link-card-text">
+                <h1 class="rich-link-card-title">{resp['meta']['title']}</h1>
+                <p class="rich-link-card-description">
+                    {resp['meta']['description']}
+                </p>
+                <p class="rich-link-href">
+                {url}
+                </p>
+            </div>
+        </a></div>
+        """
+    except:
+        return _chip("Link 🔗", url)
+
+
+def source(value):
+    if value.startswith("http"):
+        return _rich_link_card(value)
+    return _chip("Source 🔎", value)
 
 
 # def source(text: str) -> str:
