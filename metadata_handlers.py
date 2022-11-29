@@ -34,9 +34,9 @@ def _chip(key, value, should_link=True) -> str:
     if not key.startswith("http"):
         key = f"https://img.shields.io/badge/{_clean_key(key)}-{_clean_url(value)}-{_random_color(key)}"
     if should_link:
-        return f"[![alt text]({key})]({value})".strip() + "\n"
+        return f"[![alt text]({key})]({value})\n"
     else:
-        return f"![alt text]({key})".strip() + "\n"
+        return f"![alt text]({key})\n"
 
 
 def consumed(value):
