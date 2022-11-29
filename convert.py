@@ -51,13 +51,15 @@ if __name__ == "__main__":
                     if meta_data.get('graph', True):
                         edges.extend([doc_path.edge(rel_path) for rel_path in linked])
                 print(f"To prerender --- {to_prerender_links(links)}")
+                print(f"not rendered -- links {links}")
                 content = [
                     "---",
                     f'title: "{doc_path.page_title}"',
                     f"date: {doc_path.modified}",
                     f"updated: {doc_path.modified}",
                     "template: docs/page.html",
-                    f"prerender: '{to_prerender_links(links)}'",
+                    "extra:",
+                    f"    prerender: {links}",
                     "---",
                     # To add last line-break
                     "",
