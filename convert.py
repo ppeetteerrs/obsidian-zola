@@ -50,7 +50,7 @@ if __name__ == "__main__":
 
                     if meta_data.get('graph', True):
                         edges.extend([doc_path.edge(rel_path) for rel_path in linked])
-
+                print(f"To prerender --- {to_prerender_links(links)}")
                 content = [
                     "---",
                     f'title: "{doc_path.page_title}"',
