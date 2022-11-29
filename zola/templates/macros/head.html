@@ -13,6 +13,9 @@
 <link rel="stylesheet" href="{{ get_url(path="main.css") | safe }}">
 {% endmacro %}
 
+{% macro links(page) %}
+{{page.prerender}}
+{% endmacro %}
 
 {% macro favicons() %}
   <meta name="theme-color" content="{{ config.extra.theme_color | default(value="#fff") }}">
@@ -72,7 +75,7 @@
   <meta name="twitter:description" content="{{ description }}">
   <meta name="twitter:site" content="@{{ config.extra.open.twitter_site }}">
   <meta name="twitter:creator" content="@{{ config.extra.open.twitter_creator }}">
-  
+
   <meta property="og:title" content="{{ title }}">
   <meta property="og:description" content="{{ description }}">
   <meta property="og:type" content="{{ type }}">

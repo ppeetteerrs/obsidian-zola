@@ -38,6 +38,7 @@ if __name__ == "__main__":
                     nodes[doc_path.abs_url] = doc_path.page_title
                 print(f"Found metadata for {doc_path.abs_url}: {meta_data}")
                 parsed_lines: List[str] = []
+                links = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)
                     print(f" ----{linked}") if linked else None
@@ -55,6 +56,7 @@ if __name__ == "__main__":
                     f"date: {doc_path.modified}",
                     f"updated: {doc_path.modified}",
                     "template: docs/page.html",
+                    f"prerender: {to_prerender_links(linked)}",
                     "---",
                     # To add last line-break
                     "",

@@ -23,9 +23,15 @@ site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
 docs_dir = site_dir / "content/docs"
 
+
 # ---------------------------------------------------------------------------- #
 #                                 General Utils                                #
 # ---------------------------------------------------------------------------- #
+
+def to_prerender_links(links: List[str]) -> str:
+    """Converts links to prerender links"""
+    return ''.join(f'<link rel="prerender" href="{link}" as="document"/>\n' for link in links)
+
 
 # Pretty printer
 pp = PrettyPrinter(indent=4, compact=False).pprint
