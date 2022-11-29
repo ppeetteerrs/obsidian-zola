@@ -121,7 +121,7 @@ body {
       position: sticky;
       top: 4rem;
       z-index: 1000;
-      height: calc(100vh - 4rem);
+      //height: calc(100vh - 4rem);
     }
   }
 }
@@ -139,7 +139,7 @@ body {
 @include media-breakpoint-up(lg) {
   @supports ((position: -webkit-sticky) or (position: sticky)) {
     .docs-links {
-      max-height: calc(100vh - 4rem);
+      //max-height: calc(100vh - 4rem);
       overflow-y: scroll;
     }
   }
