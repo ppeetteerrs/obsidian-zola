@@ -41,7 +41,6 @@ if __name__ == "__main__":
                 links = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)
-                    print(f" ----{linked}") if linked else None
                     links += linked
                     # Fix LaTEX new lines
                     parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
@@ -50,8 +49,6 @@ if __name__ == "__main__":
 
                     if meta_data.get('graph', True):
                         edges.extend([doc_path.edge(rel_path) for rel_path in linked])
-                print(f"To prerender --- {to_prerender_links(links)}")
-                print(f"not rendered -- links {links}")
                 content = [
                     "---",
                     f'title: "{doc_path.page_title}"',
