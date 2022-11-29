@@ -47,7 +47,7 @@ def rating(value):
     return _chip("Rating", value, False)
 
 
-def _rich_link_card(url: str) -> str:
+def _rich_link_card(url: str, type_annotation="🧠") -> str:
     try:
         resp = get(f"http://iframely.server.crestify.com/iframely?url={url}").json()
         image = [link['href'] for link in resp['links'] if
@@ -68,22 +68,19 @@ def _rich_link_card(url: str) -> str:
                     <p class="rich-link-href" style="
                         padding-right: 1rem;
                         direction: rtl;">
-                    <b>Source 🔎</b> </p> 
+                    <b>{type_annotation}</b> </p> 
                 </span>
             </a></div>
             """
-    except:
-        return _chip("Link 🔗", url)
+    except: return _chip("Link 🔗", url)
 
 
 def source(value):
     if value.startswith("http"):
-        return _rich_link_card(value)
-    return _chip("Source 🔎", value)
+        return _rich_link_card(value, "Source 🔍")
+    return _chip("Source 🔍", value)
 
 
-# def source(text: str) -> str:
-#     return _chip("Source 🔎", text)
 def aliases(list_of_aliases: list) -> str:
     # using list comprehension
     return ' '.join([_chip("Alias 🔎", alias, False) for alias in list_of_aliases])
