@@ -40,7 +40,7 @@ if __name__ == "__main__":
                 parsed_lines: List[str] = []
                 for line in content:
                     parsed_line, linked = DocLink.parse(line, doc_path)
-                    print(f" ----linked") if linked else None
+                    print(f" ----{linked}") if linked else None
                     # Fix LaTEX new lines
                     parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
 
