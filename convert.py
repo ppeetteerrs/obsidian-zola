@@ -9,7 +9,7 @@ from utils import (
     pp,
     raw_dir,
     site_dir,
-    write_settings, convert_metadata_to_html,
+    write_settings, convert_metadata_to_html, to_prerender_links,
 )
 
 if __name__ == "__main__":
