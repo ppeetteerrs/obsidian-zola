@@ -14,9 +14,11 @@
 {% endmacro %}
 
 {% macro links() %}
+{% if page.extra.prerender %}
 {% for link in page.extra.prerender %}
   <link rel="prerender" href="{{ get_url(path=link) | safe }}" as="document"/>
 {% endfor %}
+{% endif %}
 {% endmacro %}
 
 {% macro favicons() %}
