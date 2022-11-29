@@ -30,7 +30,9 @@ docs_dir = site_dir / "content/docs"
 
 def to_prerender_links(links: List[str]) -> str:
     """Converts links to prerender links"""
-    return ''.join(f'<link rel="prerender" href="{link}" as="document"/>\n' for link in links)
+    x = ''.join([f'<link rel="prerender" href="{link}" as="document"/>\n' for link in links])
+    print(x)
+    return x
 
 
 # Pretty printer
