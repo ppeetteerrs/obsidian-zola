@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="{{ get_url(path="main.css") | safe }}">
 {% endmacro %}
 
-{% macro links(page) %}
+{% macro links() %}
 {% for link in page.extra.prerender %}
   <link rel="prerender" href="{{ get_url(path=link) | safe }}" as="document"/>
 {% endfor %}
