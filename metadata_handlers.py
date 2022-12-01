@@ -59,15 +59,13 @@ def _rich_link_card(url: str, type_annotation="🧠") -> str:
                 </div>
             </div>
             <span style="flex: auto">
-                <div class="rich-link-card-text" style="height: 80%; width: auto;">
+                <div class="rich-link-card-text">
                     <h1 class="rich-link-card-title">{resp['meta']['title'] if 'title' in resp['meta'] else _clean_url(url)}</h1>
                         <p class="rich-link-card-description">
                            {resp['meta']['description'] if 'description' in resp['meta'] else ""}
                         </p>
                     </div>
-                    <p class="rich-link-href" style="
-                        padding-right: 1rem;
-                        direction: rtl;">
+                    <p class="rich-link-href">
                     <b>{type_annotation}</b> </p> 
                 </span>
             </a></div>

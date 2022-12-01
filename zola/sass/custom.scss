@@ -66,6 +66,9 @@
   background-size: cover;
   background-repeat: no-repeat;
   padding-bottom: 140px;
+
+  height: 80%;
+  width: auto;
 }
 
 .rich-link-card .rich-link-card-text {
@@ -107,4 +110,6 @@
   text-decoration: none;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  padding-right: 1rem;
+  direction: rtl;
 }
