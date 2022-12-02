@@ -108,7 +108,14 @@ body {
 .docs-sidebar {
   order: 2;
 
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
+
+.example::-webkit-scrollbar {
+  display: none;
+}
+
 @supports ((position:-webkit-sticky) or (position:sticky)) {
   .docs-sidebar {
     position: -webkit-sticky;
