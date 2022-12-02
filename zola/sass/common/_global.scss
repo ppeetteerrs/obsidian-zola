@@ -107,8 +107,17 @@ body {
 
 .docs-sidebar {
   order: 2;
-}
 
+}
+@supports ((position:-webkit-sticky) or (position:sticky)) {
+  .docs-sidebar {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4rem;
+    height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+}
 @include media-breakpoint-up(lg) {
   .docs-sidebar {
     order: 0;

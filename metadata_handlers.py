@@ -65,8 +65,7 @@ def _rich_link_card(url: str, type_annotation="🧠") -> str:
                            {resp['meta']['description'] if 'description' in resp['meta'] else ""}
                         </p>
                     </div>
-                    <p class="rich-link-href">
-                    <b>{type_annotation}</b> </p> 
+                    <p class="rich-link-href"><b>{type_annotation}</b></p> 
                 </span>
             </a></div>
             """
