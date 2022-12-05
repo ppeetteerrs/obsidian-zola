@@ -32,7 +32,8 @@ if __name__ == "__main__":
             if doc_path.is_md:
                 # Page
                 content = doc_path.content
-                if not content: # empty file, skip
+                if not len(content) < 1:
+                    print(f"Skipping {doc_path} because it is empty")
                     continue
                 meta_data = doc_path.frontmatter
                 if meta_data.get('graph', True):
