@@ -61,8 +61,6 @@ if __name__ == "__main__":
                     "extra:",
                     f"    prerender: {links}",
                     "---",
-                    # To add last line-break
-                    "",
                 ]
                 doc_path.write([
                     "\n".join(content),
