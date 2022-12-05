@@ -2,6 +2,34 @@
   <img height="200" src="icon.png">
 </p>
 
+# obsidian-zola-plus
+What's in this fork?
+- Prerender linked notes for even faster browsing
+- <details><summary>rockmanvnx6's preview-popup</summary>
+
+  ![Screen Shot 2022-12-05 at 8 28 54](https://user-images.githubusercontent.com/8178413/205564384-76620f4a-9f44-4f39-b539-7ae1020e34ae.png)
+</details>  
+
+- <details><summary>Edit page button for github</summary>
+
+  ![Screen Shot 2022-12-05 at 8 35 38](https://user-images.githubusercontent.com/8178413/205565639-d8cad009-06fb-48f5-9d30-3bbdb9dca514.png)
+</details>  
+
+- Better media support
+
+- <details><summary>[giscus](https://giscus.app)</summary>
+  
+  ![Screen Shot 2022-12-05 at 8 46 03](https://user-images.githubusercontent.com/8178413/205567042-b7aae961-e10d-46bf-a24e-315ab3893776.png)
+</details>  
+
+- <details><summary>Very extendible metadata handling system</summary>
+ 
+  ![Screen Shot 2022-12-05 at 8 55 17](https://user-images.githubusercontent.com/8178413/205568652-9b24e205-9d29-4316-a0ed-998e4bb4a560.png)
+  ![Screen Shot 2022-12-05 at 8 49 55](https://user-images.githubusercontent.com/8178413/205567698-75417a99-6b01-4fbd-8821-8bf7e5c80376.png)  
+</details>   
+
+- Dynamic search bar / window size (instead of fixed one)
+
 # obsidian-zola
 
 ![](https://img.shields.io/github/v/release/ppeetteerrs/obsidian-zola)
