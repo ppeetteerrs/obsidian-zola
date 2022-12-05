@@ -32,6 +32,7 @@ if __name__ == "__main__":
             if doc_path.is_md:
                 # Page
                 content = doc_path.content
+                print(f'content {len(content)} for {doc_path.page_title}')
                 if len(content) < 2:
                     print(f"Skipping {doc_path} because it is empty")
                     continue
