@@ -32,7 +32,8 @@ if __name__ == "__main__":
             if doc_path.is_md:
                 # Page
                 content = doc_path.content
-                # meta_data = doc_path.metadata # maybe in the future we can extract metadata from inline yaml
+                if not content: # empty file, skip
+                    continue
                 meta_data = doc_path.frontmatter
                 if meta_data.get('graph', True):
                     nodes[doc_path.abs_url] = doc_path.page_title
