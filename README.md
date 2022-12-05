@@ -22,8 +22,9 @@ What's in this fork?
   ![Screen Shot 2022-12-05 at 8 46 03](https://user-images.githubusercontent.com/8178413/205567042-b7aae961-e10d-46bf-a24e-315ab3893776.png)
 </details>  
 
-- <details><summary>Metadata handling system</summary>
-  
+- <details><summary>Very extendible metadata handling system</summary>
+ 
+  ![Screen Shot 2022-12-05 at 8 55 17](https://user-images.githubusercontent.com/8178413/205568652-9b24e205-9d29-4316-a0ed-998e4bb4a560.png)
   ![Screen Shot 2022-12-05 at 8 49 55](https://user-images.githubusercontent.com/8178413/205567698-75417a99-6b01-4fbd-8821-8bf7e5c80376.png)  
 </details>   
 
