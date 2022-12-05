@@ -32,10 +32,7 @@ if __name__ == "__main__":
             if doc_path.is_md:
                 # Page
                 content = doc_path.content
-                print(f'content {len(content)} for {doc_path.page_title} - {content}')
-                if len(content) < 2:
-                    print(f"Skipping {doc_path} because it is empty")
-                    continue
+                # meta_data = doc_path.metadata # maybe in the future we can extract metadata from inline yaml
                 meta_data = doc_path.frontmatter
                 if meta_data.get('graph', True):
                     nodes[doc_path.abs_url] = doc_path.page_title
@@ -61,6 +58,8 @@ if __name__ == "__main__":
                     "extra:",
                     f"    prerender: {links}",
                     "---",
+                    # To add last line-break
+                    "",
                 ]
                 doc_path.write([
                     "\n".join(content),
