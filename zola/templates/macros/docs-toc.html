@@ -5,11 +5,11 @@
   			<nav id="TableOfContents">
   					<ul>
   							{% for h1 in page.toc %}
-  							<li><a href="{{ h1.permalink | safe}}">{{ h1.title }}</a></li>
+  							<li><a href="{{ h1.permalink |  safe | replace(from=page.permalink, to='') }}">{{ h1.title }}</a></li>
   							{% if h1.children %}
   									<ul>
   											{% for h2 in h1.children %}
-  											<li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a></li>
+  											<li><a href="{{ h2.permalink | safe | replace(from=page.permalink, to='') }}">{{ h2.title }}</a></li>
   											{% endfor %}
   									</ul>
   							{% endif %}
