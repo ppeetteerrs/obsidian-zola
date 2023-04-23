@@ -6,8 +6,10 @@ pip install python-slugify
 echo "netlify.toml" >>__obsidian/.gitignore
 
 # Avoid uploading private files
-echo "private/*" >> __obsidian/.gitignore
-echo "templates/*" >> __obsidian/.gitignore
+IFS=',' read -r -a ignore_directories <<< "$IGNORE_DIRECTORIES"
+for file in "${ignore_directories[@]}"; do
+  echo "$file" >> __obsidian/.gitignore
+done
 
 # Sync Zola template contents
 rsync -a __site/zola/ __site/build
