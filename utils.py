@@ -103,7 +103,7 @@ class DocLink:
         """Check that capture link does not contain inner links."""
         return re.match(r"\[.*?\]\(\S*?\)", item) is None
 
-    def abs_url(self, doc_path: "DocPath") -> str:
+    def abs_url(self, doc_path: "DocPath", is_md: bool) -> str:
         """Returns an absolute URL based on quoted relative URL from obsidian-export."""
 
         if self.url is None or self.url == "":
@@ -116,8 +116,12 @@ class DocLink:
                 .resolve()
                 .relative_to(docs_dir)
             )
+            if(is_md):
+                new_rel_path = Path(str(new_rel_path) + ".md")
             new_rel_path = quote(str(slugify_path(new_rel_path, False)))
 
+            if(is_md):
+                return f"/docs/{new_rel_path[:-3]}"
             return f"/docs/{new_rel_path}"
         except Exception:
             print(f"Invalid link found: {doc_path.old_rel_path}")
@@ -131,7 +135,7 @@ class DocLink:
         linked: List[str] = []
 
         for link in cls.get_links(line):
-            abs_url = link.abs_url(doc_path)
+            abs_url = link.abs_url(doc_path, link.is_md)
             parsed = parsed.replace(
                 link.combined, f"[{link.title}]({abs_url}{link.header})"
             )
