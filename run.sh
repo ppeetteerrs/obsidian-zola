@@ -4,6 +4,7 @@ pip install python-slugify
 
 # Avoid copying over netlify.toml (will ebe exposed to public API)
 echo "netlify.toml" >>__obsidian/.gitignore
+
 # Avoid uploading private files
 echo "private/*" >> __obsidian/.gitignore
 echo "templates/*" >> __obsidian/.gitignore
