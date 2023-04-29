@@ -35,14 +35,22 @@ if __name__ == "__main__":
                 content = doc_path.content
                 parsed_lines: List[str] = []
                 for line in content:
-                    parsed_line, linked = DocLink.parse(line, doc_path)
+                    # Check if line contains tags
+                    tag_match = re.match(r"tags: \[(.*)\]", line)
+                    if tag_match:
+                        # Extract and format tags
+                        tag_raw = tag.match.group(1)
+                        tags = [tag.stripe() for tag in tags_raw.split(".")]
+                    else:
 
-                    # Fix LaTEX new lines
-                    parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
+                        parsed_line, linked = DocLink.parse(line, doc_path)
 
-                    parsed_lines.append(parsed_line)
+                        # Fix LaTEX new lines
+                        parsed_line = re.sub(r"\\\\\s*$", r"\\\\\\\\", parsed_line)
 
-                    edges.extend([doc_path.edge(rel_path) for rel_path in linked])
+                        parsed_lines.append(parsed_line)
+
+                        edges.extend([doc_path.edge(rel_path) for rel_path in linked])
 
                 content = [
                     "---",
@@ -50,6 +58,7 @@ if __name__ == "__main__":
                     f"date: {doc_path.modified}",
                     f"updated: {doc_path.modified}",
                     "template: docs/page.html",
+                    f"tags = {tags}", # Add the tags to the frontmatter
                     "---",
                     # To add last line-break
                     "",

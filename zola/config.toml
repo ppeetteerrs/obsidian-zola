@@ -7,7 +7,9 @@ default_language = "en"
 generate_feed = true
 minify_html = true
 render_emoji = true
-taxonomies = []
+taxonomies = [
+  { name = "tags", feed = true, render = true },
+]
 
 [slugify]
 paths = "off"
