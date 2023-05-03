@@ -73,6 +73,9 @@ def _rich_link_card(url: str, type_annotation="🧠") -> str:
 
 
 def source(value):
+    # if list of sources
+    if isinstance(value, list):
+        return ' '.join([source(val) for val in value])
     if value.startswith("http"):
         return _rich_link_card(value, "Source 🔍")
     return _chip("Source 🔍", value)
