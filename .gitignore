@@ -166,3 +166,6 @@ backup
 data
 public
 build
+
+# MacOS
+.DS_Store
