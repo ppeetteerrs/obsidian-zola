@@ -1,5 +1,5 @@
 [build]
-command = "rm -rf __obsidian __site && mkdir __obsidian && mv * __obsidian || true && git clone https://github.com/ppeetteerrs/obsidian-zola.git __site && __site/run.sh"
+command = "rm -rf __obsidian __site && mkdir __obsidian && mv * __obsidian || true && git clone https://github.com/Yarden-zamir/obsidian-zola-plus.git __site && __site/run.sh"
 publish = "public"
 
 [build.environment]
@@ -13,7 +13,7 @@ LANDING_PAGE = "home"
 LANDING_TITLE = "I love obsidian-zola! 💖"
 PYTHON_VERSION = "3.8"
 # (REQUIRED) Site repo URL
-REPO_URL = "https://github.com/ppeetteerrs/obsidian-zola"
+REPO_URL = "https://github.com/Yarden-zamir/obsidian-zola-plus"
 # (Optional) Site title in navbar
 SITE_TITLE = "Someone's Second 🧠"
 # (Optional) Site title in browser tab (leave blank to use SITE_TITLE)
