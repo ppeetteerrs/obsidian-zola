@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 pip install python-slugify
 
 # Avoid copying over netlify.toml (will ebe exposed to public API)
@@ -17,6 +18,9 @@ else
 	__site/bin/obsidian-export --frontmatter=never --no-recursive-embeds __obsidian __site/build/__docs
 fi
 
+ls .
+ls __site
+ls __obsidian
 # Run conversion script
 python __site/convert.py
 
