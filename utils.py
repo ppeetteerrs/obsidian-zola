@@ -501,7 +501,7 @@ def get_ignore_list():
         with open(ignore_file, encoding="utf-8") as f:
             for line in f:
                 print("ignoring " + line)
-                ignore_list.append(line)
+                ignore_list.append(line.rstrip())
         return ignore_list
     print("No ignore file found.")
     return []
