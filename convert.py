@@ -26,7 +26,7 @@ if __name__ == "__main__":
     edges: List[Tuple[str, str]] = []
     section_count = 0
 
-    all_paths = list(sorted(site_dir.glob("**/*.md")))
+    all_paths = list(sorted(site_dir.glob("**/*")))
     # Filter files found in an optional .zolaignore file
     ignore_list = get_ignore_list()
     if len(ignore_list) > 0:

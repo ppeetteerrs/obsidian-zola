@@ -12,7 +12,7 @@ from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote, unquote
 
-# from slugify import slugify
+from slugify import slugify
 
 site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
