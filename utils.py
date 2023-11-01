@@ -15,7 +15,7 @@ from urllib.parse import quote, unquote
 from slugify import slugify
 
 site_dir = Path(__file__).parent.absolute() / "build"
-obsidian_path = Path(__file__).parent.parent / "__obsidian"
+obsidian_path = Path(__file__).parent.parent.absolute() / "__obsidian"
 raw_dir = site_dir / "__docs"
 docs_dir = site_dir / "content/docs"
 
