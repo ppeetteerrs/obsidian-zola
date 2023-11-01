@@ -502,6 +502,7 @@ def get_ignore_list():
             for line in f:
                 print("ignoring " + line)
                 ignore_list.append(line)
+        print("found " + len(ignore_list) + " globs to ignore")        
         return ignore_list
     print("No ignore file found.")
     return []
@@ -514,6 +515,7 @@ def filter_obsidian_files(ignore_list):
     def find(funct, a_list):
         for a in a_list:
             if(funct(a)):
+                print("match found: " + a)
                 return a
         return None
     return lambda a: find(lambda x: a.match(x), ignore_list) is None
