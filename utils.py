@@ -506,5 +506,9 @@ def get_ignore_list():
     print("No ignore file found.")
     return []
 
+def trace(a):
+    print(a)
+    return a
+
 def filter_obsidian_files(ignore_list):
-    return lambda a: next(filter(lambda x: PurePath(a).parent == site_dir.parent / x, ignore_list), None) is None
+    return lambda a: next(filter(lambda x: trace(PurePath(a).parent) == trace(x), ignore_list), None) is None
