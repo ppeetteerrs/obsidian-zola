@@ -494,7 +494,7 @@ def write_settings():
 
 
 def get_ignore_list():
-    ignore_file = site_dir.parent / ".zolaignore"
+    ignore_file = site_dir.parent.parent / ".zolaignore"
     ignore_list = []
     if ignore_file.exists():
         print("found ignore file, processing...")
