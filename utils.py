@@ -514,6 +514,7 @@ def trace(a):
 def filter_obsidian_files(ignore_list):
     def find(funct, a_list):
         for a in a_list:
+            print("trying", a)
             if(funct(a)):
                 print("match found:", a)
                 return a
