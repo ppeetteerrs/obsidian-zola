@@ -18,12 +18,14 @@ else
 	__site/bin/obsidian-export --frontmatter=never --no-recursive-embeds __obsidian __site/build/__docs
 fi
 
+echo "$PWD"
+
 echo listing local files:
-ls .
+ls -a .
 echo listing __site files:
-ls __site
+ls -a __site
 echo listing __obsidian files:
-ls __obsidian
+ls -a __obsidian
 # Run conversion script
 python __site/convert.py
 
