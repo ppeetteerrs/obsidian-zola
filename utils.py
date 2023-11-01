@@ -494,14 +494,18 @@ def write_settings():
 
 
 def get_ignore_list():
-    ignore_file = site_dir / ".zolaignore"
+    print("Target dir is: " + site_dir)
+    ignore_file = site_dir.parent / ".zolaignore"
     ignore_list = []
     if ignore_file.exists():
+        print("found ignore file, processing...")
         with open(ignore_file, encoding="utf-8") as f:
             for line in f:
+                print("ignoring " + line + "/")
                 ignore_list.append(line)
         return ignore_list
+    print("No ignore file found.")
     return []
 
 def filter_obsidian_files(ignore_list):
-    return lambda a: next(filter(lambda x: PurePath(a).parent == site_dir / x, ignore_list), None) is None
+    return lambda a: next(filter(lambda x: PurePath(a).parent == site_dir.parent / x, ignore_list), None) is None
