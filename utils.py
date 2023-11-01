@@ -15,7 +15,6 @@ from urllib.parse import quote, unquote
 from slugify import slugify
 
 site_dir = Path(__file__).parent.absolute() / "build"
-obsidian_path = Path(__file__).parent.parent.absolute() / "__obsidian"
 raw_dir = site_dir / "__docs"
 docs_dir = site_dir / "content/docs"
 
@@ -495,8 +494,7 @@ def write_settings():
 
 
 def get_ignore_list():
-    print("Obsidian folder: " + str(obsidian_path))
-    ignore_file = obsidian_path / ".zolaignore"
+    ignore_file = site_dir.parent / ".zolaignore"
     ignore_list = []
     if ignore_file.exists():
         print("found ignore file, processing...")
