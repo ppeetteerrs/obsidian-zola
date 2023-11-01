@@ -520,6 +520,6 @@ def filter_obsidian_files(ignore_list):
         return None
     def not_in_glob_list(entry):
        found = find(lambda x: entry.match(x), ignore_list) 
-       print(entry + " : " + found)
+       print(str(entry) + " : " + found)
        return found is None
     return not_in_glob_list
