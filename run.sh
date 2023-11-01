@@ -18,8 +18,11 @@ else
 	__site/bin/obsidian-export --frontmatter=never --no-recursive-embeds __obsidian __site/build/__docs
 fi
 
+echo listing local files:
 ls .
+echo listing __site files:
 ls __site
+echo listing __obsidian files:
 ls __obsidian
 # Run conversion script
 python __site/convert.py
