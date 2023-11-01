@@ -518,4 +518,8 @@ def filter_obsidian_files(ignore_list):
                 print("match found: " + a)
                 return a
         return None
-    return lambda a: find(lambda x: a.match(x), ignore_list) is None
+    def not_in_glob_list(entry):
+       found = find(lambda x: entry.match(x), ignore_list) 
+       print(entry + " : " + found)
+       return found is None
+    return not_in_glob_list
