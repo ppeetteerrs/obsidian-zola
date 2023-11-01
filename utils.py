@@ -501,26 +501,10 @@ def get_ignore_list():
         with open(ignore_file, encoding="utf-8") as f:
             for line in f:
                 print("ignoring " + line)
-                ignore_list.append(line)
-        print("found ", str(len(ignore_list)) + " globs to ignore")        
+                ignore_list.append(line.rstrip())
         return ignore_list
     print("No ignore file found.")
     return []
 
-def trace(a):
-    print(a)
-    return a
-
 def filter_obsidian_files(ignore_list):
-    def find(funct, a_list):
-        for a in a_list:
-            print("trying", a)
-            if(funct(a)):
-                print("match found:", a)
-                return a
-        return None
-    def not_in_glob_list(entry):
-       found = find(lambda x: entry.match(x), ignore_list) 
-       print(str(entry), found, sep=" :")
-       return found is None
-    return not_in_glob_list
+    return lambda a: next(filter(lambda x: a.match(x), ignore_list), None) is None
