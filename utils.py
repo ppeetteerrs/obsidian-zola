@@ -511,4 +511,9 @@ def trace(a):
     return a
 
 def filter_obsidian_files(ignore_list):
-    return lambda a: next(filter(lambda x: not a.match(x), ignore_list), None) is None
+    def find(funct, a_list):
+        for a in a_list:
+            if(funct(a)):
+                return a
+        return None
+    return lambda a: find(lambda x: a.match(x), ignore_list) is None
