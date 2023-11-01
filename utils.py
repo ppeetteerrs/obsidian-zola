@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from distutils.util import strtobool
 from os import environ
-from pathlib import Path, PurePath
+from pathlib import Path
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote, unquote
@@ -500,7 +500,7 @@ def get_ignore_list():
         print("found ignore file, processing...")
         with open(ignore_file, encoding="utf-8") as f:
             for line in f:
-                print("ignoring " + line + "/")
+                print("ignoring " + line)
                 ignore_list.append(line)
         return ignore_list
     print("No ignore file found.")
