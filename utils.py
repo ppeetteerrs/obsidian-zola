@@ -7,12 +7,12 @@ from dataclasses import dataclass
 from datetime import datetime
 from distutils.util import strtobool
 from os import environ
-from pathlib import Path
+from pathlib import Path, PurePath
 from pprint import PrettyPrinter
 from typing import Dict, List, Optional, Tuple, Union
 from urllib.parse import quote, unquote
 
-from slugify import slugify
+# from slugify import slugify
 
 site_dir = Path(__file__).parent.absolute() / "build"
 raw_dir = site_dir / "__docs"
@@ -491,3 +491,17 @@ def write_settings():
                 ]
             )
         )
+
+
+def get_ignore_list():
+    ignore_file = site_dir / ".zolaignore"
+    ignore_list = []
+    if ignore_file.exists():
+        with open(ignore_file, encoding="utf-8") as f:
+            for line in f:
+                ignore_list.append(line)
+        return ignore_list
+    return []
+
+def filter_obsidian_files(ignore_list):
+    return lambda a: next(filter(lambda x: PurePath(a).parent == site_dir / x, ignore_list), None) is None
