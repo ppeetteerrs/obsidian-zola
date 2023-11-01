@@ -502,7 +502,7 @@ def get_ignore_list():
             for line in f:
                 print("ignoring " + line)
                 ignore_list.append(line)
-        print("found " + len(ignore_list) + " globs to ignore")        
+        print("found " + str(len(ignore_list)) + " globs to ignore")        
         return ignore_list
     print("No ignore file found.")
     return []
