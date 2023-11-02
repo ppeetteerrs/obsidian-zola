@@ -10,6 +10,8 @@ from utils import (
     raw_dir,
     site_dir,
     write_settings,
+    get_ignore_list,
+    filter_obsidian_files
 )
 
 if __name__ == "__main__":
@@ -25,7 +27,10 @@ if __name__ == "__main__":
     section_count = 0
 
     all_paths = list(sorted(raw_dir.glob("**/*")))
-
+    # Filter files found in an optional .zolaignore file
+    ignore_list = get_ignore_list()
+    if len(ignore_list) > 0:
+        all_paths = list(filter(filter_obsidian_files(ignore_list), all_paths))
     for path in [raw_dir, *all_paths]:
         doc_path = DocPath(path)
         if doc_path.is_file:
